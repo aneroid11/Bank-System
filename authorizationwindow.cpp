@@ -5,7 +5,6 @@
 
 AuthorizationWindow::AuthorizationWindow(QWidget *parent) : QWidget(parent)
 {
-    setWindowTitle("Авторизация");
     setFixedSize(size());
 
     QPushButton* example_button = new QPushButton("Кнопка", this);
@@ -22,4 +21,10 @@ void AuthorizationWindow::back()
 {
     this->close();
     emit showMainWindow();
+}
+
+void AuthorizationWindow::setBankName(const QString bank)
+{
+    bankName = bank;
+    setWindowTitle(bank + ": авторизация");
 }

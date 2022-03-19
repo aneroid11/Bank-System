@@ -38,5 +38,6 @@ void MainWindow::showAuthWindow()
     selectedBank = bankListWidget->selectedItems().first()->text();
 
     this->close();
+    authWindow->setBankName(selectedBank);
     authWindow->show();
 }
