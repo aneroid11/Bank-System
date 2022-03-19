@@ -1,5 +1,5 @@
-#ifndef AUXILIARYWINDOW_H
-#define AUXILIARYWINDOW_H
+#ifndef AUTHORIZATIONWINDOW_H
+#define AUTHORIZATIONWINDOW_H
 
 #include <QWidget>
 
@@ -16,4 +16,4 @@ private slots:
     void back();
 };
 
-#endif // AUXILIARYWINDOW_H
+#endif // AUTHORIZATIONWINDOW_H

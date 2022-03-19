@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class AuthorizationWindow;
+class QListWidget;
 
 class MainWindow : public QWidget
 {
@@ -18,6 +19,9 @@ private slots:
 
 private:
     AuthorizationWindow* authWindow;
+    QListWidget* bankListWidget;
+
+    QString selectedBank = "";
 };
 
 #endif // MAINWINDOW_H

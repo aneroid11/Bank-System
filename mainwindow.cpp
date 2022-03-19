@@ -1,7 +1,5 @@
 #include <QPushButton>
 #include <QGridLayout>
-#include <QGroupBox>
-#include <QRadioButton>
 #include <QListWidget>
 
 #include "mainwindow.h"
@@ -13,17 +11,16 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("Управление финансовой системой");
     setFixedSize(size());
 
-    QListWidget* listWidget = new QListWidget(this);
+    bankListWidget = new QListWidget(this);
 
-    for (int i = 0; i < 50; i++)
-    {
-        listWidget->insertItem(i, QString("Банк ") + std::to_string(i).c_str());
-    }
+    bankListWidget->insertItem(0, "Банк \'Стеклянный\'");
+    bankListWidget->insertItem(1, "Банк \'Оловянный\'");
+    bankListWidget->insertItem(2, "Банк \'Деревянный\'");
 
     QGridLayout* grid = new QGridLayout(this);
-    grid->addWidget(listWidget, 0, 0);
+    grid->addWidget(bankListWidget, 0, 0);
 
-    QPushButton* authButton = new QPushButton("Авторизоваться");
+    QPushButton* authButton = new QPushButton("Авторизоваться", this);
     connect(authButton, &QPushButton::pressed, this, &MainWindow::showAuthWindow);
     grid->addWidget(authButton, 1, 0);
 
@@ -33,11 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-
+    delete authWindow;
 }
 
 void MainWindow::showAuthWindow()
-{
+{   
+    selectedBank = bankListWidget->selectedItems().first()->text();
+
     this->close();
     authWindow->show();
 }
