@@ -6,12 +6,14 @@
 #include "ibanksystemmodel.h"
 
 class QLineEdit;
+class PersonalAccountWindow;
 
 class AuthorizationWindow : public QWidget
 {
     Q_OBJECT
 public:
     AuthorizationWindow(IBankSystemModel* bankSystem, QWidget *parent = nullptr);
+    ~AuthorizationWindow();
 
     void setBankName(const QString bank);
 
@@ -27,6 +29,8 @@ private:
     QString bankName = "";
     IBankSystemModel* bankSystemModel;
     QLineEdit* loginLine, * passwordLine;
+
+    PersonalAccountWindow* personalAccWindow;
 };
 
 #endif // AUTHORIZATIONWINDOW_H

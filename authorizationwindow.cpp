@@ -4,6 +4,7 @@
 #include <QMessageBox>
 
 #include "authorizationwindow.h"
+#include "personalaccountwindow.h"
 
 AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QWidget(parent), bankSystemModel(bankSystem)
@@ -32,6 +33,13 @@ AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *
     grid->addWidget(enterButton, 2, 0);
     grid->addWidget(signupButton, 3, 0);
     grid->addWidget(backButton, 4, 0);
+
+    personalAccWindow = new PersonalAccountWindow();
+}
+
+AuthorizationWindow::~AuthorizationWindow()
+{
+    delete personalAccWindow;
 }
 
 void AuthorizationWindow::enter()
@@ -43,12 +51,18 @@ void AuthorizationWindow::enter()
     {
         bankSystemModel->enter(login.toStdString(), password.toStdString());
     }
-    catch (...) // Придумать класс-исключение для случая, когда нет пользователя в системе.
+    catch (const NoUserInDBException&)
     {
         QMessageBox msgBox;
-        msgBox.setText("Пользователя нет в системе.");
+        msgBox.setText("Пользователя нет в системе. Вы можете зарегистрироваться в ней.");
         msgBox.exec();
+        return;
     }
+
+    // Если enter() произошёл успешно, то:
+    // AuthorizationWindow должен закрыться и открыть личный кабинет.
+    this->close();
+    personalAccWindow->show();
 }
 
 void AuthorizationWindow::signup()
