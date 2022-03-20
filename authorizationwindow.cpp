@@ -35,6 +35,7 @@ AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *
     grid->addWidget(backButton, 4, 0);
 
     personalAccWindow = new PersonalAccountWindow();
+    connect(personalAccWindow, &PersonalAccountWindow::showAuthorizationWindow, this, &AuthorizationWindow::show);
 }
 
 AuthorizationWindow::~AuthorizationWindow()
