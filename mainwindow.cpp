@@ -5,8 +5,8 @@
 #include "mainwindow.h"
 #include "authorizationwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent)
+MainWindow::MainWindow(IBankSystemModel* bankSystem, QWidget *parent)
+    : QWidget(parent), bankSystemModel(bankSystem)
 {
     setWindowTitle("Управление финансовой системой");
     setFixedSize(size());
@@ -24,7 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(authButton, &QPushButton::pressed, this, &MainWindow::showAuthWindow);
     grid->addWidget(authButton, 1, 0);
 
-    authWindow = new AuthorizationWindow;
+    authWindow = new AuthorizationWindow(bankSystemModel);
+
     connect(authWindow, &AuthorizationWindow::showMainWindow, this, &MainWindow::show);
 }
 

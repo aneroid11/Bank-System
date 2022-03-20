@@ -17,12 +17,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     authorizationwindow.cpp \
+    banksystemmodel.cpp \
+    database.cpp \
+    hashcomputer.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     authorizationwindow.h \
-    mainwindow.h
+    banksystemmodel.h \
+    database.h \
+    hashcomputer.h \
+    ibanksystemmodel.h \
+    mainwindow.h \
+    nouserindbexception.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

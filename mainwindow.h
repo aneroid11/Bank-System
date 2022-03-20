@@ -5,13 +5,14 @@
 
 class AuthorizationWindow;
 class QListWidget;
+class IBankSystemModel;
 
 class MainWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(IBankSystemModel* bankSystem, QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -22,6 +23,8 @@ private:
     QListWidget* bankListWidget;
 
     QString selectedBank = "";
+
+    IBankSystemModel* bankSystemModel = nullptr;
 };
 
 #endif // MAINWINDOW_H
