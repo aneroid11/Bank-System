@@ -9,11 +9,11 @@ class PersonalAccountWindow : public QWidget
 public:
     explicit PersonalAccountWindow(QWidget *parent = nullptr);
 
-private slots:
-    void back();
-
 signals:
     void showAuthorizationWindow();
+
+private slots:
+    void back();
 };
 
 #endif // PERSONALACCOUNTWINDOW_H

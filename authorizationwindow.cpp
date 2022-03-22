@@ -55,6 +55,7 @@ void AuthorizationWindow::enter()
     catch (const NoUserInDBException&)
     {
         QMessageBox msgBox;
+        msgBox.setWindowTitle("Пользователь не найден");
         msgBox.setText("Пользователя нет в системе. Вы можете зарегистрироваться в ней.");
         msgBox.exec();
         return;
