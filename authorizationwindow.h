@@ -7,6 +7,7 @@
 
 class QLineEdit;
 class PersonalAccountWindow;
+class SignupWindow;
 
 class AuthorizationWindow : public QWidget
 {
@@ -31,6 +32,7 @@ private:
     QLineEdit* loginLine, * passwordLine;
 
     PersonalAccountWindow* personalAccWindow;
+    SignupWindow* signupWindow;
 };
 
 #endif // AUTHORIZATIONWINDOW_H

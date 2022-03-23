@@ -47,7 +47,9 @@ PersonalAccountWindow::PersonalAccountWindow(QWidget *parent) : QWidget(parent)
     gridLayout->addWidget(withdraw, 4, 0);
 */
 
-    QPushButton* accDepWork = new QPushButton("Работа со счетами и вкладами", this);
+    QPushButton* accDepWork = new QPushButton("Счета и вклады", this);
+    QPushButton* credits = new QPushButton("Кредиты", this);
+    QPushButton* installments = new QPushButton("Рассрочки", this);
 
     QPushButton* back = new QPushButton("Назад", this);
     connect(back, &QPushButton::pressed, this, &PersonalAccountWindow::back);
@@ -55,7 +57,9 @@ PersonalAccountWindow::PersonalAccountWindow(QWidget *parent) : QWidget(parent)
     gridLayout->addWidget(userInfoLabel, 0, 0);
     gridLayout->addWidget(infoTable, 1, 0);
     gridLayout->addWidget(accDepWork, 2, 0);
-    gridLayout->addWidget(back, 3, 0);
+    gridLayout->addWidget(credits, 3, 0);
+    gridLayout->addWidget(installments, 4, 0);
+    gridLayout->addWidget(back, 5, 0);
 }
 
 void PersonalAccountWindow::back()

@@ -5,6 +5,7 @@
 
 #include "authorizationwindow.h"
 #include "personalaccountwindow.h"
+#include "signupwindow.h"
 
 AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QWidget(parent), bankSystemModel(bankSystem)
@@ -36,11 +37,14 @@ AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *
 
     personalAccWindow = new PersonalAccountWindow();
     connect(personalAccWindow, &PersonalAccountWindow::showAuthorizationWindow, this, &AuthorizationWindow::show);
+
+    signupWindow = new SignupWindow();
 }
 
 AuthorizationWindow::~AuthorizationWindow()
 {
     delete personalAccWindow;
+    delete signupWindow;
 }
 
 void AuthorizationWindow::enter()
@@ -69,7 +73,8 @@ void AuthorizationWindow::enter()
 
 void AuthorizationWindow::signup()
 {
-
+    this->close();
+    signupWindow->show();
 }
 
 void AuthorizationWindow::back()

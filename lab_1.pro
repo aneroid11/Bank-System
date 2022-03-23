@@ -22,7 +22,8 @@ SOURCES += \
     hashcomputer.cpp \
     main.cpp \
     mainwindow.cpp \
-    personalaccountwindow.cpp
+    personalaccountwindow.cpp \
+    signupwindow.cpp
 
 HEADERS += \
     authorizationwindow.h \
@@ -32,7 +33,8 @@ HEADERS += \
     ibanksystemmodel.h \
     mainwindow.h \
     nouserindbexception.h \
-    personalaccountwindow.h
+    personalaccountwindow.h \
+    signupwindow.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
