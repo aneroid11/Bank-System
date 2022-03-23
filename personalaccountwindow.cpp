@@ -35,19 +35,27 @@ PersonalAccountWindow::PersonalAccountWindow(QWidget *parent) : QWidget(parent)
 
     infoTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    QPushButton* openAccount = new QPushButton("Открыть счёт", this);
+    /*QPushButton* openAccount = new QPushButton("Открыть счёт", this);
 
     QPushButton* closeAccount = new QPushButton("Закрыть счёт", this);
+
+    QPushButton* withdraw = new QPushButton("Снять деньги со счёта", this);
+
+    QPushButton*
+    gridLayout->addWidget(openAccount, 2, 0);
+    gridLayout->addWidget(closeAccount, 3, 0);
+    gridLayout->addWidget(withdraw, 4, 0);
+*/
+
+    QPushButton* accDepWork = new QPushButton("Работа со счетами и вкладами", this);
 
     QPushButton* back = new QPushButton("Назад", this);
     connect(back, &QPushButton::pressed, this, &PersonalAccountWindow::back);
 
-    //int i = 0;
     gridLayout->addWidget(userInfoLabel, 0, 0);
     gridLayout->addWidget(infoTable, 1, 0);
-    gridLayout->addWidget(openAccount, 2, 0);
-    gridLayout->addWidget(closeAccount, 3, 0);
-    gridLayout->addWidget(back, 4, 0);
+    gridLayout->addWidget(accDepWork, 2, 0);
+    gridLayout->addWidget(back, 3, 0);
 }
 
 void PersonalAccountWindow::back()

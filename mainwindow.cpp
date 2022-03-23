@@ -1,6 +1,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QListWidget>
+#include <QMessageBox>
 
 #include "mainwindow.h"
 #include "authorizationwindow.h"
@@ -36,6 +37,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::showAuthWindow()
 {   
+    QList<QListWidgetItem*> selectedBanksList = bankListWidget->selectedItems();
+
+    if (selectedBanksList.size() != 1)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Вы должны выбрать один из банков");
+        msgBox.exec();
+        return;
+    }
+
     selectedBank = bankListWidget->selectedItems().first()->text();
 
     this->close();
