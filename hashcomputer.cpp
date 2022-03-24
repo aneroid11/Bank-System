@@ -1,18 +1,24 @@
+#include <iostream>
+
+#include <crypto++/sha.h>
+#include <crypto++/filters.h>
+#include <crypto++/base64.h>
+#include <crypto++/hex.h>
+
 #include "hashcomputer.h"
 
-long long HashComputer::hash(const std::string& str)
+std::string HashComputer::hash(const std::string &message)
 {
-    const int p = 31;
-    const int m = 1e9 + 9;
+    CryptoPP::SHA256 hash;
+    byte digest[CryptoPP::SHA256::DIGESTSIZE];
 
-    long long hashValue = 0;
-    long long pPow = 1;
+    hash.CalculateDigest(digest, (byte*) message.c_str(), message.length());
 
-    for (char currSym : str)
-    {
-        hashValue = (hashValue + (currSym - 'a' + 1) * pPow) % m;
-        pPow = (pPow * p) % m;
-    }
+    CryptoPP::HexEncoder encoder;
+    std::string output;
+    encoder.Attach(new CryptoPP::StringSink(output));
+    encoder.Put(digest, sizeof(digest));
+    encoder.MessageEnd();
 
-    return hashValue;
+    return output;
 }

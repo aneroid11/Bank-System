@@ -6,7 +6,7 @@
 class HashComputer
 {
 public:
-    long long hash(const std::string& s);
+    std::string hash(const std::string& s);
 };
 
 #endif // HASHCOMPUTER_H
