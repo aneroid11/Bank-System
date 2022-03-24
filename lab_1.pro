@@ -18,7 +18,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     authorizationwindow.cpp \
     banksystemmodel.cpp \
-    database.cpp \
     hashcomputer.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -28,7 +27,6 @@ SOURCES += \
 HEADERS += \
     authorizationwindow.h \
     banksystemmodel.h \
-    database.h \
     hashcomputer.h \
     ibanksystemmodel.h \
     mainwindow.h \

@@ -39,6 +39,7 @@ AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *
     connect(personalAccWindow, &PersonalAccountWindow::showAuthorizationWindow, this, &AuthorizationWindow::show);
 
     signupWindow = new SignupWindow();
+    connect(signupWindow, &SignupWindow::showAuthWindow, this, &AuthorizationWindow::show);
 }
 
 AuthorizationWindow::~AuthorizationWindow()
