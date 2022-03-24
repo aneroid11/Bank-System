@@ -1,7 +1,13 @@
 #include <iostream>
+#include <ctime>
 
 #include "banksystemmodel.h"
 #include "hashcomputer.h"
+
+BankSystemModel::BankSystemModel()
+{
+    srand(time(nullptr));
+}
 
 void BankSystemModel::enter(const std::string &login, const std::string &password)
 {

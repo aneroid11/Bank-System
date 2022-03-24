@@ -18,23 +18,31 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     authorizationwindow.cpp \
     banksystemmodel.cpp \
+    cannotcreatetabledbexception.cpp \
+    cannotopendbexception.cpp \
+    database.cpp \
     hashcomputer.cpp \
     main.cpp \
     mainwindow.cpp \
     personalaccountwindow.cpp \
-    signupwindow.cpp
+    signupwindow.cpp \
+    user.cpp
 
 HEADERS += \
     authorizationwindow.h \
     banksystemmodel.h \
+    cannotcreatetabledbexception.h \
+    cannotopendbexception.h \
+    database.h \
     hashcomputer.h \
     ibanksystemmodel.h \
     mainwindow.h \
     nouserindbexception.h \
     personalaccountwindow.h \
-    signupwindow.h
+    signupwindow.h \
+    user.h
 
-LIBS += -lcrypto++
+LIBS += -lcrypto++ -lsqlite3
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

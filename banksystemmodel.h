@@ -6,6 +6,8 @@
 class BankSystemModel : public IBankSystemModel
 {
 public:
+    BankSystemModel();
+
     void enter(const std::string& login, const std::string& password) override;
 
 private:
