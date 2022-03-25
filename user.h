@@ -8,6 +8,7 @@ class User
 public:
     struct Data
     {
+        int64_t id;
         std::string name;
         std::string phone;
         std::string email;
@@ -23,15 +24,12 @@ public:
     std::string getName() const { return data.name; }
     std::string getPhone() const { return data.phone; }
     std::string getEmail() const { return data.email; }
-    int64_t getId() const { return id; }
+    int64_t getId() const { return data.id; }
     std::string getLogin() const { return data.login; }
     std::string getPasswordHash() const { return data.passwordHash; }
 
 private:
-    void generateId();
-
     Data data;
-    int64_t id;
 };
 
 #endif // USER_H

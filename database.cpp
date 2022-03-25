@@ -81,73 +81,25 @@ bool Database::hasUser(int64_t id)
     return result;
 }
 
-/*
-#include <iostream>
-#include <string>
-#include <cstdlib>
-
-#include <sqlite3.h>
-
-static int selectCallback(void *data, int numColumns, char **rowFields, char **columnNames) {
-    (void)data;
-
-    int i;
-
-    for (i = 0; i < numColumns; i++) {
-        std::cout << columnNames[i] << " == " << (rowFields[i] ? rowFields[i] : "NULL") << "\n";
-    }
-
-    printf("\n");
-    return 0;
-}
-
-void addTable(sqlite3 *db)
+bool Database::hasUser(std::string login)
 {
-    const char *sqlQuery = "CREATE TABLE COMPANY("  \
-                           "ID INT PRIMARY KEY     NOT NULL," \
-                           "NAME           TEXT    NOT NULL," \
-                           "AGE            INT     NOT NULL," \
-                           "ADDRESS        CHAR(50)," \
-                           "SALARY         REAL );";
+    std::string query = "SELECT COUNT(1) FROM USER WHERE LOGIN = " + login + ";";
     char *errMsg;
+    bool result;
+    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
 
-    if (sqlite3_exec(db, sqlQuery, nullptr, nullptr, &errMsg)){
-        fprintf(stderr, "SQL error: %s\n", errMsg);
-        sqlite3_free(errMsg);
-    }
+    return result;
 }
 
-sqlite3* createDatabase(std::string filename)
+int64_t Database::generateUniqueUserId()
 {
-    sqlite3 *db;
+    int64_t id;
 
-    if (sqlite3_open(filename.c_str(), &db)) {
-        return nullptr;
-    }
-
-    addTable(db);
-    return db;
-}
-
-int main() {
-    sqlite3 *db;
-
-    if (!(db = createDatabase("test.db")))
+    do
     {
-        std::cerr << "Terminating the program\n";
-        return 1;
+        id = rand() % 1000000;
     }
+    while (hasUser(id));
 
-    char *zErrMsg = 0;
-    const char *sqlQuery = "SELECT * FROM COMPANY;";
-
-    if (sqlite3_exec(db, sqlQuery, selectCallback, nullptr, &zErrMsg)) {
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-    }
-
-    sqlite3_close(db);
-
-    return 0;
-}*/
-
+    return id;
+}

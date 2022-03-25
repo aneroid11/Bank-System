@@ -14,6 +14,7 @@ void testDB()
     Database *db = new Database("data.db");
 
     User::Data userData;
+    userData.id = db->generateUniqueUserId();
     userData.name = "pfkaodoef";
     userData.email = "akaos@sdokfdsokfo";
     userData.passwordHash = "kapkdaspkdsadksadkdoko";
@@ -25,7 +26,7 @@ void testDB()
 
     if (db->hasUser(u->getId()))
     {
-        std::cout << "Has user\n";
+        std::cout << "Has user with ID = " << u->getId() << "\n";
     }
     else
     {

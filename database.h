@@ -15,6 +15,9 @@ public:
     void addUser(const User &user);
     void deleteUser(int64_t id);
     bool hasUser(int64_t id);
+    bool hasUser(std::string login);
+
+    int64_t generateUniqueUserId();
 
 private:
     void createUserTable();
