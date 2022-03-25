@@ -83,7 +83,7 @@ bool Database::hasUser(int64_t id)
 
 bool Database::hasUser(std::string login)
 {
-    std::string query = "SELECT COUNT(1) FROM USER WHERE LOGIN = " + login + ";";
+    std::string query = "SELECT COUNT(1) FROM USER WHERE LOGIN = \'" + login + "\';";
     char *errMsg;
     bool result;
     sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);

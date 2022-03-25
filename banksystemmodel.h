@@ -3,15 +3,18 @@
 
 #include "ibanksystemmodel.h"
 
+class Database;
+
 class BankSystemModel : public IBankSystemModel
 {
 public:
     BankSystemModel();
+    ~BankSystemModel();
 
     void enter(const std::string& login, const std::string& password) override;
 
 private:
-    bool userIsInDatabase(const std::string& login, const std::string& passwordHash) const;
+    Database* database;
 };
 
 #endif // BANKSYSTEMMODEL_H

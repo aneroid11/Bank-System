@@ -39,8 +39,6 @@ void testDB()
 
 int main(int argc, char *argv[])
 {
-    testDB();
-
     IBankSystemModel* bankSystemModel = new BankSystemModel();
 
     QApplication a(argc, argv);
