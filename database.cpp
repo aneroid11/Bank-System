@@ -3,10 +3,9 @@
 #include <sqlite3.h>
 
 #include "database.h"
-#include "cannotopendbexception.h"
-#include "cannotcreatetabledbexception.h"
-#include "cannotadduserdbexception.h"
 #include "user.h"
+
+#include "cannotopendbexception.h"
 
 Database::Database(std::string filename)
 {
@@ -33,7 +32,6 @@ void Database::createUserTable()
                            "PHONE TEXT," \
                            "EMAIL TEXT );";
     char *errMsg;
-
     sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg);
 }
 
@@ -50,22 +48,16 @@ void Database::addUser(const User &user)
     query += "\'" + user.getEmail() + "\'); ";
 
     char *errMsg;
-    if (sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg))
-    {
-        throw CannotAddUserDBException(errMsg);
-    }
+    sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg);
 }
 
 void Database::deleteUser(int64_t id)
 {
-    /*std::string query = "DELETE FROM USER WHERE ID = ";
+    std::string query = "DELETE FROM USER WHERE ID = ";
     query += std::to_string(id) + ";";
 
     char *errMsg;
-    if (sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg))
-    {
-        throw CannotDeleteUserDBException(errMsg);
-    }*/
+    sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg);
 }
 
 /*

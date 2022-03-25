@@ -29,8 +29,6 @@ SOURCES += \
 HEADERS += \
     authorizationwindow.h \
     banksystemmodel.h \
-    cannotadduserdbexception.h \
-    cannotcreatetabledbexception.h \
     cannotopendbexception.h \
     database.h \
     dbexception.h \

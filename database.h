@@ -12,11 +12,12 @@ public:
     Database(std::string filename = "users.db");
     ~Database();
 
-    void createUserTable();
     void addUser(const User &user);
     void deleteUser(int64_t id);
 
 private:
+    void createUserTable();
+
     sqlite3 *database;
 };
 
