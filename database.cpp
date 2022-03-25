@@ -15,23 +15,7 @@ Database::Database(std::string filename)
         throw CannotOpenDBException(sqlite3_errmsg(database));
     }
 
-    try
-    {
-        createUserTable();
-    }
-    catch (const CannotCreateTableDBException &exc)
-    {
-        std::cerr << exc.what() << "\n";
-
-        if (std::string(exc.what()) == "Database error: table USER already exists\n")
-        {
-            std::cerr << "saopfksoffsgkosk\n";
-        }
-        else
-        {
-            throw exc;
-        }
-    }
+    createUserTable();
 }
 
 Database::~Database()
@@ -50,11 +34,7 @@ void Database::createUserTable()
                            "EMAIL TEXT );";
     char *errMsg;
 
-    if (sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg))
-    {
-        std::cerr << errMsg;
-        throw CannotCreateTableDBException(errMsg);
-    }
+    sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg);
 }
 
 void Database::addUser(const User &user)
@@ -63,18 +43,29 @@ void Database::addUser(const User &user)
     query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL) ";
     query += "VALUES (";
     query += std::to_string(user.getId()) + ", ";
-    query += user.getName() + ", ";
-    query += user.getPasswordHash() + ", ";
-    query += user.getLogin() + ", ";
-    query += user.getPhone() + ", ";
-    query += user.getEmail() + "); ";
+    query += "\'" + user.getName() + "\', ";
+    query += "\'" + user.getPasswordHash() + "\', ";
+    query += "\'" + user.getLogin() + "\', ";
+    query += "\'" + user.getPhone() + "\', ";
+    query += "\'" + user.getEmail() + "\'); ";
 
     char *errMsg;
     if (sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg))
     {
-        std::cerr << errMsg << "\n";
         throw CannotAddUserDBException(errMsg);
     }
+}
+
+void Database::deleteUser(int64_t id)
+{
+    /*std::string query = "DELETE FROM USER WHERE ID = ";
+    query += std::to_string(id) + ";";
+
+    char *errMsg;
+    if (sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg))
+    {
+        throw CannotDeleteUserDBException(errMsg);
+    }*/
 }
 
 /*

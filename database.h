@@ -14,6 +14,7 @@ public:
 
     void createUserTable();
     void addUser(const User &user);
+    void deleteUser(int64_t id);
 
 private:
     sqlite3 *database;
