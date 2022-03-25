@@ -18,8 +18,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     authorizationwindow.cpp \
     banksystemmodel.cpp \
-    cannotcreatetabledbexception.cpp \
-    cannotopendbexception.cpp \
     database.cpp \
     hashcomputer.cpp \
     main.cpp \
@@ -31,9 +29,11 @@ SOURCES += \
 HEADERS += \
     authorizationwindow.h \
     banksystemmodel.h \
+    cannotadduserdbexception.h \
     cannotcreatetabledbexception.h \
     cannotopendbexception.h \
     database.h \
+    dbexception.h \
     hashcomputer.h \
     ibanksystemmodel.h \
     mainwindow.h \

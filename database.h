@@ -4,6 +4,7 @@
 #include <string>
 
 struct sqlite3;
+class User;
 
 class Database
 {
@@ -12,6 +13,7 @@ public:
     ~Database();
 
     void createUserTable();
+    void addUser(const User &user);
 
 private:
     sqlite3 *database;

@@ -1,8 +1,11 @@
+#include <iostream>
+
 #include <sqlite3.h>
 
 #include "database.h"
 #include "cannotopendbexception.h"
 #include "cannotcreatetabledbexception.h"
+#include "cannotadduserdbexception.h"
 #include "user.h"
 
 Database::Database(std::string filename)
@@ -12,7 +15,23 @@ Database::Database(std::string filename)
         throw CannotOpenDBException(sqlite3_errmsg(database));
     }
 
-    createUserTable();
+    try
+    {
+        createUserTable();
+    }
+    catch (const CannotCreateTableDBException &exc)
+    {
+        std::cerr << exc.what() << "\n";
+
+        if (std::string(exc.what()) == "Database error: table USER already exists\n")
+        {
+            std::cerr << "saopfksoffsgkosk\n";
+        }
+        else
+        {
+            throw exc;
+        }
+    }
 }
 
 Database::~Database()
@@ -31,10 +50,33 @@ void Database::createUserTable()
                            "EMAIL TEXT );";
     char *errMsg;
 
-    if (sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg)){
+    if (sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg))
+    {
+        std::cerr << errMsg;
         throw CannotCreateTableDBException(errMsg);
     }
 }
+
+void Database::addUser(const User &user)
+{
+    std::string query = "INSERT INTO USER ";
+    query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL) ";
+    query += "VALUES (";
+    query += std::to_string(user.getId()) + ", ";
+    query += user.getName() + ", ";
+    query += user.getPasswordHash() + ", ";
+    query += user.getLogin() + ", ";
+    query += user.getPhone() + ", ";
+    query += user.getEmail() + "); ";
+
+    char *errMsg;
+    if (sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg))
+    {
+        std::cerr << errMsg << "\n";
+        throw CannotAddUserDBException(errMsg);
+    }
+}
+
 /*
 #include <iostream>
 #include <string>

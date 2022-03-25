@@ -1,24 +1,12 @@
 #ifndef CANNOTOPENDBEXCEPTION_H
 #define CANNOTOPENDBEXCEPTION_H
 
-#include <exception>
-#include <string>
+#include "dbexception.h"
 
-class CannotOpenDBException : public std::exception
+class CannotOpenDBException : public DBException
 {
 public:
-    CannotOpenDBException(std::string errMsg);
-
-    CannotOpenDBException& operator =(const CannotOpenDBException& exc)
-    {
-        errorMsg = exc.errorMsg;
-        return *this;
-    }
-
-    const char *what() const noexcept;
-
-private:
-    std::string errorMsg;
+    CannotOpenDBException(std::string errMsg) : DBException(errMsg) {}
 };
 
 #endif // CANNOTOPENDBEXCEPTION_H
