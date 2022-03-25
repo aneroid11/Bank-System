@@ -14,6 +14,7 @@ public:
 
     void addUser(const User &user);
     void deleteUser(int64_t id);
+    bool hasUser(int64_t id);
 
 private:
     void createUserTable();

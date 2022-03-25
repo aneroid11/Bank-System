@@ -60,6 +60,27 @@ void Database::deleteUser(int64_t id)
     sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg);
 }
 
+static int hasUserCallbk(void *data, int numColumns, char **rowFields, char **columnNames)
+{
+    (void)numColumns;
+    (void)columnNames;
+
+    bool hasUser = atoi(rowFields[0]);
+    *((bool *)data) = hasUser;
+
+    return 0;
+}
+
+bool Database::hasUser(int64_t id)
+{
+    std::string query = "SELECT COUNT(1) FROM USER WHERE ID = " + std::to_string(id) + ";";
+    char *errMsg;
+    bool result;
+    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
+
+    return result;
+}
+
 /*
 #include <iostream>
 #include <string>

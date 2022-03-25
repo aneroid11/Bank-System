@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <QApplication>
 
 #include "mainwindow.h"
@@ -20,6 +22,15 @@ void testDB()
 
     User *u = new User(userData);
     db->addUser(*u);
+
+    if (db->hasUser(u->getId()))
+    {
+        std::cout << "Has user\n";
+    }
+    else
+    {
+        std::cout << "Does not have user\n";
+    }
 
     delete u;
     delete db;
