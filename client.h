@@ -3,7 +3,9 @@
 
 #include <string>
 
-class Client
+#include "user.h"
+
+class Client : public User
 {
 public:
     struct Data

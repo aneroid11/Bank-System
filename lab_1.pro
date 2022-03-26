@@ -23,8 +23,11 @@ SOURCES += \
     hashcomputer.cpp \
     main.cpp \
     mainwindow.cpp \
+    manager.cpp \
+    operator.cpp \
     personalaccountwindow.cpp \
-    signupwindow.cpp
+    signupwindow.cpp \
+    user.cpp
 
 HEADERS += \
     authorizationwindow.h \
@@ -37,9 +40,12 @@ HEADERS += \
     hashcomputer.h \
     ibanksystemmodel.h \
     mainwindow.h \
+    manager.h \
     nouserindbexception.h \
+    operator.h \
     personalaccountwindow.h \
     signupwindow.h \
+    user.h \
     useralreadyexistsexception.h
 
 LIBS += -lcrypto++ -lsqlite3
