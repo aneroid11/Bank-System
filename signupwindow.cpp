@@ -71,10 +71,20 @@ void SignupWindow::sendSignupRequest()
         return;
     }
 
+    bankSystemModel->sendSignupRequestForClient
+            (
+                loginLine->text().toStdString(),
+                passwordLine->text().toStdString(),
+                emailLine->text().toStdString(),
+                nameLine->text().toStdString(),
+                phoneLine->text().toStdString()
+            );
+
     QMessageBox msgBox;
     msgBox.setWindowTitle("Запрос отправлен");
     msgBox.setText("Ваша заявка будет рассмотрена менеджером. Пожалуйста, подождите одобрения заявки");
     msgBox.exec();
+
     back();
 }
 

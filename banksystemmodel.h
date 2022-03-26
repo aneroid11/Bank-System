@@ -13,7 +13,10 @@ public:
 
     void setCurrentBank(std::string bankName) override;
 
-    void enter(const std::string& login, const std::string& password) override;
+    void enter(std::string login, std::string password) override;
+
+    void sendSignupRequestForClient(std::string login, std::string password, std::string email,
+                                    std::string name, std::string phone) override;
 
 private:
     Database *database = nullptr;

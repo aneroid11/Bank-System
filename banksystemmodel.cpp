@@ -31,7 +31,7 @@ void BankSystemModel::setCurrentBank(std::string bankName)
     database = new Database(fileName);
 }
 
-void BankSystemModel::enter(const std::string &login, const std::string &password)
+void BankSystemModel::enter(std::string login, std::string password)
 {
     if (!database)
     {
@@ -43,4 +43,11 @@ void BankSystemModel::enter(const std::string &login, const std::string &passwor
     {
         throw NoUserInDBException();
     }
+}
+
+void BankSystemModel::sendSignupRequestForClient(std::string login, std::string password, std::string email,
+                                                 std::string name, std::string phone)
+{
+
+    //std::cout << name << ": юзер отправил запрос на регистрацию\n";
 }

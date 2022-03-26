@@ -13,7 +13,11 @@ public:
 
     // войти в систему.
     // Если юзера с таким логином или паролем нет, выкинуть исключение NoUserInDBException
-    virtual void enter(const std::string& login, const std::string& password) = 0;
+    virtual void enter(std::string login, std::string password) = 0;
+
+    // Подать запрос на регистрацию клиента, который должен быть одобрен менеджером
+    virtual void sendSignupRequestForClient(std::string login, std::string password, std::string email,
+                                            std::string name, std::string phone) = 0;
 };
 
 #endif // IBANKSYSTEMMODEL_H
