@@ -1,6 +1,6 @@
 #include "user.h"
 
-User::User()
+User::User(const User::Data &userData)
+    : data(userData)
 {
-
 }

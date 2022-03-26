@@ -2,7 +2,7 @@
 
 #include "client.h"
 
-Client::Client(const Client::Data &clientData)
-    : data(clientData)
+Client::Client(const User::Data &clientData)
+    : User(clientData)
 {
 }

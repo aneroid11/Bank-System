@@ -6,7 +6,7 @@
 class Manager : public Operator
 {
 public:
-    Manager();
+    Manager(const Data &data);
 };
 
 #endif // MANAGER_H

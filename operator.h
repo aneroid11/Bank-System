@@ -6,7 +6,7 @@
 class Operator : public User
 {
 public:
-    Operator();
+    Operator(const Data &data);
 };
 
 #endif // OPERATOR_H

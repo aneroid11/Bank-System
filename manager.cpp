@@ -1,6 +1,7 @@
 #include "manager.h"
 
-Manager::Manager()
+Manager::Manager(const Data &data)
+    : Operator(data)
 {
 
 }

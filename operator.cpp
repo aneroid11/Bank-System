@@ -1,6 +1,7 @@
 #include "operator.h"
 
-Operator::Operator()
+Operator::Operator(const Data &data)
+    : User(data)
 {
 
 }
