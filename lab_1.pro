@@ -21,6 +21,7 @@ SOURCES += \
     banksystemmodel.cpp \
     client.cpp \
     database.cpp \
+    enterprisespecialist.cpp \
     hashcomputer.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     database.h \
     dbexception.h \
     dbnotopenedexception.h \
+    enterprisespecialist.h \
     hashcomputer.h \
     ibanksystemmodel.h \
     mainwindow.h \

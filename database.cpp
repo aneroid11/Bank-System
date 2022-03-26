@@ -42,7 +42,7 @@ void Database::createClientsTable()
 
 void Database::createOperatorsTable()
 {
-    /*const char *sqlQuery = "CREATE TABLE OPERATORS("  \
+    const char *sqlQuery = "CREATE TABLE OPERATORS("  \
                            "ID INT NOT NULL," \
                            "NAME TEXT NOT NULL," \
                            "PASSWORD_HASH TEXT NOT NULL," \
@@ -50,12 +50,20 @@ void Database::createOperatorsTable()
                            "PHONE TEXT," \
                            "EMAIL TEXT);";
     char *errMsg;
-    sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg);*/
+    sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg);
 }
 
 void Database::createManagersTable()
 {
-
+    const char *sqlQuery = "CREATE TABLE MANAGERS("  \
+                           "ID INT NOT NULL," \
+                           "NAME TEXT NOT NULL," \
+                           "PASSWORD_HASH TEXT NOT NULL," \
+                           "LOGIN TEXT," \
+                           "PHONE TEXT," \
+                           "EMAIL TEXT);";
+    char *errMsg;
+    sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg);
 }
 
 void Database::createAdministratorsTable()
@@ -107,12 +115,25 @@ static int hasUserCallbk(void *data, int numColumns, char **rowFields, char **co
 
 bool Database::hasUser(int64_t id)
 {
-    std::string query = "SELECT COUNT(1) FROM CLIENTS WHERE ID = " + std::to_string(id) + ";";
+    std::string query = "SELECT COUNT(1) FROM CLIENTS WHERE ID = \'" + std::to_string(id) + "\';";
     char *errMsg;
     bool result;
     sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
+    if (result) { return true; }
 
-    return result;
+    query = "SELECT COUNT(1) FROM OPERATORS WHERE ID = \'" + std::to_string(id) + "\';";
+    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
+    if (result) { return true; }
+
+    query = "SELECT COUNT(1) FROM MANAGERS WHERE ID = \'" + std::to_string(id) + "\';";
+    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
+    if (result) { return true; }
+
+    query = "SELECT COUNT(1) FROM ADMINISTRATORS WHERE ID = \'" + std::to_string(id) + "\';";
+    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
+    if (result) { return true; }
+
+    return false;
 }
 
 bool Database::hasUser(std::string login)
@@ -121,8 +142,21 @@ bool Database::hasUser(std::string login)
     char *errMsg;
     bool result;
     sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
+    if (result) { return true; }
 
-    return result;
+    query = "SELECT COUNT(1) FROM OPERATORS WHERE LOGIN = \'" + login + "\';";
+    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
+    if (result) { return true; }
+
+    query = "SELECT COUNT(1) FROM MANAGERS WHERE LOGIN = \'" + login + "\';";
+    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
+    if (result) { return true; }
+
+    query = "SELECT COUNT(1) FROM ADMINISTRATORS WHERE LOGIN = \'" + login + "\';";
+    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
+    if (result) { return true; }
+
+    return false;
 }
 
 int64_t Database::generateUniqueUserId()

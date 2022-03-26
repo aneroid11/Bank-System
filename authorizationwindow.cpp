@@ -57,7 +57,7 @@ void AuthorizationWindow::enter()
     {
         bankSystemModel->enter(login.toStdString(), password.toStdString());
     }
-    catch (const NoUserInDBException&)
+    catch (const NoUserInDBException &)
     {
         QMessageBox msgBox;
         msgBox.setWindowTitle("Пользователь не найден");
