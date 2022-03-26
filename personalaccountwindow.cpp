@@ -11,7 +11,7 @@ PersonalAccountWindow::PersonalAccountWindow(QWidget *parent) : QWidget(parent)
     setFixedWidth(500);
     setFixedHeight(500);
 
-    setWindowTitle(QString("Роль пользователя: ") + "Клиент");
+    setWindowTitle("Личный кабинет");
 
     QGridLayout* gridLayout = new QGridLayout(this);
 

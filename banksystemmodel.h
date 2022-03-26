@@ -21,6 +21,8 @@ public:
     // TODO: заменить на нормальное появление в базе данных менеджеров, администраторов и операторов
     void addSampleManager() override;
 
+    User *getUserData(std::string login, std::string &type) override;
+
 private:
     Database *database = nullptr;
 

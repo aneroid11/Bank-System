@@ -36,10 +36,7 @@ void BankSystemModel::setCurrentBank(std::string bankName)
 
 void BankSystemModel::enter(std::string login, std::string password)
 {
-    if (!database)
-    {
-        throw DBNotOpenedException();
-    }
+    if (!database) { throw DBNotOpenedException(); }
     //const std::string passwordHash = HashComputer().hash(password);
 
     if (!database->hasUser(login))
@@ -51,10 +48,7 @@ void BankSystemModel::enter(std::string login, std::string password)
 void BankSystemModel::sendSignupRequestForClient(std::string login, std::string password, std::string email,
                                                  std::string name, std::string phone)
 {
-    if (!database)
-    {
-        throw DBNotOpenedException();
-    }
+    if (!database) { throw DBNotOpenedException(); }
 
     Client::Data data =
     {
@@ -74,10 +68,7 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
 
 void BankSystemModel::addSampleManager()
 {
-    if (!database)
-    {
-        throw DBNotOpenedException();
-    }
+    if (!database) { throw DBNotOpenedException(); }
 
     Manager::Data data =
     {
@@ -91,5 +82,18 @@ void BankSystemModel::addSampleManager()
     Manager newManager(data);
     std::cout << "Добавление одного менеджера: " << newManager.getName() << "\n";
 
-    database->addManager(newManager);
+    try
+    {
+        database->addManager(newManager);
+    }
+    catch (const UserAlreadyExistsException &)
+    {
+    }
+}
+
+User *BankSystemModel::getUserData(std::string login, std::string &type)
+{
+    if (!database) { throw DBNotOpenedException(); }
+
+    return database->getUserData(login, type);
 }

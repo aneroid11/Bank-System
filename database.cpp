@@ -3,6 +3,7 @@
 #include <sqlite3.h>
 
 #include "database.h"
+#include "hashcomputer.h"
 
 #include "client.h"
 #include "manager.h"
@@ -193,4 +194,22 @@ int64_t Database::generateUniqueUserId()
     while (hasUser(id));
 
     return id;
+}
+
+User *Database::getUserData(std::string login, std::string &type)
+{
+    type = "Client";
+
+    User::Data data =
+    {
+        12345,
+        "Example Examplovich",
+        "+3-E-X-A-M-P-L-E",
+        "example@example.com",
+        "ada",
+        HashComputer().hash("123")
+    };
+    Client *client = new Client(data);
+
+    return client;
 }

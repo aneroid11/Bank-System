@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "user.h"
 #include "nouserindbexception.h"
 
 class IBankSystemModel
@@ -21,6 +22,9 @@ public:
 
     // TODO: заменить на нормальное появление в базе данных менеджеров, администраторов и операторов
     virtual void addSampleManager() = 0;
+
+    // Получить пользователя и его тип по логину
+    virtual User *getUserData(std::string login, std::string &type) = 0;
 };
 
 #endif // IBANKSYSTEMMODEL_H

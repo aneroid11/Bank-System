@@ -6,6 +6,7 @@
 #include "authorizationwindow.h"
 #include "personalaccountwindow.h"
 #include "signupwindow.h"
+#include "client.h"
 
 AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QWidget(parent), bankSystemModel(bankSystem)
@@ -67,7 +68,23 @@ void AuthorizationWindow::enter()
     }
 
     // Если enter() произошёл успешно, то:
-    // AuthorizationWindow должен закрыться и открыть личный кабинет.
+    std::string userType;
+    User *loggedInUser = bankSystemModel->getUserData(login.toStdString(), userType);
+
+    if (userType == "Client")
+    {
+        Client *client = (Client *)loggedInUser;
+
+        if (!client->isApproved())
+        {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Невозможно войти в личный кабинет");
+            msgBox.setText("Ваша заявка на регистрацию ещё не была подтверждена.");
+            msgBox.exec();
+            return;
+        }
+    }
+
     this->close();
     personalAccWindow->show();
 }

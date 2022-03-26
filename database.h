@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "user.h"
+
 struct sqlite3;
 class Client;
 class Manager;
@@ -23,6 +25,9 @@ public:
     //void approveClient(std::string login);
 
     int64_t generateUniqueUserId();
+
+    // Получить по логину пользователя и его роль в системе (записывается в переменную type)
+    User *getUserData(std::string login, std::string &type);
 
 private:
     void createClientsTable();
