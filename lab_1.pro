@@ -18,18 +18,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     authorizationwindow.cpp \
     banksystemmodel.cpp \
+    client.cpp \
     database.cpp \
     hashcomputer.cpp \
     main.cpp \
     mainwindow.cpp \
     personalaccountwindow.cpp \
-    signupwindow.cpp \
-    user.cpp
+    signupwindow.cpp
 
 HEADERS += \
     authorizationwindow.h \
     banksystemmodel.h \
     cannotopendbexception.h \
+    client.h \
     database.h \
     dbexception.h \
     dbnotopenedexception.h \
@@ -39,7 +40,6 @@ HEADERS += \
     nouserindbexception.h \
     personalaccountwindow.h \
     signupwindow.h \
-    user.h \
     useralreadyexistsexception.h
 
 LIBS += -lcrypto++ -lsqlite3

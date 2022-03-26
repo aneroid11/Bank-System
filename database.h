@@ -4,25 +4,26 @@
 #include <string>
 
 struct sqlite3;
-class User;
+class Client;
 
 class Database
 {
 public:
-    Database(std::string filename = "users.db");
+    Database(std::string filename);
     ~Database();
 
-    void addUser(const User &user);
+    void addClient(const Client &client);
+
     void deleteUser(int64_t id);
     bool hasUser(int64_t id);
     bool hasUser(std::string login);
 
-    //void approveUser(std::string login);
+    //void approveClient(std::string login);
 
     int64_t generateUniqueUserId();
 
 private:
-    void createUserTable();
+    void createClientsTable();
 
     sqlite3 *database;
 };

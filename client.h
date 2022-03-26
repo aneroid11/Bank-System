@@ -1,9 +1,9 @@
-#ifndef USER_H
-#define USER_H
+#ifndef CLIENT_H
+#define CLIENT_H
 
 #include <string>
 
-class User
+class Client
 {
 public:
     struct Data
@@ -16,7 +16,7 @@ public:
         std::string passwordHash;
     };
 
-    User(const Data &data);
+    Client(const Data &data);
 
     void setPhone(std::string phone) { data.phone = phone; }
     void setEmail(std::string email) { data.email = email; }
@@ -36,4 +36,4 @@ private:
     bool approved = false;
 };
 
-#endif // USER_H
+#endif // CLIENT_H

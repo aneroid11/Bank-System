@@ -3,7 +3,7 @@
 #include <sqlite3.h>
 
 #include "database.h"
-#include "user.h"
+#include "client.h"
 
 #include "cannotopendbexception.h"
 #include "useralreadyexistsexception.h"
@@ -15,7 +15,7 @@ Database::Database(std::string filename)
         throw CannotOpenDBException(sqlite3_errmsg(database));
     }
 
-    createUserTable();
+    createClientsTable();
 }
 
 Database::~Database()
@@ -23,9 +23,9 @@ Database::~Database()
     sqlite3_close(database);
 }
 
-void Database::createUserTable()
+void Database::createClientsTable()
 {
-    const char *sqlQuery = "CREATE TABLE USER("  \
+    const char *sqlQuery = "CREATE TABLE CLIENTS("  \
                            "ID INT NOT NULL," \
                            "NAME TEXT NOT NULL," \
                            "PASSWORD_HASH TEXT NOT NULL," \
@@ -37,23 +37,23 @@ void Database::createUserTable()
     sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg);
 }
 
-void Database::addUser(const User &user)
+void Database::addClient(const Client &client)
 {
-    if (hasUser(user.getLogin()))
+    if (hasUser(client.getLogin()))
     {
         throw UserAlreadyExistsException();
     }
 
-    std::string query = "INSERT INTO USER ";
+    std::string query = "INSERT INTO CLIENTS ";
     query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL,APPROVED) ";
     query += "VALUES (";
-    query += std::to_string(user.getId()) + ", ";
-    query += "\'" + user.getName() + "\', ";
-    query += "\'" + user.getPasswordHash() + "\', ";
-    query += "\'" + user.getLogin() + "\', ";
-    query += "\'" + user.getPhone() + "\', ";
-    query += "\'" + user.getEmail() + "\', ";
-    query += "\'" + std::to_string(user.isApproved()) + "\'); ";
+    query += std::to_string(client.getId()) + ", ";
+    query += "\'" + client.getName() + "\', ";
+    query += "\'" + client.getPasswordHash() + "\', ";
+    query += "\'" + client.getLogin() + "\', ";
+    query += "\'" + client.getPhone() + "\', ";
+    query += "\'" + client.getEmail() + "\', ";
+    query += "\'" + std::to_string(client.isApproved()) + "\'); ";
 
     char *errMsg;
     sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg);
@@ -61,7 +61,7 @@ void Database::addUser(const User &user)
 
 void Database::deleteUser(int64_t id)
 {
-    std::string query = "DELETE FROM USER WHERE ID = ";
+    std::string query = "DELETE FROM CLIENTS WHERE ID = ";
     query += std::to_string(id) + ";";
 
     char *errMsg;
@@ -81,7 +81,7 @@ static int hasUserCallbk(void *data, int numColumns, char **rowFields, char **co
 
 bool Database::hasUser(int64_t id)
 {
-    std::string query = "SELECT COUNT(1) FROM USER WHERE ID = " + std::to_string(id) + ";";
+    std::string query = "SELECT COUNT(1) FROM CLIENTS WHERE ID = " + std::to_string(id) + ";";
     char *errMsg;
     bool result;
     sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
@@ -91,7 +91,7 @@ bool Database::hasUser(int64_t id)
 
 bool Database::hasUser(std::string login)
 {
-    std::string query = "SELECT COUNT(1) FROM USER WHERE LOGIN = \'" + login + "\';";
+    std::string query = "SELECT COUNT(1) FROM CLIENTS WHERE LOGIN = \'" + login + "\';";
     char *errMsg;
     bool result;
     sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);

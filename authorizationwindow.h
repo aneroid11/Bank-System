@@ -13,7 +13,7 @@ class AuthorizationWindow : public QWidget
 {
     Q_OBJECT
 public:
-    AuthorizationWindow(IBankSystemModel* bankSystem, QWidget *parent = nullptr);
+    AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *parent = nullptr);
     ~AuthorizationWindow();
 
     void setBankName(const QString bank);

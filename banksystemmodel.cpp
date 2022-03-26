@@ -2,7 +2,7 @@
 #include <ctime>
 
 #include "banksystemmodel.h"
-#include "user.h"
+#include "client.h"
 #include "hashcomputer.h"
 #include "database.h"
 #include "dbnotopenedexception.h"
@@ -53,7 +53,7 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
     // Создаём пользователя. Пока просто создаём и добавляем в базу. Потом сделаем там поле approved,
     // которое будет показывать, подтвердил ли менеджер юзера.
 
-    User::Data data =
+    Client::Data data =
     {
         database->generateUniqueUserId(),
         name,
@@ -63,8 +63,8 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
         HashComputer().hash(password)
     };
 
-    User newUser(data);
-    std::cout << "Добавление пользователя: " << name << "\n";
+    Client newClient(data);
+    std::cout << "Добавление клиента: " << name << "\n";
 
-    database->addUser(newUser);
+    database->addClient(newClient);
 }
