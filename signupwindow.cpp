@@ -1,4 +1,5 @@
 #include "signupwindow.h"
+#include "ibanksystemmodel.h"
 
 #include <QPushButton>
 #include <QGridLayout>
@@ -6,7 +7,8 @@
 #include <QLineEdit>
 #include <QMessageBox>
 
-SignupWindow::SignupWindow(QWidget *parent) : QWidget(parent)
+SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
+    : QWidget(parent), bankSystemModel(bankSystem)
 {
     setWindowTitle("Регистрация");
     setFixedSize(400, 400);

@@ -9,7 +9,7 @@
 #include "user.h"
 #include "database.h"
 
-void testDB()
+/*void testDB()
 {
     Database *db = new Database("data.db");
 
@@ -35,7 +35,7 @@ void testDB()
 
     delete u;
     delete db;
-}
+}*/
 
 int main(int argc, char *argv[])
 {
