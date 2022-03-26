@@ -11,10 +11,14 @@ public:
     BankSystemModel();
     ~BankSystemModel();
 
+    void setCurrentBank(std::string bankName) override;
+
     void enter(const std::string& login, const std::string& password) override;
 
 private:
-    Database* database;
+    Database *database = nullptr;
+
+    std::string currentBank = "";
 };
 
 #endif // BANKSYSTEMMODEL_H

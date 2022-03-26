@@ -49,7 +49,8 @@ void MainWindow::showAuthWindow()
     }
 
     selectedBank = bankListWidget->selectedItems().first()->text();
-    //bankSystemModel->
+
+    bankSystemModel->setCurrentBank(selectedBank.toStdString());
 
     this->close();
     authWindow->setBankName(selectedBank);

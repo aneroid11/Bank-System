@@ -32,6 +32,7 @@ HEADERS += \
     cannotopendbexception.h \
     database.h \
     dbexception.h \
+    dbnotopenedexception.h \
     hashcomputer.h \
     ibanksystemmodel.h \
     mainwindow.h \
