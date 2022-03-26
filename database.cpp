@@ -16,6 +16,9 @@ Database::Database(std::string filename)
     }
 
     createClientsTable();
+    createOperatorsTable();
+    createManagersTable();
+    createAdministratorsTable();
 }
 
 Database::~Database()
@@ -35,6 +38,29 @@ void Database::createClientsTable()
                            "APPROVED INT );";
     char *errMsg;
     sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg);
+}
+
+void Database::createOperatorsTable()
+{
+    /*const char *sqlQuery = "CREATE TABLE OPERATORS("  \
+                           "ID INT NOT NULL," \
+                           "NAME TEXT NOT NULL," \
+                           "PASSWORD_HASH TEXT NOT NULL," \
+                           "LOGIN TEXT," \
+                           "PHONE TEXT," \
+                           "EMAIL TEXT);";
+    char *errMsg;
+    sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg);*/
+}
+
+void Database::createManagersTable()
+{
+
+}
+
+void Database::createAdministratorsTable()
+{
+
 }
 
 void Database::addClient(const Client &client)

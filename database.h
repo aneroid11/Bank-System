@@ -24,6 +24,9 @@ public:
 
 private:
     void createClientsTable();
+    void createOperatorsTable();
+    void createManagersTable();
+    void createAdministratorsTable();
 
     sqlite3 *database;
 };
