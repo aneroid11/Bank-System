@@ -5,6 +5,7 @@
 
 struct sqlite3;
 class Client;
+class Manager;
 
 class Database
 {
@@ -13,6 +14,7 @@ public:
     ~Database();
 
     void addClient(const Client &client);
+    void addManager(const Manager &manager);
 
     void deleteUser(int64_t id);
     bool hasUser(int64_t id);

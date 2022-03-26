@@ -18,6 +18,9 @@ public:
     // Подать запрос на регистрацию клиента, который должен быть одобрен менеджером
     virtual void sendSignupRequestForClient(std::string login, std::string password, std::string email,
                                             std::string name, std::string phone) = 0;
+
+    // TODO: заменить на нормальное появление в базе данных менеджеров, администраторов и операторов
+    virtual void addSampleManager() = 0;
 };
 
 #endif // IBANKSYSTEMMODEL_H

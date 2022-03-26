@@ -3,7 +3,9 @@
 #include <sqlite3.h>
 
 #include "database.h"
+
 #include "client.h"
+#include "manager.h"
 
 #include "cannotopendbexception.h"
 #include "useralreadyexistsexception.h"
@@ -88,6 +90,27 @@ void Database::addClient(const Client &client)
     query += "\'" + client.getPhone() + "\', ";
     query += "\'" + client.getEmail() + "\', ";
     query += "\'" + std::to_string(client.isApproved()) + "\'); ";
+
+    char *errMsg;
+    sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg);
+}
+
+void Database::addManager(const Manager &manager)
+{
+    if (hasUser(manager.getLogin()))
+    {
+        throw UserAlreadyExistsException();
+    }
+
+    std::string query = "INSERT INTO MANAGERS ";
+    query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL) ";
+    query += "VALUES (";
+    query += std::to_string(manager.getId()) + ", ";
+    query += "\'" + manager.getName() + "\', ";
+    query += "\'" + manager.getPasswordHash() + "\', ";
+    query += "\'" + manager.getLogin() + "\', ";
+    query += "\'" + manager.getPhone() + "\', ";
+    query += "\'" + manager.getEmail() + "\');";
 
     char *errMsg;
     sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg);

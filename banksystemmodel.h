@@ -18,6 +18,9 @@ public:
     void sendSignupRequestForClient(std::string login, std::string password, std::string email,
                                     std::string name, std::string phone) override;
 
+    // TODO: заменить на нормальное появление в базе данных менеджеров, администраторов и операторов
+    void addSampleManager() override;
+
 private:
     Database *database = nullptr;
 

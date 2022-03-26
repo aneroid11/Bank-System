@@ -3,6 +3,7 @@
 
 #include "banksystemmodel.h"
 #include "client.h"
+#include "manager.h"
 #include "hashcomputer.h"
 #include "database.h"
 #include "dbnotopenedexception.h"
@@ -50,8 +51,10 @@ void BankSystemModel::enter(std::string login, std::string password)
 void BankSystemModel::sendSignupRequestForClient(std::string login, std::string password, std::string email,
                                                  std::string name, std::string phone)
 {
-    // Создаём пользователя. Пока просто создаём и добавляем в базу. Потом сделаем там поле approved,
-    // которое будет показывать, подтвердил ли менеджер юзера.
+    if (!database)
+    {
+        throw DBNotOpenedException();
+    }
 
     Client::Data data =
     {
@@ -67,4 +70,26 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
     std::cout << "Добавление клиента: " << name << "\n";
 
     database->addClient(newClient);
+}
+
+void BankSystemModel::addSampleManager()
+{
+    if (!database)
+    {
+        throw DBNotOpenedException();
+    }
+
+    Manager::Data data =
+    {
+        database->generateUniqueUserId(),
+        "Example Examplovich",
+        "+3-E-X-A-M-P-L-E",
+        "example@example.com",
+        "samplman",
+        HashComputer().hash("123")
+    };
+    Manager newManager(data);
+    std::cout << "Добавление одного менеджера: " << newManager.getName() << "\n";
+
+    database->addManager(newManager);
 }
