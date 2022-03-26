@@ -1,5 +1,6 @@
 #include "signupwindow.h"
 #include "ibanksystemmodel.h"
+#include "useralreadyexistsexception.h"
 
 #include <QPushButton>
 #include <QGridLayout>
@@ -71,14 +72,25 @@ void SignupWindow::sendSignupRequest()
         return;
     }
 
-    bankSystemModel->sendSignupRequestForClient
-            (
-                loginLine->text().toStdString(),
-                passwordLine->text().toStdString(),
-                emailLine->text().toStdString(),
-                nameLine->text().toStdString(),
-                phoneLine->text().toStdString()
-            );
+    try
+    {
+        bankSystemModel->sendSignupRequestForClient
+                (
+                    loginLine->text().toStdString(),
+                    passwordLine->text().toStdString(),
+                    emailLine->text().toStdString(),
+                    nameLine->text().toStdString(),
+                    phoneLine->text().toStdString()
+                );
+    }
+    catch (const UserAlreadyExistsException &)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Пользователь с таким логином уже существует. Выберите другой логин");
+        msgBox.exec();
+        return;
+    }
 
     QMessageBox msgBox;
     msgBox.setWindowTitle("Запрос отправлен");

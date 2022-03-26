@@ -6,6 +6,7 @@
 #include "user.h"
 
 #include "cannotopendbexception.h"
+#include "useralreadyexistsexception.h"
 
 Database::Database(std::string filename)
 {
@@ -25,27 +26,34 @@ Database::~Database()
 void Database::createUserTable()
 {
     const char *sqlQuery = "CREATE TABLE USER("  \
-                           "ID INT PRIMARY KEY NOT NULL," \
+                           "ID INT NOT NULL," \
                            "NAME TEXT NOT NULL," \
                            "PASSWORD_HASH TEXT NOT NULL," \
                            "LOGIN TEXT," \
                            "PHONE TEXT," \
-                           "EMAIL TEXT );";
+                           "EMAIL TEXT," \
+                           "APPROVED INT );";
     char *errMsg;
     sqlite3_exec(database, sqlQuery, nullptr, nullptr, &errMsg);
 }
 
 void Database::addUser(const User &user)
 {
+    if (hasUser(user.getLogin()))
+    {
+        throw UserAlreadyExistsException();
+    }
+
     std::string query = "INSERT INTO USER ";
-    query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL) ";
+    query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL,APPROVED) ";
     query += "VALUES (";
     query += std::to_string(user.getId()) + ", ";
     query += "\'" + user.getName() + "\', ";
     query += "\'" + user.getPasswordHash() + "\', ";
     query += "\'" + user.getLogin() + "\', ";
     query += "\'" + user.getPhone() + "\', ";
-    query += "\'" + user.getEmail() + "\'); ";
+    query += "\'" + user.getEmail() + "\', ";
+    query += "\'" + std::to_string(user.isApproved()) + "\'); ";
 
     char *errMsg;
     sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg);

@@ -28,8 +28,12 @@ public:
     std::string getLogin() const { return data.login; }
     std::string getPasswordHash() const { return data.passwordHash; }
 
+    void approve() { approved = true; }
+    bool isApproved() const { return approved; }
+
 private:
     Data data;
+    bool approved = false;
 };
 
 #endif // USER_H

@@ -6,6 +6,7 @@
 #include "hashcomputer.h"
 #include "database.h"
 #include "dbnotopenedexception.h"
+#include "useralreadyexistsexception.h"
 
 BankSystemModel::BankSystemModel()
 {
@@ -63,5 +64,7 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
     };
 
     User newUser(data);
+    std::cout << "Добавление пользователя: " << name << "\n";
+
     database->addUser(newUser);
 }

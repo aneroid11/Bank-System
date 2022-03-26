@@ -39,7 +39,8 @@ HEADERS += \
     nouserindbexception.h \
     personalaccountwindow.h \
     signupwindow.h \
-    user.h
+    user.h \
+    useralreadyexistsexception.h
 
 LIBS += -lcrypto++ -lsqlite3
 

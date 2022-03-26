@@ -17,6 +17,8 @@ public:
     bool hasUser(int64_t id);
     bool hasUser(std::string login);
 
+    //void approveUser(std::string login);
+
     int64_t generateUniqueUserId();
 
 private:
