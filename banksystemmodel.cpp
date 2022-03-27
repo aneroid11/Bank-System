@@ -117,24 +117,5 @@ std::list<Client *> BankSystemModel::getUnapprovedClients()
 {
     if (!database) { throw DBNotOpenedException(); }
 
-    std::list<Client *> unapprovedClients;
-
-    /*int64_t id;
-        std::string name;
-        std::string phone;
-        std::string email;
-        std::string login;
-        std::string passwordHash;
-     * */
-
-    unapprovedClients.push_back(new Client(
-    Client::Data { 22, "a a", "+3", "a@a", "aa", "koaskdq321o3k" }));
-
-    unapprovedClients.push_back(new Client(
-    Client::Data { 33, "b b", "+4", "b@b", "bb", "k3213dq321o3k" }));
-
-    unapprovedClients.push_back(new Client(
-    Client::Data { 44, "c c", "+5", "c@c", "cc", "koas352351o3k" }));
-
-    return unapprovedClients;
+    return database->getUnapprovedClients();
 }
