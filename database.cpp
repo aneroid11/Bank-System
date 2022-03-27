@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 #include <sqlite3.h>
 
@@ -11,6 +10,7 @@
 
 #include "cannotopendbexception.h"
 #include "useralreadyexistsexception.h"
+#include "nouserindbexception.h"
 
 Database::Database(std::string filename)
 {
@@ -197,14 +197,6 @@ int64_t Database::generateUniqueUserId()
     return id;
 }
 
-struct UserRawData
-{
-    bool hasData() const { return columnNames.size(); }
-
-    std::vector<std::string> columnNames;
-    std::vector<std::string> rowFields;
-};
-
 static int getUserDataCallbk(void *data, int numColumns, char **rowFields, char **columnNames)
 {
     UserRawData *userRawData = (UserRawData *)data;
@@ -218,20 +210,59 @@ static int getUserDataCallbk(void *data, int numColumns, char **rowFields, char 
     return 0;
 }
 
+User *Database::createUserFromRawData(const UserRawData& data, std::string type)
+{
+    User::Data userData;
+
+    userData.id = atoi(data.columnNames[0].c_str());
+    userData.name = data.columnNames[1];
+    userData.passwordHash = data.columnNames[2];
+    userData.login = data.columnNames[3];
+    userData.phone = data.columnNames[4];
+    userData.email = data.columnNames[5];
+
+    if (type == "CLIENTS")
+    {
+        Client *client = new Client(userData);
+        bool clientApproved = atoi(data.columnNames[6].c_str());
+
+        if (clientApproved)
+        {
+            client->approve();
+        }
+        return client;
+    }
+    if (type == "MANAGERS")
+    {
+        Manager *manager = new Manager(userData);
+        return manager;
+    }
+
+    return nullptr;
+}
+
 User *Database::getUserData(std::string login, std::string &type)
 {
-    type = "Client";
+    std::vector<std::string> tablesToCheck = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
 
-    User::Data data =
+    std::string query;
+    char *errMsg;
+    UserRawData userRawData;
+
+    for (const std::string &tableName : tablesToCheck)
     {
-        12345,
-        "Example Examplovich",
-        "+3-E-X-A-M-P-L-E",
-        "example@example.com",
-        "ada",
-        HashComputer().hash("123")
-    };
-    Client *client = new Client(data);
+        query = "SELECT * FROM";
+        query += " " + tableName + " ";
+        query += "WHERE LOGIN = \'" + login + "\';";
 
-    return client;
+        sqlite3_exec(database, query.c_str(), getUserDataCallbk, (void *)&userRawData, &errMsg);
+
+        if (userRawData.hasData())
+        {
+            type = tableName;
+            return createUserFromRawData(userRawData, tableName);
+        }
+    }
+
+    throw NoUserInDBException();
 }

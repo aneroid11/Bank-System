@@ -2,12 +2,21 @@
 #define DATABASE_H
 
 #include <string>
+#include <vector>
 
 #include "user.h"
 
 struct sqlite3;
 class Client;
 class Manager;
+
+struct UserRawData
+{
+    bool hasData() const { return columnNames.size(); }
+
+    std::vector<std::string> columnNames;
+    std::vector<std::string> rowFields;
+};
 
 class Database
 {
@@ -34,6 +43,9 @@ private:
     void createOperatorsTable();
     void createManagersTable();
     void createAdministratorsTable();
+
+    User* createUserFromRawData(const UserRawData &rawData, std::string type);
+
 
     sqlite3 *database;
 };

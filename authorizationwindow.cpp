@@ -71,7 +71,7 @@ void AuthorizationWindow::enter()
     std::string userType;
     User *loggedInUser = bankSystemModel->getUserData(login.toStdString(), userType);
 
-    if (userType == "Client")
+    if (userType == "CLIENTS")
     {
         Client *client = (Client *)loggedInUser;
 
