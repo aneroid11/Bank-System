@@ -197,17 +197,20 @@ int64_t Database::generateUniqueUserId()
     return id;
 }
 
-static int selectUsersCallback(void *data, int argc, char **argv, char **azColName)
+static int selectUsersCallback(void *data, int numColumns, char **rowFields, char **columnNames)
 {
-    int i;
-    fprintf(stderr, "%s: ", (const char*)data);
+    //UserRawData *userRawData = (UserRawData *)data;
+    UserRawData userRawData;
 
-    for(i = 0; i < argc; i++)
+    for (int i = 0; i < numColumns; i++)
     {
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+        userRawData.columnNames.push_back(columnNames[i]);
+        userRawData.rowFields.push_back(rowFields[i]);
     }
 
-    printf("\n");
+    std::list<UserRawData> &users = *((std::list<UserRawData> *)data);
+    users.push_back(userRawData);
+
     return 0;
 }
 
@@ -215,14 +218,23 @@ std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
                                                          std::string parameterName,
                                                          std::string parameterValue)
 {
-   std::string query = "SELECT * FROM ";
+    std::string query = "SELECT * FROM ";
     query += tableName;
     query += " WHERE " + parameterName + " = \'" + parameterValue + "\';";
     char *errMsg;
 
-    sqlite3_exec(database, query.c_str(), selectUsersCallback, (void*)"Callback func called", &errMsg);
+    std::list<UserRawData> usersData;
+    sqlite3_exec(database, query.c_str(), selectUsersCallback, &usersData, &errMsg);
 
-    return std::list<User *>();
+    std::list<User *> users;
+
+    for (const UserRawData& data : usersData)
+    {
+        //std::cout << data.columnNames[0] << " = " << data.rowFields[0] << "\n";
+        users.push_back(createUserFromRawData(data, tableName));
+    }
+
+    return users;
 }
 
 std::list<Client *> Database::getUnapprovedClients()
