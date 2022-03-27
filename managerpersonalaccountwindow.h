@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTableWidget>
 
+#include "ibanksystemmodel.h"
 #include "manager.h"
 #include "signuprequestswindow.h"
 
@@ -11,7 +12,7 @@ class ManagerPersonalAccountWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ManagerPersonalAccountWindow(QWidget *parent = nullptr);
+    explicit ManagerPersonalAccountWindow(IBankSystemModel *bankSystem, QWidget *parent = nullptr);
     ~ManagerPersonalAccountWindow();
 
     void setCurrentManagerData(Manager *mgr);
@@ -28,6 +29,7 @@ private:
     QTableWidget *infoTable;
 
     SignupRequestsWindow *signupRequestsWindow;
+    IBankSystemModel *bankSystemModel;
 };
 
 #endif // MANAGERPERSONALACCOUNTWINDOW_H

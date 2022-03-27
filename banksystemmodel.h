@@ -23,6 +23,8 @@ public:
 
     User *getUserData(std::string login, std::string &type) override;
 
+    std::list<Client *> getUnapprovedClients() override;
+
 private:
     Database *database = nullptr;
 

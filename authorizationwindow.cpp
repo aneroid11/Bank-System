@@ -45,7 +45,7 @@ AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *
     connect(clientPersonalAccWindow, &ClientPersonalAccountWindow::showAuthorizationWindow,
             this, &AuthorizationWindow::show);
 
-    managerPersonalAccWindow = new ManagerPersonalAccountWindow();
+    managerPersonalAccWindow = new ManagerPersonalAccountWindow(bankSystemModel);
     connect(managerPersonalAccWindow, &ManagerPersonalAccountWindow::showAuthorizationWindow,
             this, &AuthorizationWindow::show);
 

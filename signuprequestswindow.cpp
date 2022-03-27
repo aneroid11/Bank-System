@@ -31,12 +31,6 @@ SignupRequestsWindow::SignupRequestsWindow(QWidget *parent) : QWidget(parent)
         connect(currButton, &QPushButton::pressed, this, &SignupRequestsWindow::back);
     }
 
-    //QPushButton *approve = new QPushButton("Подтвердить заявку", this);
-    //connect(approve, &QPushButton::pressed, this, &SignupRequestsWindow::back);
-
-    //gridLayout->addWidget(, 0, 0);
-    //gridLayout->addWidget(approve, 0, 1);
-
     QList<QPushButton *> approveButtons;
 
     for (QPushButton *currButton : loginButtons) {

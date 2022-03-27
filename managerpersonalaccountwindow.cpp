@@ -6,8 +6,8 @@
 #include <QPushButton>
 #include <QHeaderView>
 
-ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(QWidget *parent)
-    : QWidget(parent)
+ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(IBankSystemModel *bankSystem, QWidget *parent)
+    : QWidget(parent), bankSystemModel(bankSystem)
 {
     setFixedWidth(500);
     setFixedHeight(500);

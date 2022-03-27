@@ -2,8 +2,9 @@
 #define IBANKSYSTEMMODEL_H
 
 #include <string>
+#include <list>
 
-#include "user.h"
+#include "client.h"
 #include "nouserindbexception.h"
 
 class IBankSystemModel
@@ -25,6 +26,9 @@ public:
 
     // Получить пользователя и его тип по логину
     virtual User *getUserData(std::string login, std::string &type) = 0;
+
+    // Получить список клиентов, регистрация которых ещё не была подтверждена менеджером
+    virtual std::list<Client *> getUnapprovedClients() = 0;
 };
 
 #endif // IBANKSYSTEMMODEL_H

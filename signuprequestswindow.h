@@ -2,6 +2,9 @@
 #define SIGNUPREQUESTSWINDOW_H
 
 #include <QWidget>
+#include <QList>
+
+class Client;
 
 class SignupRequestsWindow : public QWidget
 {
@@ -14,6 +17,9 @@ signals:
 
 private slots:
     void back();
+
+private:
+    QList<Client *> unapprovedClients;
 };
 
 #endif // SIGNUPREQUESTSWINDOW_H
