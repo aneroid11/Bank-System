@@ -1,5 +1,6 @@
 #include <QPushButton>
 #include <QGridLayout>
+#include <QMessageBox>
 
 #include "ibanksystemmodel.h"
 #include "signuprequestswindow.h"
@@ -27,9 +28,10 @@ SignupRequestsWindow::SignupRequestsWindow(IBankSystemModel *bankSystem, QWidget
         loginButtons.append(newButton);
     }
 
-    for (QPushButton *currButton : loginButtons)
+    for (int i = 0; i < loginButtons.size(); i++)
     {
-        connect(currButton, &QPushButton::pressed, this, &SignupRequestsWindow::back);
+        connect(loginButtons[i], &QPushButton::pressed,
+                this, [this, i]{ showClientInfo(unapprovedClients[i]); });
     }
 
     QList<QPushButton *> approveButtons;
@@ -64,4 +66,18 @@ void SignupRequestsWindow::back()
 {
     this->close();
     emit showManagerWindow();
+}
+
+void SignupRequestsWindow::showClientInfo(Client *client)
+{
+    std::string info;
+    info += "Имя: " + client->getName() + "\n";
+    info += "Идентификационный номер: " + std::to_string(client->getId()) + "\n";
+    info += "Email: " + client->getEmail() + "\n";
+    info += "Телефон: " + client->getPhone() + "\n";
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Информация о клиенте");
+    msgBox.setText(info.c_str());
+    msgBox.exec();
 }

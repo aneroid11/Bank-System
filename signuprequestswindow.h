@@ -21,6 +21,8 @@ private slots:
     void back();
 
 private:
+    void showClientInfo(Client *client);
+
     QList<Client *> unapprovedClients;
     IBankSystemModel *bankSystemModel;
 };
