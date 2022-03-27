@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include <sqlite3.h>
 
@@ -194,6 +195,27 @@ int64_t Database::generateUniqueUserId()
     while (hasUser(id));
 
     return id;
+}
+
+struct UserRawData
+{
+    bool hasData() const { return columnNames.size(); }
+
+    std::vector<std::string> columnNames;
+    std::vector<std::string> rowFields;
+};
+
+static int getUserDataCallbk(void *data, int numColumns, char **rowFields, char **columnNames)
+{
+    UserRawData *userRawData = (UserRawData *)data;
+
+    for (int i = 0; i < numColumns; i++)
+    {
+        userRawData->columnNames.push_back(columnNames[i]);
+        userRawData->rowFields.push_back(rowFields[i]);
+    }
+
+    return 0;
 }
 
 User *Database::getUserData(std::string login, std::string &type)
