@@ -92,5 +92,10 @@ void SignupRequestsWindow::showClientInfo(Client *client)
 
 void SignupRequestsWindow::approveClient(std::string login)
 {
-    std::cout << "approved user: " << login << "\n";
+    bankSystemModel->approveClient(login);
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("");
+    msgBox.setText("Регистрация клиента успешно подтверждена");
+    msgBox.exec();
 }

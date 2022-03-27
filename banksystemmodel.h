@@ -25,6 +25,8 @@ public:
 
     std::list<Client *> getUnapprovedClients() override;
 
+    void approveClient(std::string login) override;
+
     void test() override;
 
 private:

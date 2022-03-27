@@ -113,6 +113,12 @@ User *BankSystemModel::getUserData(std::string login, std::string &type)
     return database->getUserData(login, type);
 }
 
+void BankSystemModel::approveClient(std::string login)
+{
+    if (!database) { throw DBNotOpenedException(); }
+    database->approveClient(login);
+}
+
 std::list<Client *> BankSystemModel::getUnapprovedClients()
 {
     if (!database) { throw DBNotOpenedException(); }

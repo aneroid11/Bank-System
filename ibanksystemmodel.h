@@ -30,6 +30,9 @@ public:
     // Получить список клиентов, регистрация которых ещё не была подтверждена менеджером
     virtual std::list<Client *> getUnapprovedClients() = 0;
 
+    // Подтвердить регистрацию клиента
+    virtual void approveClient(std::string login) = 0;
+
     // Запустить определённые тесты
     virtual void test() = 0;
 };

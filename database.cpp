@@ -197,6 +197,15 @@ int64_t Database::generateUniqueUserId()
     return id;
 }
 
+void Database::approveClient(std::string login)
+{
+    std::string query = "UPDATE CLIENTS SET APPROVED = 1 WHERE LOGIN = ";
+    query += "\'" + login + "\'";
+
+    char *errMsg;
+    sqlite3_exec(database, query.c_str(), nullptr, nullptr, &errMsg);
+}
+
 static int selectUsersCallback(void *data, int numColumns, char **rowFields, char **columnNames)
 {
     //UserRawData *userRawData = (UserRawData *)data;

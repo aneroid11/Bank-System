@@ -32,7 +32,7 @@ public:
     bool hasUser(int64_t id);
     bool hasUser(std::string login);
 
-    //void approveClient(std::string login);
+    void approveClient(std::string login);
 
     int64_t generateUniqueUserId();
 
