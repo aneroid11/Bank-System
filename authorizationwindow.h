@@ -7,6 +7,7 @@
 
 class QLineEdit;
 class ClientPersonalAccountWindow;
+class ManagerPersonalAccountWindow;
 class SignupWindow;
 
 class AuthorizationWindow : public QWidget
@@ -28,10 +29,12 @@ private slots:
 
 private:
     QString bankName = "";
-    IBankSystemModel* bankSystemModel;
-    QLineEdit* loginLine, * passwordLine;
+    IBankSystemModel *bankSystemModel;
+    QLineEdit *loginLine, *passwordLine;
 
-    ClientPersonalAccountWindow* clientPersonalAccWindow;
+    // child windows
+    ClientPersonalAccountWindow *clientPersonalAccWindow;
+    ManagerPersonalAccountWindow *managerPersonalAccWindow;
     SignupWindow* signupWindow;
 };
 

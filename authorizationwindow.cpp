@@ -3,11 +3,14 @@
 #include <QLineEdit>
 #include <QMessageBox>
 
-#include "authorizationwindow.h"
-#include "clientpersonalaccountwindow.h"
-#include "signupwindow.h"
 #include "client.h"
 #include "manager.h"
+
+#include "authorizationwindow.h"
+#include "clientpersonalaccountwindow.h"
+#include "managerpersonalaccountwindow.h"
+#include "signupwindow.h"
+
 #include "wronguserpasswordexception.h"
 
 AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *parent)
@@ -42,6 +45,10 @@ AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *
     connect(clientPersonalAccWindow, &ClientPersonalAccountWindow::showAuthorizationWindow,
             this, &AuthorizationWindow::show);
 
+    managerPersonalAccWindow = new ManagerPersonalAccountWindow();
+    connect(managerPersonalAccWindow, &ManagerPersonalAccountWindow::showAuthorizationWindow,
+            this, &AuthorizationWindow::show);
+
     signupWindow = new SignupWindow(bankSystem);
     connect(signupWindow, &SignupWindow::showAuthWindow, this, &AuthorizationWindow::show);
 }
@@ -49,6 +56,7 @@ AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *
 AuthorizationWindow::~AuthorizationWindow()
 {
     delete clientPersonalAccWindow;
+    delete managerPersonalAccWindow;
     delete signupWindow;
 }
 
@@ -103,16 +111,8 @@ void AuthorizationWindow::enter()
     }
     else if (userType == "MANAGERS")
     {
-        //Manager *manager = (Manager *)loggedInUser;
-
-        /*QMessageBox msgBox;
-        msgBox.setWindowTitle("Менеджер");
-        msgBox.setText("Здесь должен быть личный кабинет менеджера.");
-        msgBox.exec();*/
-
-        // Здесь должен быть managerPersonalAccWindow
         this->close();
-        clientPersonalAccWindow->show();
+        managerPersonalAccWindow->show();
         delete loggedInUser;
     }
 }
