@@ -10,7 +10,10 @@ public:
     explicit ManagerPersonalAccountWindow(QWidget *parent = nullptr);
 
 signals:
+    void showAuthorizationWindow();
 
+private slots:
+    void back();
 };
 
 #endif // MANAGERPERSONALACCOUNTWINDOW_H

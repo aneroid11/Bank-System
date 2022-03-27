@@ -27,6 +27,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     manager.cpp \
+    managerpersonalaccountwindow.cpp \
     operator.cpp \
     signupwindow.cpp \
     user.cpp
@@ -46,6 +47,7 @@ HEADERS += \
     ibanksystemmodel.h \
     mainwindow.h \
     manager.h \
+    managerpersonalaccountwindow.h \
     nouserindbexception.h \
     operator.h \
     signupwindow.h \
