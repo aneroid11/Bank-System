@@ -6,7 +6,7 @@
 #include "ibanksystemmodel.h"
 
 class QLineEdit;
-class PersonalAccountWindow;
+class ClientPersonalAccountWindow;
 class SignupWindow;
 
 class AuthorizationWindow : public QWidget
@@ -31,7 +31,7 @@ private:
     IBankSystemModel* bankSystemModel;
     QLineEdit* loginLine, * passwordLine;
 
-    PersonalAccountWindow* personalAccWindow;
+    ClientPersonalAccountWindow* clientPersonalAccWindow;
     SignupWindow* signupWindow;
 };
 

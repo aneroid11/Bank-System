@@ -4,9 +4,9 @@
 #include <QLabel>
 #include <QHeaderView>
 
-#include "personalaccountwindow.h"
+#include "clientpersonalaccountwindow.h"
 
-PersonalAccountWindow::PersonalAccountWindow(QWidget *parent) : QWidget(parent)
+ClientPersonalAccountWindow::ClientPersonalAccountWindow(QWidget *parent) : QWidget(parent)
 {
     setFixedWidth(500);
     setFixedHeight(500);
@@ -52,7 +52,7 @@ PersonalAccountWindow::PersonalAccountWindow(QWidget *parent) : QWidget(parent)
     QPushButton* installments = new QPushButton("Рассрочки", this);
 
     QPushButton* back = new QPushButton("Назад", this);
-    connect(back, &QPushButton::pressed, this, &PersonalAccountWindow::back);
+    connect(back, &QPushButton::pressed, this, &ClientPersonalAccountWindow::back);
 
     gridLayout->addWidget(userInfoLabel, 0, 0);
     gridLayout->addWidget(infoTable, 1, 0);
@@ -62,7 +62,7 @@ PersonalAccountWindow::PersonalAccountWindow(QWidget *parent) : QWidget(parent)
     gridLayout->addWidget(back, 5, 0);
 }
 
-void PersonalAccountWindow::back()
+void ClientPersonalAccountWindow::back()
 {
     this->close();
     emit showAuthorizationWindow();

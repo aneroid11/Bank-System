@@ -20,6 +20,7 @@ SOURCES += \
     authorizationwindow.cpp \
     banksystemmodel.cpp \
     client.cpp \
+    clientpersonalaccountwindow.cpp \
     database.cpp \
     enterprisespecialist.cpp \
     hashcomputer.cpp \
@@ -27,7 +28,6 @@ SOURCES += \
     mainwindow.cpp \
     manager.cpp \
     operator.cpp \
-    personalaccountwindow.cpp \
     signupwindow.cpp \
     user.cpp
 
@@ -37,6 +37,7 @@ HEADERS += \
     banksystemmodel.h \
     cannotopendbexception.h \
     client.h \
+    clientpersonalaccountwindow.h \
     database.h \
     dbexception.h \
     dbnotopenedexception.h \
@@ -47,7 +48,6 @@ HEADERS += \
     manager.h \
     nouserindbexception.h \
     operator.h \
-    personalaccountwindow.h \
     signupwindow.h \
     user.h \
     useralreadyexistsexception.h \
