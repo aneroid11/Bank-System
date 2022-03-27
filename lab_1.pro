@@ -50,7 +50,8 @@ HEADERS += \
     personalaccountwindow.h \
     signupwindow.h \
     user.h \
-    useralreadyexistsexception.h
+    useralreadyexistsexception.h \
+    wronguserpasswordexception.h
 
 LIBS += -lcrypto++ -lsqlite3
 

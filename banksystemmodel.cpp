@@ -6,8 +6,10 @@
 #include "manager.h"
 #include "hashcomputer.h"
 #include "database.h"
+
 #include "dbnotopenedexception.h"
 #include "useralreadyexistsexception.h"
+#include "wronguserpasswordexception.h"
 
 BankSystemModel::BankSystemModel()
 {
@@ -37,11 +39,19 @@ void BankSystemModel::setCurrentBank(std::string bankName)
 void BankSystemModel::enter(std::string login, std::string password)
 {
     if (!database) { throw DBNotOpenedException(); }
-    //const std::string passwordHash = HashComputer().hash(password);
 
-    if (!database->hasUser(login))
+    std::string userType;
+    // getUserData() выкинет исключение об отсутствии пользователя, если пользователя
+    // нет в базе
+    User *user = database->getUserData(login, userType);
+
+    // если юзер существует, то проверить правильность введённого пароля
+    // и если он неправильный, то выкинуть исключение
+    std::string passwordHash = HashComputer().hash(password);
+
+    if (passwordHash != user->getPasswordHash())
     {
-        throw NoUserInDBException();
+        throw WrongUserPasswordException();
     }
 }
 

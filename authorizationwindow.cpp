@@ -7,6 +7,7 @@
 #include "personalaccountwindow.h"
 #include "signupwindow.h"
 #include "client.h"
+#include "manager.h"
 
 AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QWidget(parent), bankSystemModel(bankSystem)
@@ -81,8 +82,22 @@ void AuthorizationWindow::enter()
             msgBox.setWindowTitle("Невозможно войти в личный кабинет");
             msgBox.setText("Ваша заявка на регистрацию ещё не была подтверждена.");
             msgBox.exec();
+
+            delete loggedInUser;
             return;
         }
+    }
+    else if (userType == "MANAGERS")
+    {
+        //Manager *manager = (Manager *)loggedInUser;
+
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Менеджер");
+        msgBox.setText("Здесь должен быть личный кабинет менеджера.");
+        msgBox.exec();
+
+        delete loggedInUser;
+        return;
     }
 
     this->close();
