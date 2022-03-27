@@ -214,17 +214,17 @@ User *Database::createUserFromRawData(const UserRawData& data, std::string type)
 {
     User::Data userData;
 
-    userData.id = atoi(data.columnNames[0].c_str());
-    userData.name = data.columnNames[1];
-    userData.passwordHash = data.columnNames[2];
-    userData.login = data.columnNames[3];
-    userData.phone = data.columnNames[4];
-    userData.email = data.columnNames[5];
+    userData.id = atoi(data.rowFields[0].c_str());
+    userData.name = data.rowFields[1];
+    userData.passwordHash = data.rowFields[2];
+    userData.login = data.rowFields[3];
+    userData.phone = data.rowFields[4];
+    userData.email = data.rowFields[5];
 
     if (type == "CLIENTS")
     {
         Client *client = new Client(userData);
-        bool clientApproved = atoi(data.columnNames[6].c_str());
+        bool clientApproved = atoi(data.rowFields[6].c_str());
 
         if (clientApproved)
         {

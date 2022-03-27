@@ -8,6 +8,7 @@
 #include "signupwindow.h"
 #include "client.h"
 #include "manager.h"
+#include "wronguserpasswordexception.h"
 
 AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QWidget(parent), bankSystemModel(bankSystem)
@@ -64,6 +65,14 @@ void AuthorizationWindow::enter()
         QMessageBox msgBox;
         msgBox.setWindowTitle("Пользователь не найден");
         msgBox.setText("Пользователя нет в системе. Вы можете зарегистрироваться в ней.");
+        msgBox.exec();
+        return;
+    }
+    catch (const WrongUserPasswordException &)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Неверный пароль");
+        msgBox.setText("Вы ввели неправильный пароль. Попробуйте ещё раз.");
         msgBox.exec();
         return;
     }
