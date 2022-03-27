@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <QPushButton>
 #include <QGridLayout>
 #include <QMessageBox>
@@ -36,8 +38,14 @@ SignupRequestsWindow::SignupRequestsWindow(IBankSystemModel *bankSystem, QWidget
 
     QList<QPushButton *> approveButtons;
 
-    for (QPushButton *currButton : loginButtons) {
+    for (int i = 0; i < loginButtons.size(); i++)
+    {
+        QPushButton *currButton = loginButtons[i];
+
         QPushButton *newButton = new QPushButton(QString("Подтвердить: ") + currButton->text());
+        connect(newButton, &QPushButton::pressed,
+                this, [this, currButton]{ approveClient(currButton->text().toStdString()); });
+
         approveButtons.append(newButton);
     }
 
@@ -80,4 +88,9 @@ void SignupRequestsWindow::showClientInfo(Client *client)
     msgBox.setWindowTitle("Информация о клиенте");
     msgBox.setText(info.c_str());
     msgBox.exec();
+}
+
+void SignupRequestsWindow::approveClient(std::string login)
+{
+    std::cout << "approved user: " << login << "\n";
 }

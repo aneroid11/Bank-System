@@ -22,6 +22,7 @@ private slots:
 
 private:
     void showClientInfo(Client *client);
+    void approveClient(std::string login);
 
     QList<Client *> unapprovedClients;
     IBankSystemModel *bankSystemModel;
