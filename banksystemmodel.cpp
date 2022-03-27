@@ -90,7 +90,6 @@ void BankSystemModel::addSampleManager()
         HashComputer().hash("123")
     };
     Manager newManager(data);
-    std::cout << "Добавление одного менеджера: " << newManager.getName() << "\n";
 
     try
     {

@@ -6,7 +6,8 @@
 #include <QPushButton>
 #include <QHeaderView>
 
-ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(QWidget *parent) : QWidget(parent)
+ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(QWidget *parent)
+    : QWidget(parent)
 {
     setFixedWidth(500);
     setFixedHeight(500);
@@ -28,10 +29,13 @@ ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(QWidget *parent) : QW
     infoTable->setItem(2, 0, new QTableWidgetItem("Email"));
     infoTable->setItem(3, 0, new QTableWidgetItem("Телефон"));
 
+    // Это происходит в setCurrentManagerData()
+    /*
     infoTable->setItem(0, 1, new QTableWidgetItem("Лоло опшцуш ывлоа"));
     infoTable->setItem(1, 1, new QTableWidgetItem("234989"));
     infoTable->setItem(2, 1, new QTableWidgetItem("iajdawjidaj@asdjasidi"));
     infoTable->setItem(3, 1, new QTableWidgetItem("+92842394"));
+    */
 
     infoTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -41,6 +45,24 @@ ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(QWidget *parent) : QW
     gridLayout->addWidget(userInfoLabel, 0, 0);
     gridLayout->addWidget(infoTable, 1, 0);
     gridLayout->addWidget(back, 2, 0);
+}
+
+ManagerPersonalAccountWindow::~ManagerPersonalAccountWindow()
+{
+    if (manager)
+    {
+        delete manager;
+        manager = nullptr;
+    }
+}
+
+void ManagerPersonalAccountWindow::setCurrentManagerData(Manager *mgr)
+{
+    if (manager)
+    {
+        delete manager;
+    }
+    manager = mgr;
 }
 
 void ManagerPersonalAccountWindow::back()
