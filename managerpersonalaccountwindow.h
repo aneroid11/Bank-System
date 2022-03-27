@@ -2,6 +2,7 @@
 #define MANAGERPERSONALACCOUNTWINDOW_H
 
 #include <QWidget>
+#include <QTableWidget>
 
 #include "manager.h"
 
@@ -22,6 +23,7 @@ private slots:
 
 private:
     Manager *manager = nullptr;
+    QTableWidget* infoTable;
 };
 
 #endif // MANAGERPERSONALACCOUNTWINDOW_H

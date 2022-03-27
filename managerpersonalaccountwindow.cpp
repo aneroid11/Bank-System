@@ -19,7 +19,7 @@ ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(QWidget *parent)
     QLabel* userInfoLabel = new QLabel(this);
     userInfoLabel->setText("Информация:");
 
-    QTableWidget* infoTable = new QTableWidget(this);
+    infoTable = new QTableWidget(this);
     infoTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     infoTable->setRowCount(4);
@@ -28,14 +28,6 @@ ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(QWidget *parent)
     infoTable->setItem(1, 0, new QTableWidgetItem("Id"));
     infoTable->setItem(2, 0, new QTableWidgetItem("Email"));
     infoTable->setItem(3, 0, new QTableWidgetItem("Телефон"));
-
-    // Это происходит в setCurrentManagerData()
-    /*
-    infoTable->setItem(0, 1, new QTableWidgetItem("Лоло опшцуш ывлоа"));
-    infoTable->setItem(1, 1, new QTableWidgetItem("234989"));
-    infoTable->setItem(2, 1, new QTableWidgetItem("iajdawjidaj@asdjasidi"));
-    infoTable->setItem(3, 1, new QTableWidgetItem("+92842394"));
-    */
 
     infoTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -58,11 +50,18 @@ ManagerPersonalAccountWindow::~ManagerPersonalAccountWindow()
 
 void ManagerPersonalAccountWindow::setCurrentManagerData(Manager *mgr)
 {
+    // Здесь должна обновляться информация о пользователе в таблице
+
     if (manager)
     {
         delete manager;
     }
     manager = mgr;
+
+    infoTable->setItem(0, 1, new QTableWidgetItem(mgr->getName().c_str()));
+    infoTable->setItem(1, 1, new QTableWidgetItem(std::to_string(mgr->getId()).c_str()));
+    infoTable->setItem(2, 1, new QTableWidgetItem(mgr->getEmail().c_str()));
+    infoTable->setItem(3, 1, new QTableWidgetItem(mgr->getPhone().c_str()));
 }
 
 void ManagerPersonalAccountWindow::back()

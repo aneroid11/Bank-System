@@ -112,8 +112,8 @@ void AuthorizationWindow::enter()
     else if (userType == "MANAGERS")
     {
         this->close();
+        managerPersonalAccWindow->setCurrentManagerData((Manager *)loggedInUser);
         managerPersonalAccWindow->show();
-        delete loggedInUser;
     }
 }
 
