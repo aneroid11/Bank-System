@@ -5,6 +5,7 @@
 #include <QTableWidget>
 
 #include "manager.h"
+#include "signuprequestswindow.h"
 
 class ManagerPersonalAccountWindow : public QWidget
 {
@@ -20,10 +21,13 @@ signals:
 
 private slots:
     void back();
+    void showSignupRequests();
 
 private:
     Manager *manager = nullptr;
-    QTableWidget* infoTable;
+    QTableWidget *infoTable;
+
+    SignupRequestsWindow *signupRequestsWindow;
 };
 
 #endif // MANAGERPERSONALACCOUNTWINDOW_H

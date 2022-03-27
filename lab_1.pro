@@ -29,6 +29,7 @@ SOURCES += \
     manager.cpp \
     managerpersonalaccountwindow.cpp \
     operator.cpp \
+    signuprequestswindow.cpp \
     signupwindow.cpp \
     user.cpp
 
@@ -50,6 +51,7 @@ HEADERS += \
     managerpersonalaccountwindow.h \
     nouserindbexception.h \
     operator.h \
+    signuprequestswindow.h \
     signupwindow.h \
     user.h \
     useralreadyexistsexception.h \

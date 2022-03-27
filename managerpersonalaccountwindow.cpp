@@ -31,12 +31,20 @@ ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(QWidget *parent)
 
     infoTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    QPushButton* back = new QPushButton("Назад", this);
+    QPushButton *showClientsSignupRequests = new QPushButton("Запросы на регистрацию", this);
+    connect(showClientsSignupRequests, &QPushButton::pressed, this, &ManagerPersonalAccountWindow::showSignupRequests);
+
+    QPushButton *back = new QPushButton("Назад", this);
     connect(back, &QPushButton::pressed, this, &ManagerPersonalAccountWindow::back);
+
+    signupRequestsWindow = new SignupRequestsWindow();
+    connect(signupRequestsWindow, &SignupRequestsWindow::showManagerWindow,
+            this, &ManagerPersonalAccountWindow::show);
 
     gridLayout->addWidget(userInfoLabel, 0, 0);
     gridLayout->addWidget(infoTable, 1, 0);
-    gridLayout->addWidget(back, 2, 0);
+    gridLayout->addWidget(showClientsSignupRequests, 2, 0);
+    gridLayout->addWidget(back, 3, 0);
 }
 
 ManagerPersonalAccountWindow::~ManagerPersonalAccountWindow()
@@ -62,6 +70,12 @@ void ManagerPersonalAccountWindow::setCurrentManagerData(Manager *mgr)
     infoTable->setItem(1, 1, new QTableWidgetItem(std::to_string(mgr->getId()).c_str()));
     infoTable->setItem(2, 1, new QTableWidgetItem(mgr->getEmail().c_str()));
     infoTable->setItem(3, 1, new QTableWidgetItem(mgr->getPhone().c_str()));
+}
+
+void ManagerPersonalAccountWindow::showSignupRequests()
+{
+    this->close();
+    signupRequestsWindow->show();
 }
 
 void ManagerPersonalAccountWindow::back()
