@@ -197,6 +197,47 @@ int64_t Database::generateUniqueUserId()
     return id;
 }
 
+static int selectUsersCallback(void *data, int argc, char **argv, char **azColName)
+{
+    int i;
+    fprintf(stderr, "%s: ", (const char*)data);
+
+    for(i = 0; i < argc; i++)
+    {
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+
+    printf("\n");
+    return 0;
+}
+
+std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
+                                                         std::string parameterName,
+                                                         std::string parameterValue)
+{
+   std::string query = "SELECT * FROM ";
+    query += tableName;
+    query += " WHERE " + parameterName + " = \'" + parameterValue + "\';";
+    char *errMsg;
+
+    sqlite3_exec(database, query.c_str(), selectUsersCallback, (void*)"Callback func called", &errMsg);
+
+    return std::list<User *>();
+}
+
+std::list<Client *> Database::getUnapprovedClients()
+{
+    std::list<User *> unapproved = getUsersFromTableByParameter("CLIENTS", "APPROVED", "0");
+    std::list<Client *> unapprovedClients;
+
+    for (User *u : unapproved)
+    {
+        unapprovedClients.push_back((Client *)u);
+    }
+
+    return unapprovedClients;
+}
+
 static int getUserDataCallbk(void *data, int numColumns, char **rowFields, char **columnNames)
 {
     UserRawData *userRawData = (UserRawData *)data;

@@ -37,7 +37,7 @@ ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(IBankSystemModel *ban
     QPushButton *back = new QPushButton("Назад", this);
     connect(back, &QPushButton::pressed, this, &ManagerPersonalAccountWindow::back);
 
-    signupRequestsWindow = new SignupRequestsWindow();
+    signupRequestsWindow = new SignupRequestsWindow(bankSystemModel);
     connect(signupRequestsWindow, &SignupRequestsWindow::showManagerWindow,
             this, &ManagerPersonalAccountWindow::show);
 

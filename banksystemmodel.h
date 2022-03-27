@@ -25,6 +25,8 @@ public:
 
     std::list<Client *> getUnapprovedClients() override;
 
+    void test() override;
+
 private:
     Database *database = nullptr;
 

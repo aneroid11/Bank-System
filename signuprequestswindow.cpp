@@ -1,9 +1,11 @@
 #include <QPushButton>
 #include <QGridLayout>
 
+#include "ibanksystemmodel.h"
 #include "signuprequestswindow.h"
 
-SignupRequestsWindow::SignupRequestsWindow(QWidget *parent) : QWidget(parent)
+SignupRequestsWindow::SignupRequestsWindow(IBankSystemModel *bankSystem, QWidget *parent)
+    : QWidget(parent), bankSystemModel(bankSystem)
 {
     setFixedWidth(500);
     setFixedHeight(500);
@@ -15,16 +17,15 @@ SignupRequestsWindow::SignupRequestsWindow(QWidget *parent) : QWidget(parent)
     QPushButton *back = new QPushButton("Назад", this);
     connect(back, &QPushButton::pressed, this, &SignupRequestsWindow::back);
 
+    unapprovedClients = QList<Client *>::fromStdList(bankSystemModel->getUnapprovedClients());
+
     QList<QPushButton *> loginButtons;
 
-    QPushButton *newButton = new QPushButton("Клиент 1", this);
-    loginButtons.append(newButton);
-
-    newButton = new QPushButton("Клиент 2", this);
-    loginButtons.append(newButton);
-
-    newButton = new QPushButton("Клиент 3", this);
-    loginButtons.append(newButton);
+    for (Client *cl : unapprovedClients)
+    {
+        QPushButton *newButton = new QPushButton(cl->getLogin().c_str(), this);
+        loginButtons.append(newButton);
+    }
 
     for (QPushButton *currButton : loginButtons)
     {
@@ -34,7 +35,7 @@ SignupRequestsWindow::SignupRequestsWindow(QWidget *parent) : QWidget(parent)
     QList<QPushButton *> approveButtons;
 
     for (QPushButton *currButton : loginButtons) {
-        newButton = new QPushButton(QString("Подтвердить: ") + currButton->text());
+        QPushButton *newButton = new QPushButton(QString("Подтвердить: ") + currButton->text());
         approveButtons.append(newButton);
     }
 
@@ -46,6 +47,17 @@ SignupRequestsWindow::SignupRequestsWindow(QWidget *parent) : QWidget(parent)
     }
 
     gridLayout->addWidget(back, rowIndex, 0);
+}
+
+SignupRequestsWindow::~SignupRequestsWindow()
+{
+    if (unapprovedClients.size() > 1)
+    {
+        for (Client *cl : unapprovedClients)
+        {
+            delete cl;
+        }
+    }
 }
 
 void SignupRequestsWindow::back()

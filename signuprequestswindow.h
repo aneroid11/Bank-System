@@ -4,13 +4,15 @@
 #include <QWidget>
 #include <QList>
 
+class IBankSystemModel;
 class Client;
 
 class SignupRequestsWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SignupRequestsWindow(QWidget *parent = nullptr);
+    explicit SignupRequestsWindow(IBankSystemModel *bankSystem, QWidget *parent = nullptr);
+    ~SignupRequestsWindow();
 
 signals:
     void showManagerWindow();
@@ -20,6 +22,7 @@ private slots:
 
 private:
     QList<Client *> unapprovedClients;
+    IBankSystemModel *bankSystemModel;
 };
 
 #endif // SIGNUPREQUESTSWINDOW_H

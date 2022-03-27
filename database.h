@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 
 #include "user.h"
 
@@ -35,6 +36,10 @@ public:
 
     int64_t generateUniqueUserId();
 
+    std::list<User *> getUsersFromTableByParameter(std::string tableName, std::string parameterName,
+                                                   std::string parameterValue);
+    std::list<Client *> getUnapprovedClients();
+
     // Получить по логину пользователя и его роль в системе (записывается в переменную type)
     User *getUserData(std::string login, std::string &type);
 
@@ -44,8 +49,7 @@ private:
     void createManagersTable();
     void createAdministratorsTable();
 
-    User* createUserFromRawData(const UserRawData &rawData, std::string type);
-
+    User *createUserFromRawData(const UserRawData &rawData, std::string type);
 
     sqlite3 *database;
 };

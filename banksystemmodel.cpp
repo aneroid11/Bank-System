@@ -24,6 +24,12 @@ BankSystemModel::~BankSystemModel()
     }
 }
 
+void BankSystemModel::test()
+{
+    database->getUsersFromTableByParameter("CLIENTS", "APPROVED", "0");
+    std::cout << "End of test\n";
+}
+
 void BankSystemModel::setCurrentBank(std::string bankName)
 {
     // Генерируем хеш bankName и на его основе создаём файл с точкой в начале
