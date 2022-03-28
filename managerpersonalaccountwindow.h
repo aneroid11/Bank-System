@@ -28,7 +28,6 @@ private:
     Manager *manager = nullptr;
     QTableWidget *infoTable;
 
-    SignupRequestsWindow *signupRequestsWindow;
     IBankSystemModel *bankSystemModel;
 };
 

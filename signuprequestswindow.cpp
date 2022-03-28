@@ -8,7 +8,7 @@
 #include "signuprequestswindow.h"
 
 SignupRequestsWindow::SignupRequestsWindow(IBankSystemModel *bankSystem, QWidget *parent)
-    : QWidget(parent), bankSystemModel(bankSystem)
+    : QDialog(parent), bankSystemModel(bankSystem)
 {
     setFixedWidth(500);
     setFixedHeight(500);
@@ -16,9 +16,6 @@ SignupRequestsWindow::SignupRequestsWindow(IBankSystemModel *bankSystem, QWidget
     setWindowTitle("Запросы клиентов на регистрацию");
 
     QGridLayout *gridLayout = new QGridLayout(this);
-
-    QPushButton *back = new QPushButton("Назад", this);
-    connect(back, &QPushButton::pressed, this, &SignupRequestsWindow::back);
 
     unapprovedClients = QList<Client *>::fromStdList(bankSystemModel->getUnapprovedClients());
 
@@ -55,8 +52,6 @@ SignupRequestsWindow::SignupRequestsWindow(IBankSystemModel *bankSystem, QWidget
         gridLayout->addWidget(loginButtons[rowIndex], rowIndex, 0);
         gridLayout->addWidget(approveButtons[rowIndex], rowIndex, 1);
     }
-
-    gridLayout->addWidget(back, rowIndex, 0);
 }
 
 SignupRequestsWindow::~SignupRequestsWindow()
@@ -68,12 +63,6 @@ SignupRequestsWindow::~SignupRequestsWindow()
             delete cl;
         }
     }
-}
-
-void SignupRequestsWindow::back()
-{
-    this->close();
-    emit showManagerWindow();
 }
 
 void SignupRequestsWindow::showClientInfo(Client *client)
