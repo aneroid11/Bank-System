@@ -21,6 +21,7 @@ BankSystemModel::~BankSystemModel()
     if (database)
     {
         delete database;
+        database = nullptr;
     }
 }
 
@@ -38,6 +39,7 @@ void BankSystemModel::setCurrentBank(std::string bankName)
     if (database)
     {
         delete database;
+        database = nullptr;
     }
     database = new Database(fileName);
 }

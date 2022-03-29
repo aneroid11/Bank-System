@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QVariant>
+#include <QDebug>
 
 #include "database.h"
 #include "hashcomputer.h"
@@ -112,6 +113,8 @@ void Database::addClient(const Client &client)
 
 void Database::addManager(const Manager &manager)
 {
+    std::cout << "Adding manager: " << manager.getName() << "\n";
+
     if (hasUser(manager.getLogin()))
     {
         throw UserAlreadyExistsException();
@@ -174,14 +177,19 @@ bool Database::hasUser(int64_t id)
     if (result) { return true; }*/
     QSqlQuery checkQuery;
 
-    QString tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
+    std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
 
-    for (const QString &tableName : tablesToCheck)
+    for (const std::string &tableName : tablesToCheck)
     {
-        checkQuery.prepare("SELECT COUNT(1) FROM :table WHERE ID = ':id';");
-        checkQuery.bindValue(":table", tableName);
-        checkQuery.bindValue(":id", std::to_string(id).c_str());
-        if (checkQuery.exec() && checkQuery.next()) { return true; }
+        std::string query = std::string("SELECT NAME FROM ") + tableName +
+                " WHERE ID = \'" + std::to_string(id) + "\';";
+        checkQuery.prepare(query.c_str());
+
+        if (checkQuery.exec() && checkQuery.next())
+        {
+            std::cout << "has user\n";
+            return true;
+        }
     }
 
     return false;
@@ -210,14 +218,19 @@ bool Database::hasUser(std::string login)
 
     QSqlQuery checkQuery;
 
-    QString tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
+    std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
 
-    for (const QString &tableName : tablesToCheck)
+    for (const std::string &tableName : tablesToCheck)
     {
-        checkQuery.prepare("SELECT COUNT(1) FROM :table WHERE LOGIN = ':login';");
-        checkQuery.bindValue(":table", tableName);
-        checkQuery.bindValue(":login", login.c_str());
-        if (checkQuery.exec() && checkQuery.next()) { return true; }
+        //checkQuery.prepare("SELECT COUNT(1) FROM :table WHERE LOGIN = ':login';");
+        std::string query = std::string("SELECT NAME FROM ") + tableName + " WHERE LOGIN = \'" + login + "\';";
+        checkQuery.prepare(query.c_str());
+
+        if (checkQuery.exec() && checkQuery.next())
+        {
+            std::cout << "has user\n";
+            return true;
+        }
     }
 
     return false;
@@ -230,6 +243,7 @@ int64_t Database::generateUniqueUserId()
     do
     {
         id = rand() % 1000000;
+        //std::cout << id << "\n";
     }
     while (hasUser(id));
 
@@ -282,11 +296,9 @@ std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
         //std::cout << data.columnNames[0] << " = " << data.rowFields[0] << "\n";
         users.push_back(createUserFromRawData(data, tableName));
     }*/
+    std::string query = std::string("SELECT * FROM ") + tableName + " WHERE " + parameterName + " = \'" + parameterValue + "\';";
     QSqlQuery searchQuery;
-    searchQuery.prepare("SELECT * FROM :table WHERE :parameterName = ':parameterValue';");
-    searchQuery.bindValue(":table", tableName.c_str());
-    searchQuery.bindValue(":parameterName", parameterName.c_str());
-    searchQuery.bindValue(":parameterValue", parameterValue.c_str());
+    searchQuery.prepare(query.c_str());
 
     std::list<User *> users;
 
@@ -332,8 +344,6 @@ std::list<Client *> Database::getUnapprovedClients()
     {
         unapprovedClients.push_back((Client *)u);
     }
-
-    okofskd;
 
     return unapprovedClients;
 }
@@ -392,10 +402,9 @@ User *Database::getUserData(std::string login, std::string &type)
 
     for (const std::string &tableName : tablesToCheck)
     {
+        std::string query = std::string("SELECT * FROM ") + tableName + " WHERE LOGIN = \'" + login + "\';";
         QSqlQuery getQuery;
-        getQuery.prepare("SELECT * FROM :tableName WHERE LOGIN = ':login';");
-        getQuery.bindValue(":tableName", tableName.c_str());
-        getQuery.bindValue(":login", login.c_str());
+        getQuery.prepare(query.c_str());
 
         if (getQuery.exec() && getQuery.next())
         {
