@@ -5,9 +5,11 @@
 #include <vector>
 #include <list>
 
+#include <QSqlDatabase>
+
 #include "user.h"
 
-struct sqlite3;
+//struct sqlite3;
 class Client;
 class Manager;
 
@@ -51,7 +53,8 @@ private:
 
     User *createUserFromRawData(const UserRawData &rawData, std::string type);
 
-    sqlite3 *database;
+    QSqlDatabase database;
+    //sqlite3 *database;
 };
 
 #endif // DATABASE_H
