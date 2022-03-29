@@ -16,6 +16,7 @@ private slots:
     void showClientDepositsWindow();
     void showClientCreditsWindow();
     void showClientInstallmentsWindow();
+    void showSalaryProjectWindow();
 
 private:
     Client *currClient;

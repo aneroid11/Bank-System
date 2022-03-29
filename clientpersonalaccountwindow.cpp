@@ -3,6 +3,7 @@
 #include <QTableWidget>
 #include <QLabel>
 #include <QHeaderView>
+#include <QMessageBox>
 
 #include "clientpersonalaccountwindow.h"
 #include "clientaccountswindow.h"
@@ -52,12 +53,16 @@ ClientPersonalAccountWindow::ClientPersonalAccountWindow(Client *client, QWidget
     QPushButton *installments = new QPushButton("Рассрочки", this);
     connect(installments, &QPushButton::clicked, this, &ClientPersonalAccountWindow::showClientInstallmentsWindow);
 
+    QPushButton *salaryProject = new QPushButton("Зарплатный проект", this);
+    connect(salaryProject, &QPushButton::clicked, this, &ClientPersonalAccountWindow::showSalaryProjectWindow);
+
     gridLayout->addWidget(userInfoLabel, 0, 0);
     gridLayout->addWidget(infoTable, 1, 0);
     gridLayout->addWidget(accountsWork, 2, 0);
     gridLayout->addWidget(depositsWork, 3, 0);
     gridLayout->addWidget(credits, 4, 0);
     gridLayout->addWidget(installments, 5, 0);
+    gridLayout->addWidget(salaryProject, 6, 0);
 }
 
 void ClientPersonalAccountWindow::showClientAccountsWindow()
@@ -90,4 +95,26 @@ void ClientPersonalAccountWindow::showClientInstallmentsWindow()
     clientInstallmentsWindow->setWindowModality(Qt::ApplicationModal);
     clientInstallmentsWindow->exec();
     delete clientInstallmentsWindow;
+}
+
+void ClientPersonalAccountWindow::showSalaryProjectWindow()
+{
+    QString title = QString("Вы действительно хотите подать заявку на зарплатный проект предприятия ");
+    title += "ОАО АБУБУ ЛДТ КОМПАНИ";
+    title += "?";
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Заявка на зарплатный проект",
+                                                              title, QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes)
+    {
+        QMessageBox msg;
+        msg.setWindowTitle("Заявка подана");
+        msg.setText("Пожалуйста, подождите её одобрения оператором");
+        msg.exec();
+    }
+
+    /*ClientInstallmentsWindow *clientInstallmentsWindow = new ClientInstallmentsWindow();
+    clientInstallmentsWindow->setWindowModality(Qt::ApplicationModal);
+    clientInstallmentsWindow->exec();
+    delete clientInstallmentsWindow;*/
 }
