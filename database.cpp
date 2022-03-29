@@ -145,36 +145,8 @@ void Database::deleteUser(int64_t id)
     sqlQuery.exec();
 }
 
-static int hasUserCallbk(void *data, int numColumns, char **rowFields, char **columnNames)
-{
-    (void)numColumns;
-    (void)columnNames;
-
-    bool hasUser = atoi(rowFields[0]);
-    *((bool *)data) = hasUser;
-
-    return 0;
-}
-
 bool Database::hasUser(int64_t id)
 {
-    /*std::string query = "SELECT COUNT(1) FROM CLIENTS WHERE ID = \'" + std::to_string(id) + "\';";
-    char *errMsg;
-    bool result;
-    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
-    if (result) { return true; }
-
-    query = "SELECT COUNT(1) FROM OPERATORS WHERE ID = \'" + std::to_string(id) + "\';";
-    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
-    if (result) { return true; }
-
-    query = "SELECT COUNT(1) FROM MANAGERS WHERE ID = \'" + std::to_string(id) + "\';";
-    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
-    if (result) { return true; }
-
-    query = "SELECT COUNT(1) FROM ADMINISTRATORS WHERE ID = \'" + std::to_string(id) + "\';";
-    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
-    if (result) { return true; }*/
     QSqlQuery checkQuery;
 
     std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
@@ -197,32 +169,12 @@ bool Database::hasUser(int64_t id)
 
 bool Database::hasUser(std::string login)
 {
-    //std::string query = "SELECT COUNT(1) FROM CLIENTS WHERE LOGIN = \'" + login + "\';";
-
-    /*char *errMsg;
-    bool result;
-    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
-    if (result) { return true; }
-
-    query = "SELECT COUNT(1) FROM OPERATORS WHERE LOGIN = \'" + login + "\';";
-    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
-    if (result) { return true; }
-
-    query = "SELECT COUNT(1) FROM MANAGERS WHERE LOGIN = \'" + login + "\';";
-    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
-    if (result) { return true; }
-
-    query = "SELECT COUNT(1) FROM ADMINISTRATORS WHERE LOGIN = \'" + login + "\';";
-    sqlite3_exec(database, query.c_str(), hasUserCallbk, (void *)&result, &errMsg);
-    if (result) { return true; }*/
-
     QSqlQuery checkQuery;
 
     std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
 
     for (const std::string &tableName : tablesToCheck)
     {
-        //checkQuery.prepare("SELECT COUNT(1) FROM :table WHERE LOGIN = ':login';");
         std::string query = std::string("SELECT NAME FROM ") + tableName + " WHERE LOGIN = \'" + login + "\';";
         checkQuery.prepare(query.c_str());
 
@@ -243,7 +195,6 @@ int64_t Database::generateUniqueUserId()
     do
     {
         id = rand() % 1000000;
-        //std::cout << id << "\n";
     }
     while (hasUser(id));
 
@@ -260,43 +211,12 @@ void Database::approveClient(std::string login)
     sqlQuery.exec();
 }
 
-static int selectUsersCallback(void *data, int numColumns, char **rowFields, char **columnNames)
-{
-    //UserRawData *userRawData = (UserRawData *)data;
-    UserRawData userRawData;
-
-    for (int i = 0; i < numColumns; i++)
-    {
-        userRawData.columnNames.push_back(columnNames[i]);
-        userRawData.rowFields.push_back(rowFields[i]);
-    }
-
-    std::list<UserRawData> &users = *((std::list<UserRawData> *)data);
-    users.push_back(userRawData);
-
-    return 0;
-}
-
 std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
                                                          std::string parameterName,
                                                          std::string parameterValue)
 {
-    /*std::string query = "SELECT * FROM ";
-    query += tableName;
-    query += " WHERE " + parameterName + " = \'" + parameterValue + "\';";
-    char *errMsg;
-
-    std::list<UserRawData> usersData;
-    sqlite3_exec(database, query.c_str(), selectUsersCallback, &usersData, &errMsg);
-
-    std::list<User *> users;
-
-    for (const UserRawData& data : usersData)
-    {
-        //std::cout << data.columnNames[0] << " = " << data.rowFields[0] << "\n";
-        users.push_back(createUserFromRawData(data, tableName));
-    }*/
-    std::string query = std::string("SELECT * FROM ") + tableName + " WHERE " + parameterName + " = \'" + parameterValue + "\';";
+    std::string query = std::string("SELECT * FROM ") + tableName +
+            " WHERE " + parameterName + " = \'" + parameterValue + "\';";
     QSqlQuery searchQuery;
     searchQuery.prepare(query.c_str());
 
@@ -348,19 +268,6 @@ std::list<Client *> Database::getUnapprovedClients()
     return unapprovedClients;
 }
 
-static int getUserDataCallbk(void *data, int numColumns, char **rowFields, char **columnNames)
-{
-    UserRawData *userRawData = (UserRawData *)data;
-
-    for (int i = 0; i < numColumns; i++)
-    {
-        userRawData->columnNames.push_back(columnNames[i]);
-        userRawData->rowFields.push_back(rowFields[i]);
-    }
-
-    return 0;
-}
-
 User *Database::createUserFromRawData(const UserRawData& data, std::string type)
 {
     User::Data userData;
@@ -395,10 +302,6 @@ User *Database::createUserFromRawData(const UserRawData& data, std::string type)
 User *Database::getUserData(std::string login, std::string &type)
 {
     std::vector<std::string> tablesToCheck = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
-
-    /*std::string query;
-    char *errMsg;
-    UserRawData userRawData;*/
 
     for (const std::string &tableName : tablesToCheck)
     {
@@ -436,18 +339,6 @@ User *Database::getUserData(std::string login, std::string &type)
                 return manager;
             }
         }
-
-        /*query = "SELECT * FROM";
-        query += " " + tableName + " ";
-        query += "WHERE LOGIN = \'" + login + "\';";
-
-        sqlite3_exec(database, query.c_str(), getUserDataCallbk, (void *)&userRawData, &errMsg);
-
-        if (userRawData.hasData())
-        {
-            type = tableName;
-            return createUserFromRawData(userRawData, tableName);
-        }*/
     }
 
     throw NoUserInDBException();
