@@ -217,27 +217,29 @@ std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
 {
     std::string query = std::string("SELECT * FROM ") + tableName +
             " WHERE " + parameterName + " = \'" + parameterValue + "\';";
-    QSqlQuery searchQuery;
-    searchQuery.prepare(query.c_str());
+    QSqlQuery searchQuery(query.c_str());
+    //searchQuery.prepare(query.c_str());
+
+    const QSqlRecord rec = searchQuery.record();
+
+    //std::cout << searchQuery.executedQuery().toStdString() << "\n";
 
     std::list<User *> users;
 
     while (searchQuery.next())
     {
-        const QSqlRecord &currRecord = searchQuery.record();
-
         User::Data userData;
-        userData.name = currRecord.value(currRecord.indexOf("NAME")).toString().toStdString();
-        userData.email = currRecord.value(currRecord.indexOf("EMAIL")).toString().toStdString();
-        userData.login = currRecord.value(currRecord.indexOf("LOGIN")).toString().toStdString();
-        userData.passwordHash = currRecord.value(currRecord.indexOf("PASSWORD_HASH")).toString().toStdString();
-        userData.phone = currRecord.value(currRecord.indexOf("PHONE")).toString().toStdString();
-        userData.id = currRecord.value(currRecord.indexOf("ID")).toInt();
+        userData.name = searchQuery.value(rec.indexOf("NAME")).toString().toStdString();
+        userData.email = searchQuery.value(rec.indexOf("EMAIL")).toString().toStdString();
+        userData.login = searchQuery.value(rec.indexOf("LOGIN")).toString().toStdString();
+        userData.passwordHash = searchQuery.value(rec.indexOf("PASSWORD_HASH")).toString().toStdString();
+        userData.phone = searchQuery.value(rec.indexOf("PHONE")).toString().toStdString();
+        userData.id = searchQuery.value(rec.indexOf("ID")).toInt();
 
         if (tableName == "CLIENTS")
         {
             Client *client = new Client(userData);
-            bool clientApproved = currRecord.value(currRecord.indexOf("APPROVED")).toInt();
+            bool clientApproved = searchQuery.value(rec.indexOf("APPROVED")).toInt();
 
             if (clientApproved)
             {
@@ -265,6 +267,7 @@ std::list<Client *> Database::getUnapprovedClients()
         unapprovedClients.push_back((Client *)u);
     }
 
+    std::cout << "unapprovedClients.size() = " << unapprovedClients.size() << "\n";
     return unapprovedClients;
 }
 
