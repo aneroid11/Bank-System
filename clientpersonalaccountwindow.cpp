@@ -6,6 +6,9 @@
 
 #include "clientpersonalaccountwindow.h"
 #include "clientaccountswindow.h"
+#include "clientdepositswindow.h"
+#include "clientcreditswindow.h"
+#include "clientinstallmentswindow.h"
 
 ClientPersonalAccountWindow::ClientPersonalAccountWindow(Client *client, QWidget *parent)
     : QDialog(parent), currClient(client)
@@ -67,24 +70,24 @@ void ClientPersonalAccountWindow::showClientAccountsWindow()
 
 void ClientPersonalAccountWindow::showClientDepositsWindow()
 {
-    ClientAccountsWindow *clientAccountsWindow = new ClientAccountsWindow();
-    clientAccountsWindow->setWindowModality(Qt::ApplicationModal);
-    clientAccountsWindow->exec();
-    delete clientAccountsWindow;
+    ClientDepositsWindow *clientDepositsWindow = new ClientDepositsWindow();
+    clientDepositsWindow->setWindowModality(Qt::ApplicationModal);
+    clientDepositsWindow->exec();
+    delete clientDepositsWindow;
 }
 
 void ClientPersonalAccountWindow::showClientCreditsWindow()
 {
-    ClientAccountsWindow *clientAccountsWindow = new ClientAccountsWindow();
-    clientAccountsWindow->setWindowModality(Qt::ApplicationModal);
-    clientAccountsWindow->exec();
-    delete clientAccountsWindow;
+    ClientCreditsWindow *clientCreditsWindow = new ClientCreditsWindow();
+    clientCreditsWindow->setWindowModality(Qt::ApplicationModal);
+    clientCreditsWindow->exec();
+    delete clientCreditsWindow;
 }
 
 void ClientPersonalAccountWindow::showClientInstallmentsWindow()
 {
-    ClientAccountsWindow *clientAccountsWindow = new ClientAccountsWindow();
-    clientAccountsWindow->setWindowModality(Qt::ApplicationModal);
-    clientAccountsWindow->exec();
-    delete clientAccountsWindow;
+    ClientInstallmentsWindow *clientInstallmentsWindow = new ClientInstallmentsWindow();
+    clientInstallmentsWindow->setWindowModality(Qt::ApplicationModal);
+    clientInstallmentsWindow->exec();
+    delete clientInstallmentsWindow;
 }
