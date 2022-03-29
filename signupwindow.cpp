@@ -11,15 +11,8 @@
 SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QDialog(parent), bankSystemModel(bankSystem)
 {
-    setWindowTitle("Регистрация");
+    setWindowTitle("Регистрация нового клиента");
     setFixedSize(400, 400);
-
-    QComboBox *box = new QComboBox(this);
-    box->addItem("Клиент");
-    box->addItem("Специалист стороннего предприятия");
-    box->addItem("Оператор");
-    box->addItem("Менеджер");
-    box->addItem("Администратор");
 
     loginLine = new QLineEdit(this);
     loginLine->setPlaceholderText("Придумайте логин");
@@ -41,24 +34,13 @@ SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     QPushButton *sendRequest = new QPushButton("Отправить запрос на регистрацию", this);
     connect(sendRequest, &QPushButton::pressed, this, &SignupWindow::sendSignupRequest);
 
-    QPushButton *back = new QPushButton("Назад", this);
-    connect(back, &QPushButton::pressed, this, &SignupWindow::back);
-
     QGridLayout *gridLayout = new QGridLayout(this);
-    gridLayout->addWidget(box, 0, 0);
-    gridLayout->addWidget(loginLine, 1, 0);
-    gridLayout->addWidget(passwordLine, 2, 0);
-    gridLayout->addWidget(nameLine, 3, 0);
-    gridLayout->addWidget(phoneLine, 4, 0);
-    gridLayout->addWidget(emailLine, 5, 0);
-    gridLayout->addWidget(sendRequest, 6, 0);
-    gridLayout->addWidget(back, 7, 0);
-}
-
-void SignupWindow::back()
-{
-    this->close();
-    emit showAuthWindow();
+    gridLayout->addWidget(loginLine, 0, 0);
+    gridLayout->addWidget(passwordLine, 1, 0);
+    gridLayout->addWidget(nameLine, 2, 0);
+    gridLayout->addWidget(phoneLine, 3, 0);
+    gridLayout->addWidget(emailLine, 4, 0);
+    gridLayout->addWidget(sendRequest, 5, 0);
 }
 
 void SignupWindow::sendSignupRequest()
@@ -97,7 +79,7 @@ void SignupWindow::sendSignupRequest()
     msgBox.setText("Ваша заявка будет рассмотрена менеджером. Пожалуйста, подождите одобрения заявки");
     msgBox.exec();
 
-    back();
+    close();
 }
 
 bool SignupWindow::notAllFieldsAreFilled()

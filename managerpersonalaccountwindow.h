@@ -17,11 +17,7 @@ public:
 
     void setCurrentManagerData(Manager *mgr);
 
-signals:
-    void showAuthorizationWindow();
-
 private slots:
-    void back();
     void showSignupRequests();
 
 private:

@@ -19,11 +19,7 @@ public:
 
     void setBankName(const QString bank);
 
-signals:
-    void showMainWindow();
-
 private slots:
-    void back();
     void enter();
     void signup();
 
@@ -31,11 +27,6 @@ private:
     QString bankName = "";
     IBankSystemModel *bankSystemModel;
     QLineEdit *loginLine, *passwordLine;
-
-    // child windows
-    ClientPersonalAccountWindow *clientPersonalAccWindow;
-    ManagerPersonalAccountWindow *managerPersonalAccWindow;
-    SignupWindow* signupWindow;
 };
 
 #endif // AUTHORIZATIONWINDOW_H

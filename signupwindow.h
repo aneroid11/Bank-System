@@ -12,11 +12,7 @@ class SignupWindow : public QDialog
 public:
     explicit SignupWindow(IBankSystemModel *bankSystem, QWidget *parent = nullptr);
 
-signals:
-    void showAuthWindow();
-
 private slots:
-    void back();
     void sendSignupRequest();
 
 private:

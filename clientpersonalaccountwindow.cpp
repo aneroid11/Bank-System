@@ -35,35 +35,13 @@ ClientPersonalAccountWindow::ClientPersonalAccountWindow(QWidget *parent) : QDia
 
     infoTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    /*QPushButton* openAccount = new QPushButton("Открыть счёт", this);
-
-    QPushButton* closeAccount = new QPushButton("Закрыть счёт", this);
-
-    QPushButton* withdraw = new QPushButton("Снять деньги со счёта", this);
-
-    QPushButton*
-    gridLayout->addWidget(openAccount, 2, 0);
-    gridLayout->addWidget(closeAccount, 3, 0);
-    gridLayout->addWidget(withdraw, 4, 0);
-*/
-
     QPushButton* accDepWork = new QPushButton("Счета и вклады", this);
     QPushButton* credits = new QPushButton("Кредиты", this);
     QPushButton* installments = new QPushButton("Рассрочки", this);
-
-    QPushButton* back = new QPushButton("Назад", this);
-    connect(back, &QPushButton::pressed, this, &ClientPersonalAccountWindow::back);
 
     gridLayout->addWidget(userInfoLabel, 0, 0);
     gridLayout->addWidget(infoTable, 1, 0);
     gridLayout->addWidget(accDepWork, 2, 0);
     gridLayout->addWidget(credits, 3, 0);
     gridLayout->addWidget(installments, 4, 0);
-    gridLayout->addWidget(back, 5, 0);
-}
-
-void ClientPersonalAccountWindow::back()
-{
-    this->close();
-    emit showAuthorizationWindow();
 }

@@ -34,13 +34,9 @@ ManagerPersonalAccountWindow::ManagerPersonalAccountWindow(IBankSystemModel *ban
     QPushButton *showClientsSignupRequests = new QPushButton("Запросы на регистрацию", this);
     connect(showClientsSignupRequests, &QPushButton::pressed, this, &ManagerPersonalAccountWindow::showSignupRequests);
 
-    QPushButton *back = new QPushButton("Назад", this);
-    connect(back, &QPushButton::pressed, this, &ManagerPersonalAccountWindow::back);
-
     gridLayout->addWidget(userInfoLabel, 0, 0);
     gridLayout->addWidget(infoTable, 1, 0);
     gridLayout->addWidget(showClientsSignupRequests, 2, 0);
-    gridLayout->addWidget(back, 3, 0);
 }
 
 ManagerPersonalAccountWindow::~ManagerPersonalAccountWindow()
@@ -74,10 +70,4 @@ void ManagerPersonalAccountWindow::showSignupRequests()
     signupRequestsWindow->setWindowModality(Qt::ApplicationModal);
     signupRequestsWindow->exec();
     delete signupRequestsWindow;
-}
-
-void ManagerPersonalAccountWindow::back()
-{
-    this->close();
-    emit showAuthorizationWindow();
 }
