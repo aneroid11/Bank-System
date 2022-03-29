@@ -12,18 +12,6 @@ ClientAccountsWindow::ClientAccountsWindow()
 
     setWindowTitle("Работа со счетами");
 
-    /*
-     *
-1) Открывать
-2) закрывать
-3) хранить
-4) снимать деньги
-5) Перевод
-6) Накопление
-7) Блокировка
-8) Заморозка
-     * */
-
     QGridLayout *gridLayout = new QGridLayout(this);
 
     QListWidget *accountsListWidget = new QListWidget(this);
