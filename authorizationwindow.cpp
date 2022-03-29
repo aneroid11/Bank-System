@@ -14,7 +14,7 @@
 #include "wronguserpasswordexception.h"
 
 AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *parent)
-    : QWidget(parent), bankSystemModel(bankSystem)
+    : QDialog(parent), bankSystemModel(bankSystem)
 {
     setFixedWidth(400);
     setFixedHeight(200);

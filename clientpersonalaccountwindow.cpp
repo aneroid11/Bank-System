@@ -6,7 +6,7 @@
 
 #include "clientpersonalaccountwindow.h"
 
-ClientPersonalAccountWindow::ClientPersonalAccountWindow(QWidget *parent) : QWidget(parent)
+ClientPersonalAccountWindow::ClientPersonalAccountWindow(QWidget *parent) : QDialog(parent)
 {
     setFixedWidth(500);
     setFixedHeight(500);

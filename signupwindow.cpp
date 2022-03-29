@@ -9,7 +9,7 @@
 #include <QMessageBox>
 
 SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
-    : QWidget(parent), bankSystemModel(bankSystem)
+    : QDialog(parent), bankSystemModel(bankSystem)
 {
     setWindowTitle("Регистрация");
     setFixedSize(400, 400);

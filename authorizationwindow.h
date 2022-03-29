@@ -1,7 +1,7 @@
 #ifndef AUTHORIZATIONWINDOW_H
 #define AUTHORIZATIONWINDOW_H
 
-#include <QWidget>
+#include <QDialog>
 
 #include "ibanksystemmodel.h"
 
@@ -10,7 +10,7 @@ class ClientPersonalAccountWindow;
 class ManagerPersonalAccountWindow;
 class SignupWindow;
 
-class AuthorizationWindow : public QWidget
+class AuthorizationWindow : public QDialog
 {
     Q_OBJECT
 public:

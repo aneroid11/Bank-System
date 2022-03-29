@@ -19,7 +19,6 @@ private slots:
     void showAuthWindow();
 
 private:
-    AuthorizationWindow* authWindow;
     QListWidget* bankListWidget;
 
     QString selectedBank = "";

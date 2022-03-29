@@ -1,9 +1,9 @@
 #ifndef CLIENTPERSONALACCOUNTWINDOW_H
 #define CLIENTPERSONALACCOUNTWINDOW_H
 
-#include <QWidget>
+#include <QDialog>
 
-class ClientPersonalAccountWindow : public QWidget
+class ClientPersonalAccountWindow : public QDialog
 {
     Q_OBJECT
 public:

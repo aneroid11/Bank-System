@@ -1,14 +1,14 @@
 #ifndef MANAGERPERSONALACCOUNTWINDOW_H
 #define MANAGERPERSONALACCOUNTWINDOW_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QTableWidget>
 
 #include "ibanksystemmodel.h"
 #include "manager.h"
 #include "signuprequestswindow.h"
 
-class ManagerPersonalAccountWindow : public QWidget
+class ManagerPersonalAccountWindow : public QDialog
 {
     Q_OBJECT
 public:

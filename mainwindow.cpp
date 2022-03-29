@@ -24,15 +24,10 @@ MainWindow::MainWindow(IBankSystemModel* bankSystem, QWidget *parent)
     QPushButton* authButton = new QPushButton("Авторизоваться", this);
     connect(authButton, &QPushButton::pressed, this, &MainWindow::showAuthWindow);
     grid->addWidget(authButton, 1, 0);
-
-    authWindow = new AuthorizationWindow(bankSystemModel);
-
-    connect(authWindow, &AuthorizationWindow::showMainWindow, this, &MainWindow::show);
 }
 
 MainWindow::~MainWindow()
 {
-    delete authWindow;
 }
 
 void MainWindow::showAuthWindow()
@@ -52,7 +47,9 @@ void MainWindow::showAuthWindow()
 
     bankSystemModel->setCurrentBank(selectedBank.toStdString());
 
-    this->close();
+    AuthorizationWindow *authWindow = new AuthorizationWindow(bankSystemModel);
     authWindow->setBankName(selectedBank);
-    authWindow->show();
+    authWindow->setWindowModality(Qt::ApplicationModal);
+    authWindow->exec();
+    delete authWindow;
 }

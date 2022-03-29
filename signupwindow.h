@@ -1,12 +1,12 @@
 #ifndef SIGNUPWINDOW_H
 #define SIGNUPWINDOW_H
 
-#include <QWidget>
+#include <QDialog>
 
 class QLineEdit;
 class IBankSystemModel;
 
-class SignupWindow : public QWidget
+class SignupWindow : public QDialog
 {
     Q_OBJECT
 public:
