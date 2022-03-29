@@ -5,6 +5,7 @@
 #include <QHeaderView>
 
 #include "clientpersonalaccountwindow.h"
+#include "clientaccountswindow.h"
 
 ClientPersonalAccountWindow::ClientPersonalAccountWindow(Client *client, QWidget *parent)
     : QDialog(parent), currClient(client)
@@ -37,9 +38,16 @@ ClientPersonalAccountWindow::ClientPersonalAccountWindow(Client *client, QWidget
     infoTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     QPushButton *accountsWork = new QPushButton("Счета", this);
+    connect(accountsWork, &QPushButton::clicked, this, &ClientPersonalAccountWindow::showClientAccountsWindow);
+
     QPushButton *depositsWork = new QPushButton("Вклады", this);
+    connect(depositsWork, &QPushButton::clicked, this, &ClientPersonalAccountWindow::showClientDepositsWindow);
+
     QPushButton *credits = new QPushButton("Кредиты", this);
+    connect(credits, &QPushButton::clicked, this, &ClientPersonalAccountWindow::showClientCreditsWindow);
+
     QPushButton *installments = new QPushButton("Рассрочки", this);
+    connect(installments, &QPushButton::clicked, this, &ClientPersonalAccountWindow::showClientInstallmentsWindow);
 
     gridLayout->addWidget(userInfoLabel, 0, 0);
     gridLayout->addWidget(infoTable, 1, 0);
@@ -47,4 +55,36 @@ ClientPersonalAccountWindow::ClientPersonalAccountWindow(Client *client, QWidget
     gridLayout->addWidget(depositsWork, 3, 0);
     gridLayout->addWidget(credits, 4, 0);
     gridLayout->addWidget(installments, 5, 0);
+}
+
+void ClientPersonalAccountWindow::showClientAccountsWindow()
+{
+    ClientAccountsWindow *clientAccountsWindow = new ClientAccountsWindow();
+    clientAccountsWindow->setWindowModality(Qt::ApplicationModal);
+    clientAccountsWindow->exec();
+    delete clientAccountsWindow;
+}
+
+void ClientPersonalAccountWindow::showClientDepositsWindow()
+{
+    ClientAccountsWindow *clientAccountsWindow = new ClientAccountsWindow();
+    clientAccountsWindow->setWindowModality(Qt::ApplicationModal);
+    clientAccountsWindow->exec();
+    delete clientAccountsWindow;
+}
+
+void ClientPersonalAccountWindow::showClientCreditsWindow()
+{
+    ClientAccountsWindow *clientAccountsWindow = new ClientAccountsWindow();
+    clientAccountsWindow->setWindowModality(Qt::ApplicationModal);
+    clientAccountsWindow->exec();
+    delete clientAccountsWindow;
+}
+
+void ClientPersonalAccountWindow::showClientInstallmentsWindow()
+{
+    ClientAccountsWindow *clientAccountsWindow = new ClientAccountsWindow();
+    clientAccountsWindow->setWindowModality(Qt::ApplicationModal);
+    clientAccountsWindow->exec();
+    delete clientAccountsWindow;
 }

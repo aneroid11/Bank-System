@@ -11,6 +11,12 @@ class ClientPersonalAccountWindow : public QDialog
 public:
     explicit ClientPersonalAccountWindow(Client *client, QWidget *parent = nullptr);
 
+private slots:
+    void showClientAccountsWindow();
+    void showClientDepositsWindow();
+    void showClientCreditsWindow();
+    void showClientInstallmentsWindow();
+
 private:
     Client *currClient;
 };

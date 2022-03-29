@@ -20,6 +20,7 @@ SOURCES += \
     authorizationwindow.cpp \
     banksystemmodel.cpp \
     client.cpp \
+    clientaccountswindow.cpp \
     clientpersonalaccountwindow.cpp \
     database.cpp \
     enterprisespecialist.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     banksystemmodel.h \
     cannotopendbexception.h \
     client.h \
+    clientaccountswindow.h \
     clientpersonalaccountwindow.h \
     database.h \
     dbexception.h \
