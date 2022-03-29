@@ -9,26 +9,26 @@ ClientDepositsWindow::ClientDepositsWindow()
     setFixedWidth(500);
     setFixedHeight(500);
 
-    setWindowTitle("Работа со счетами");
+    setWindowTitle("Работа со вкладами");
+
+    /*
+     * a. Создание
+     * a. Закрытие (не надо)
+     * e. Накопление
+     * */
 
     QGridLayout *gridLayout = new QGridLayout(this);
 
     QListWidget *accountsListWidget = new QListWidget(this);
 
-    accountsListWidget->insertItem(0, "24918239183293, 2%, на балансе 3000 руб.");
-    accountsListWidget->insertItem(1, "90812903912309, 3%, на балансе 440 руб.");
-    accountsListWidget->insertItem(2, "31891289819899, 1%, на балансе 4000 руб.");
+    accountsListWidget->insertItem(0, "24918239183293, 2%, текущая сумма: 3000 руб.");
+    accountsListWidget->insertItem(1, "90812903912309, 3%, текущая сумма: 440 руб.");
+    accountsListWidget->insertItem(2, "31891289819899, 1%, текущая сумма: 4000 руб.");
 
-    QPushButton *openAccount = new QPushButton("Открыть новый счёт", this);
-    QPushButton *closeAccount = new QPushButton("Закрыть счёт", this);
-    QPushButton *withdraw = new QPushButton("Снять деньги", this);
-    QPushButton *transfer = new QPushButton("Перевести деньги", this);
+    QPushButton *openDeposit = new QPushButton("Открыть новый вклад", this);
     QPushButton *putMoney = new QPushButton("Положить деньги", this);
 
     gridLayout->addWidget(accountsListWidget, 0, 0);
-    gridLayout->addWidget(openAccount, 1, 0);
-    gridLayout->addWidget(closeAccount, 2, 0);
-    gridLayout->addWidget(withdraw, 3, 0);
-    gridLayout->addWidget(transfer, 4, 0);
-    gridLayout->addWidget(putMoney, 5, 0);
+    gridLayout->addWidget(openDeposit, 1, 0);
+    gridLayout->addWidget(putMoney, 2, 0);
 }
