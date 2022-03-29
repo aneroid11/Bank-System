@@ -112,9 +112,4 @@ void ClientPersonalAccountWindow::showSalaryProjectWindow()
         msg.setText("Пожалуйста, подождите её одобрения оператором");
         msg.exec();
     }
-
-    /*ClientInstallmentsWindow *clientInstallmentsWindow = new ClientInstallmentsWindow();
-    clientInstallmentsWindow->setWindowModality(Qt::ApplicationModal);
-    clientInstallmentsWindow->exec();
-    delete clientInstallmentsWindow;*/
 }
