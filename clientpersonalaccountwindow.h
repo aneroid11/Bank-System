@@ -3,11 +3,16 @@
 
 #include <QDialog>
 
+#include "client.h"
+
 class ClientPersonalAccountWindow : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ClientPersonalAccountWindow(QWidget *parent = nullptr);
+    explicit ClientPersonalAccountWindow(Client *client, QWidget *parent = nullptr);
+
+private:
+    Client *currClient;
 };
 
 #endif // CLIENTPERSONALACCOUNTWINDOW_H

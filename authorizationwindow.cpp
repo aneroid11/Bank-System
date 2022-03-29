@@ -88,7 +88,8 @@ void AuthorizationWindow::enter()
             return;
         }
 
-        ClientPersonalAccountWindow *clientPersonalAccWindow = new ClientPersonalAccountWindow();
+        ClientPersonalAccountWindow *clientPersonalAccWindow =
+                new ClientPersonalAccountWindow((Client *)loggedInUser);
         clientPersonalAccWindow->setWindowModality(Qt::ApplicationModal);
         clientPersonalAccWindow->exec();
 
