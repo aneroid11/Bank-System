@@ -51,8 +51,6 @@ private:
     void createManagersTable();
     void createAdministratorsTable();
 
-    User *createUserFromRawData(const UserRawData &rawData, std::string type);
-
     QSqlDatabase database;
     //sqlite3 *database;
 };

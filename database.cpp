@@ -217,12 +217,12 @@ std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
 {
     std::string query = std::string("SELECT * FROM ") + tableName +
             " WHERE " + parameterName + " = \'" + parameterValue + "\';";
-    QSqlQuery searchQuery(query.c_str());
-    //searchQuery.prepare(query.c_str());
+
+    QSqlQuery searchQuery;
+    searchQuery.prepare(query.c_str());
+    searchQuery.exec();
 
     const QSqlRecord rec = searchQuery.record();
-
-    //std::cout << searchQuery.executedQuery().toStdString() << "\n";
 
     std::list<User *> users;
 
@@ -271,37 +271,6 @@ std::list<Client *> Database::getUnapprovedClients()
     return unapprovedClients;
 }
 
-User *Database::createUserFromRawData(const UserRawData& data, std::string type)
-{
-    User::Data userData;
-
-    userData.id = atoi(data.rowFields[0].c_str());
-    userData.name = data.rowFields[1];
-    userData.passwordHash = data.rowFields[2];
-    userData.login = data.rowFields[3];
-    userData.phone = data.rowFields[4];
-    userData.email = data.rowFields[5];
-
-    if (type == "CLIENTS")
-    {
-        Client *client = new Client(userData);
-        bool clientApproved = atoi(data.rowFields[6].c_str());
-
-        if (clientApproved)
-        {
-            client->approve();
-        }
-        return client;
-    }
-    if (type == "MANAGERS")
-    {
-        Manager *manager = new Manager(userData);
-        return manager;
-    }
-
-    return nullptr;
-}
-
 User *Database::getUserData(std::string login, std::string &type)
 {
     std::vector<std::string> tablesToCheck = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
@@ -311,8 +280,9 @@ User *Database::getUserData(std::string login, std::string &type)
         std::string query = std::string("SELECT * FROM ") + tableName + " WHERE LOGIN = \'" + login + "\';";
         QSqlQuery getQuery;
         getQuery.prepare(query.c_str());
+        getQuery.exec();
 
-        if (getQuery.exec() && getQuery.next())
+        if (getQuery.next())
         {
             type = tableName;
 
