@@ -320,41 +320,6 @@ std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
     {
         User *currUser = createUserFromData(searchQuery, rec, tableName);
         users.push_back(currUser);
-
-        /*User::Data userData;
-        userData.name = searchQuery.value(rec.indexOf("NAME")).toString().toStdString();
-        userData.email = searchQuery.value(rec.indexOf("EMAIL")).toString().toStdString();
-        userData.login = searchQuery.value(rec.indexOf("LOGIN")).toString().toStdString();
-        userData.passwordHash = searchQuery.value(rec.indexOf("PASSWORD_HASH")).toString().toStdString();
-        userData.phone = searchQuery.value(rec.indexOf("PHONE")).toString().toStdString();
-        userData.id = searchQuery.value(rec.indexOf("ID")).toInt();
-
-        if (tableName == "CLIENTS")
-        {
-            Client *client = new Client(userData);
-            bool clientApproved = searchQuery.value(rec.indexOf("APPROVED")).toInt();
-
-            if (clientApproved)
-            {
-                client->approve();
-            }
-            users.push_back(client);
-        }
-        else if (tableName == "MANAGERS")
-        {
-            Manager *manager = new Manager(userData);
-            users.push_back(manager);
-        }
-        else if (tableName == "ADMINISTRATORS")
-        {
-            Administrator *adm = new Administrator(userData);
-            users.push_back(adm);
-        }
-        else if (tableName == "OPERATORS")
-        {
-            Operator *op = new Operator(userData);
-            users.push_back(op);
-        }*/
     }
 
     return users;
@@ -390,30 +355,7 @@ User *Database::getUserData(std::string login, std::string &type)
             type = tableName;
 
             const QSqlRecord &currRecord = getQuery.record();
-            User::Data userData;
-            userData.name = currRecord.value(currRecord.indexOf("NAME")).toString().toStdString();
-            userData.email = currRecord.value(currRecord.indexOf("EMAIL")).toString().toStdString();
-            userData.login = currRecord.value(currRecord.indexOf("LOGIN")).toString().toStdString();
-            userData.passwordHash = currRecord.value(currRecord.indexOf("PASSWORD_HASH")).toString().toStdString();
-            userData.phone = currRecord.value(currRecord.indexOf("PHONE")).toString().toStdString();
-            userData.id = currRecord.value(currRecord.indexOf("ID")).toInt();
-
-            if (tableName == "CLIENTS")
-            {
-                Client *client = new Client(userData);
-                bool clientApproved = currRecord.value(currRecord.indexOf("APPROVED")).toInt();
-
-                if (clientApproved)
-                {
-                    client->approve();
-                }
-                return client;
-            }
-            if (tableName == "MANAGERS")
-            {
-                Manager *manager = new Manager(userData);
-                return manager;
-            }
+            return createUserFromData(getQuery, currRecord, tableName);
         }
     }
 
