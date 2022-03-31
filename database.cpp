@@ -113,8 +113,6 @@ void Database::addClient(const Client &client)
 
 void Database::addManager(const Manager &manager)
 {
-    std::cout << "Adding manager: " << manager.getName() << "\n";
-
     if (hasUser(manager.getLogin()))
     {
         throw UserAlreadyExistsException();
@@ -133,6 +131,16 @@ void Database::addManager(const Manager &manager)
     QSqlQuery sqlQuery;
     sqlQuery.prepare(query.c_str());
     sqlQuery.exec();
+}
+
+void Database::addOperator(const Operator &op)
+{
+
+}
+
+void Database::addAdministrator(const Administrator &admin)
+{
+
 }
 
 void Database::deleteUser(int64_t id)

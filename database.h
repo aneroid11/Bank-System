@@ -12,6 +12,8 @@
 //struct sqlite3;
 class Client;
 class Manager;
+class Operator;
+class Administrator;
 
 struct UserRawData
 {
@@ -29,6 +31,8 @@ public:
 
     void addClient(const Client &client);
     void addManager(const Manager &manager);
+    void addOperator(const Operator &op);
+    void addAdministrator(const Administrator &admin);
 
     void deleteUser(int64_t id);
     bool hasUser(int64_t id);

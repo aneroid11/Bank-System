@@ -19,7 +19,13 @@ public:
                                     std::string name, std::string phone) override;
 
     // TODO: заменить на нормальное появление в базе данных менеджеров, администраторов и операторов
+    void addSampleOperator() override;
+
+    // TODO: заменить на нормальное появление в базе данных менеджеров, администраторов и операторов
     void addSampleManager() override;
+
+    // TODO: заменить на нормальное появление в базе данных менеджеров, администраторов и операторов
+    void addSampleAdministrator() override;
 
     User *getUserData(std::string login, std::string &type) override;
 

@@ -13,7 +13,9 @@ int main(int argc, char *argv[])
     // TODO: убрать
     bankSystemModel->setCurrentBank("Банк \'Стеклянный\'");
     bankSystemModel->addSampleManager();
-    bankSystemModel->test();
+    bankSystemModel->addSampleOperator();
+    bankSystemModel->addSampleAdministrator();
+    //bankSystemModel->test();
     //
 
     QApplication a(argc, argv);

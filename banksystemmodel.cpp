@@ -4,6 +4,7 @@
 #include "banksystemmodel.h"
 #include "client.h"
 #include "manager.h"
+#include "administrator.h"
 #include "hashcomputer.h"
 #include "database.h"
 
@@ -84,6 +85,30 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
     database->addClient(newClient);
 }
 
+void BankSystemModel::addSampleOperator()
+{
+    if (!database) { throw DBNotOpenedException(); }
+
+    Operator::Data data =
+    {
+        database->generateUniqueUserId(),
+        "Example Examplovich Operator",
+        "+3-E-X-A-M-P-L-E-2",
+        "examp@example.com",
+        "samplop",
+        HashComputer().hash("123")
+    };
+    Operator newOperator(data);
+
+    try
+    {
+        database->addOperator(newOperator);
+    }
+    catch (const UserAlreadyExistsException &)
+    {
+    }
+}
+
 void BankSystemModel::addSampleManager()
 {
     if (!database) { throw DBNotOpenedException(); }
@@ -102,6 +127,30 @@ void BankSystemModel::addSampleManager()
     try
     {
         database->addManager(newManager);
+    }
+    catch (const UserAlreadyExistsException &)
+    {
+    }
+}
+
+void BankSystemModel::addSampleAdministrator()
+{
+    if (!database) { throw DBNotOpenedException(); }
+
+    Administrator::Data data =
+    {
+        database->generateUniqueUserId(),
+        "Example Admin",
+        "+332424442424",
+        "exa@exa.com",
+        "sampladm",
+        HashComputer().hash("123")
+    };
+    Administrator newAdm(data);
+
+    try
+    {
+        database->addAdministrator(newAdm);
     }
     catch (const UserAlreadyExistsException &)
     {
