@@ -1,6 +1,5 @@
 #include <iostream>
 
-//#include <sqlite3.h>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
@@ -12,6 +11,7 @@
 
 #include "client.h"
 #include "manager.h"
+#include "administrator.h"
 
 #include "cannotopendbexception.h"
 #include "useralreadyexistsexception.h"
@@ -135,12 +135,46 @@ void Database::addManager(const Manager &manager)
 
 void Database::addOperator(const Operator &op)
 {
+    if (hasUser(op.getLogin()))
+    {
+        throw UserAlreadyExistsException();
+    }
 
+    std::string query = "INSERT INTO OPERATORS ";
+    query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL) ";
+    query += "VALUES (";
+    query += std::to_string(op.getId()) + ", ";
+    query += "\'" + op.getName() + "\', ";
+    query += "\'" + op.getPasswordHash() + "\', ";
+    query += "\'" + op.getLogin() + "\', ";
+    query += "\'" + op.getPhone() + "\', ";
+    query += "\'" + op.getEmail() + "\');";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
 }
 
 void Database::addAdministrator(const Administrator &admin)
 {
+    if (hasUser(admin.getLogin()))
+    {
+        throw UserAlreadyExistsException();
+    }
 
+    std::string query = "INSERT INTO ADMINISTRATORS ";
+    query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL) ";
+    query += "VALUES (";
+    query += std::to_string(admin.getId()) + ", ";
+    query += "\'" + admin.getName() + "\', ";
+    query += "\'" + admin.getPasswordHash() + "\', ";
+    query += "\'" + admin.getLogin() + "\', ";
+    query += "\'" + admin.getPhone() + "\', ";
+    query += "\'" + admin.getEmail() + "\');";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
 }
 
 void Database::deleteUser(int64_t id)
