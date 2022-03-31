@@ -85,7 +85,15 @@ void Database::createManagersTable()
 
 void Database::createAdministratorsTable()
 {
-
+    QSqlQuery query;
+    query.prepare("CREATE TABLE ADMINISTRATORS("  \
+                  "ID INT NOT NULL," \
+                  "NAME TEXT NOT NULL," \
+                  "PASSWORD_HASH TEXT NOT NULL," \
+                  "LOGIN TEXT," \
+                  "PHONE TEXT," \
+                  "EMAIL TEXT);");
+    query.exec();
 }
 
 void Database::addClient(const Client &client)
@@ -253,6 +261,46 @@ void Database::approveClient(std::string login)
     sqlQuery.exec();
 }
 
+User *Database::createUserFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName)
+{
+    User::Data userData;
+    userData.name = query.value(rec.indexOf("NAME")).toString().toStdString();
+    userData.email = query.value(rec.indexOf("EMAIL")).toString().toStdString();
+    userData.login = query.value(rec.indexOf("LOGIN")).toString().toStdString();
+    userData.passwordHash = query.value(rec.indexOf("PASSWORD_HASH")).toString().toStdString();
+    userData.phone = query.value(rec.indexOf("PHONE")).toString().toStdString();
+    userData.id = query.value(rec.indexOf("ID")).toInt();
+
+    if (tableName == "CLIENTS")
+    {
+        Client *client = new Client(userData);
+        bool clientApproved = query.value(rec.indexOf("APPROVED")).toInt();
+
+        if (clientApproved)
+        {
+            client->approve();
+        }
+        return client;
+    }
+    if (tableName == "MANAGERS")
+    {
+        Manager *manager = new Manager(userData);
+        return manager;
+    }
+    if (tableName == "ADMINISTRATORS")
+    {
+        Administrator *adm = new Administrator(userData);
+        return adm;
+    }
+    if (tableName == "OPERATORS")
+    {
+        Operator *op = new Operator(userData);
+        return op;
+    }
+
+    return nullptr;
+}
+
 std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
                                                          std::string parameterName,
                                                          std::string parameterValue)
@@ -270,7 +318,10 @@ std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
 
     while (searchQuery.next())
     {
-        User::Data userData;
+        User *currUser = createUserFromData(searchQuery, rec, tableName);
+        users.push_back(currUser);
+
+        /*User::Data userData;
         userData.name = searchQuery.value(rec.indexOf("NAME")).toString().toStdString();
         userData.email = searchQuery.value(rec.indexOf("EMAIL")).toString().toStdString();
         userData.login = searchQuery.value(rec.indexOf("LOGIN")).toString().toStdString();
@@ -294,6 +345,16 @@ std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
             Manager *manager = new Manager(userData);
             users.push_back(manager);
         }
+        else if (tableName == "ADMINISTRATORS")
+        {
+            Administrator *adm = new Administrator(userData);
+            users.push_back(adm);
+        }
+        else if (tableName == "OPERATORS")
+        {
+            Operator *op = new Operator(userData);
+            users.push_back(op);
+        }*/
     }
 
     return users;
