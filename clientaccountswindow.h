@@ -13,6 +13,7 @@ public:
 
 private slots:
     void openAccount();
+    void showAccountInfo();
 
 private:
     IBankSystemModel *bankSystemModel;

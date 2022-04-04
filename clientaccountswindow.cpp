@@ -4,6 +4,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
+#include <QMessageBox>
 
 #include "ibanksystemmodel.h"
 #include "client.h"
@@ -33,16 +34,31 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
     QPushButton *transfer = new QPushButton("Перевести деньги", this);
     QPushButton *putMoney = new QPushButton("Положить деньги", this);
 
+    QPushButton *showAccInfo = new QPushButton("Информация о счёте", this);
+    connect(showAccInfo, &QPushButton::clicked, this, &ClientAccountsWindow::showAccountInfo);
+
     gridLayout->addWidget(accountsListWidget, 0, 0);
-    gridLayout->addWidget(openAccount, 1, 0);
-    gridLayout->addWidget(closeAccount, 2, 0);
-    gridLayout->addWidget(withdraw, 3, 0);
-    gridLayout->addWidget(transfer, 4, 0);
-    gridLayout->addWidget(putMoney, 5, 0);
+    gridLayout->addWidget(showAccInfo, 1, 0);
+    gridLayout->addWidget(openAccount, 2, 0);
+    gridLayout->addWidget(closeAccount, 3, 0);
+    gridLayout->addWidget(withdraw, 4, 0);
+    gridLayout->addWidget(transfer, 5, 0);
+    gridLayout->addWidget(putMoney, 6, 0);
 }
 
 void ClientAccountsWindow::openAccount()
 {
     std::cout << "Open account for " << client->getLogin() << "\n";
-    bankSystemModel->openAccountForClient(client);
+    //bankSystemModel->openAccountForClient(client);
+}
+
+void ClientAccountsWindow::showAccountInfo()
+{
+    QMessageBox msgBox;
+    QString info = "Процентная ставка: 2%\n";
+    info += "Баланс: 2000 руб.\n";
+    info += "Создан: 25.04.22 в 09:00\n";
+    msgBox.setWindowTitle("Информация о счёте");
+    msgBox.setText(info);
+    msgBox.exec();
 }

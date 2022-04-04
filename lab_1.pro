@@ -37,6 +37,7 @@ SOURCES += \
     operatorpersonalaccountwindow.cpp \
     signuprequestswindow.cpp \
     signupwindow.cpp \
+    somethingholdingmoney.cpp \
     user.cpp
 
 HEADERS += \
@@ -65,6 +66,7 @@ HEADERS += \
     operatorpersonalaccountwindow.h \
     signuprequestswindow.h \
     signupwindow.h \
+    somethingholdingmoney.h \
     user.h \
     useralreadyexistsexception.h \
     wronguserpasswordexception.h
