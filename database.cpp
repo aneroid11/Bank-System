@@ -19,7 +19,8 @@
 
 Database::Database(std::string filename)
 {
-    database = QSqlDatabase::addDatabase("QSQLITE");
+    //qDebug() << QSqlDatabase::drivers();
+    database = QSqlDatabase::addDatabase("QSQLCIPHER");
     database.setDatabaseName(filename.c_str());
 
     if (!database.open())
@@ -27,6 +28,9 @@ Database::Database(std::string filename)
         //throw CannotOpenDBException(sqlite3_errmsg(database));
         throw CannotOpenDBException(database.lastError().text().toStdString());
     }
+
+    QSqlQuery query;
+    query.exec("PRAGMA key = 'not_key_for_db_encryption';");
 
     createClientsTable();
     createOperatorsTable();
@@ -36,7 +40,6 @@ Database::Database(std::string filename)
 
 Database::~Database()
 {
-    //sqlite3_close(database);
     if (database.isOpen())
     {
         database.close();

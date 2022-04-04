@@ -11,8 +11,11 @@
 #include "clientcreditswindow.h"
 #include "clientinstallmentswindow.h"
 
-ClientPersonalAccountWindow::ClientPersonalAccountWindow(Client *client, QWidget *parent)
-    : QDialog(parent), currClient(client)
+#include "ibanksystemmodel.h"
+#include "client.h"
+
+ClientPersonalAccountWindow::ClientPersonalAccountWindow(IBankSystemModel *bankSystem, Client *client, QWidget *parent)
+    : QDialog(parent), currClient(client), bankSystemModel(bankSystem)
 {
     setFixedWidth(500);
     setFixedHeight(500);
@@ -67,7 +70,7 @@ ClientPersonalAccountWindow::ClientPersonalAccountWindow(Client *client, QWidget
 
 void ClientPersonalAccountWindow::showClientAccountsWindow()
 {
-    ClientAccountsWindow *clientAccountsWindow = new ClientAccountsWindow();
+    ClientAccountsWindow *clientAccountsWindow = new ClientAccountsWindow(bankSystemModel, currClient);
     clientAccountsWindow->setWindowModality(Qt::ApplicationModal);
     clientAccountsWindow->exec();
     delete clientAccountsWindow;

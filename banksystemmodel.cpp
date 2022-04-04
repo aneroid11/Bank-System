@@ -176,3 +176,8 @@ std::list<Client *> BankSystemModel::getUnapprovedClients()
 
     return database->getUnapprovedClients();
 }
+
+void BankSystemModel::openAccountForClient(Client *client)
+{
+
+}

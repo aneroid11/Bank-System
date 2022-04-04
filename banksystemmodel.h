@@ -33,6 +33,8 @@ public:
 
     void approveClient(std::string login) override;
 
+    void openAccountForClient(Client *client) override;
+
     void test() override;
 
 private:

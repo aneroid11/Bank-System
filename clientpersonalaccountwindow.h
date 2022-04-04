@@ -3,13 +3,14 @@
 
 #include <QDialog>
 
-#include "client.h"
+class Client;
+class IBankSystemModel;
 
 class ClientPersonalAccountWindow : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ClientPersonalAccountWindow(Client *client, QWidget *parent = nullptr);
+    explicit ClientPersonalAccountWindow(IBankSystemModel *bankSystemModel, Client *client, QWidget *parent = nullptr);
 
 private slots:
     void showClientAccountsWindow();
@@ -20,6 +21,7 @@ private slots:
 
 private:
     Client *currClient;
+    IBankSystemModel *bankSystemModel;
 };
 
 #endif // CLIENTPERSONALACCOUNTWINDOW_H

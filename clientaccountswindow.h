@@ -3,10 +3,20 @@
 
 #include <QDialog>
 
+class IBankSystemModel;
+class Client;
+
 class ClientAccountsWindow : public QDialog
 {
 public:
-    ClientAccountsWindow();
+    ClientAccountsWindow(IBankSystemModel *bankSystem, Client *cl);
+
+private slots:
+    void openAccount();
+
+private:
+    IBankSystemModel *bankSystemModel;
+    Client *client;
 };
 
 #endif // CLIENTACCOUNTSWINDOW_H

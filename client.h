@@ -13,6 +13,8 @@ public:
     void approve() { approved = true; }
     bool isApproved() const { return approved; }
 
+    void openAccount();
+
 private:
     bool approved = false;
 };

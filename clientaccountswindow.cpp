@@ -1,11 +1,16 @@
+#include <iostream>
+
 #include <QPushButton>
 #include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
 
+#include "ibanksystemmodel.h"
+#include "client.h"
 #include "clientaccountswindow.h"
 
-ClientAccountsWindow::ClientAccountsWindow()
+ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client *cl)
+    : bankSystemModel(bankSystem), client(cl)
 {
     setFixedWidth(500);
     setFixedHeight(500);
@@ -21,6 +26,8 @@ ClientAccountsWindow::ClientAccountsWindow()
     accountsListWidget->insertItem(2, "31891289819899, 1%, на балансе 4000 руб.");
 
     QPushButton *openAccount = new QPushButton("Открыть новый счёт", this);
+    connect(openAccount, &QPushButton::clicked, this, &ClientAccountsWindow::openAccount);
+
     QPushButton *closeAccount = new QPushButton("Закрыть счёт", this);
     QPushButton *withdraw = new QPushButton("Снять деньги", this);
     QPushButton *transfer = new QPushButton("Перевести деньги", this);
@@ -32,4 +39,10 @@ ClientAccountsWindow::ClientAccountsWindow()
     gridLayout->addWidget(withdraw, 3, 0);
     gridLayout->addWidget(transfer, 4, 0);
     gridLayout->addWidget(putMoney, 5, 0);
+}
+
+void ClientAccountsWindow::openAccount()
+{
+    std::cout << "Open account for " << client->getLogin() << "\n";
+    bankSystemModel->openAccountForClient(client);
 }

@@ -39,6 +39,9 @@ public:
     // Подтвердить регистрацию клиента
     virtual void approveClient(std::string login) = 0;
 
+    // Открыть счёт
+    virtual void openAccountForClient(Client *client) = 0;
+
     // Запустить определённые тесты
     virtual void test() = 0;
 };

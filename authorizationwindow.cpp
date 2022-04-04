@@ -91,7 +91,7 @@ void AuthorizationWindow::enter()
         }
 
         ClientPersonalAccountWindow *clientPersonalAccWindow =
-                new ClientPersonalAccountWindow((Client *)loggedInUser);
+                new ClientPersonalAccountWindow(bankSystemModel, (Client *)loggedInUser);
         clientPersonalAccWindow->setWindowModality(Qt::ApplicationModal);
         clientPersonalAccWindow->exec();
 
