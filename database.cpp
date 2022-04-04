@@ -12,6 +12,7 @@
 #include "client.h"
 #include "manager.h"
 #include "administrator.h"
+#include "account.h"
 
 #include "cannotopendbexception.h"
 #include "useralreadyexistsexception.h"
@@ -36,6 +37,7 @@ Database::Database(std::string filename)
     createOperatorsTable();
     createManagersTable();
     createAdministratorsTable();
+    createAccountsTable();
 }
 
 Database::~Database()
@@ -96,6 +98,18 @@ void Database::createAdministratorsTable()
                   "LOGIN TEXT," \
                   "PHONE TEXT," \
                   "EMAIL TEXT);");
+    query.exec();
+}
+
+void Database::createAccountsTable()
+{
+    QSqlQuery query;
+    query.prepare("CREATE TABLE ACCOUNTS("  \
+                  "ID INT NOT NULL," \
+                  "CLIENT_LOGIN TEXT," \
+                  "BALANCE INT," \
+                  "PERCENT REAL," \
+                  "CREATION_DATE INT);");
     query.exec();
 }
 
@@ -188,6 +202,34 @@ void Database::addAdministrator(const Administrator &admin)
     sqlQuery.exec();
 }
 
+void Database::addAccount(const Account &account)
+{
+    if (hasRecord(account.getId()))
+    {
+        std::cout << "Already has such account\n";
+        return;
+    }
+
+    std::string query = "INSERT INTO ACCOUNTS ";
+    /*
+     * ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE
+     * */
+
+    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE) ";
+    query += "VALUES (";
+    query += std::to_string(account.getId()) + ", ";
+    query += "\'" + account.getClientLogin() + "\', ";
+    query += "\'" + std::to_string(account.getBalance()) + "\', ";
+    query += "\'" + std::to_string(account.getPercents()) + "\', ";
+    query += "\'" + std::to_string(account.getCreationTime()) + "\'); ";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
+
+    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
+}
+
 void Database::deleteUser(int64_t id)
 {
     std::string query = "DELETE FROM CLIENTS WHERE ID = ";
@@ -213,6 +255,32 @@ bool Database::hasUser(int64_t id)
         if (checkQuery.exec() && checkQuery.next())
         {
             std::cout << "has user\n";
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Database::hasRecord(int64_t id)
+{
+    bool hasUserWithId = hasUser(id);
+
+    if (hasUserWithId) { return true; }
+
+    // Проверить таблицу со счетами
+    QSqlQuery checkQuery;
+
+    std::string tablesToCheck[] = { "ACCOUNTS" };
+
+    for (const std::string &tableName : tablesToCheck)
+    {
+        std::string query = std::string("SELECT NAME FROM ") + tableName +
+                " WHERE ID = \'" + std::to_string(id) + "\';";
+        checkQuery.prepare(query.c_str());
+
+        if (checkQuery.exec() && checkQuery.next())
+        {
             return true;
         }
     }
@@ -250,6 +318,19 @@ int64_t Database::generateUniqueUserId()
         id = rand() % 1000000;
     }
     while (hasUser(id));
+
+    return id;
+}
+
+int64_t Database::generateUniqueId()
+{
+    int64_t id;
+
+    do
+    {
+        id = rand() % 1000000;
+    }
+    while (hasRecord(id));
 
     return id;
 }

@@ -7,6 +7,7 @@
 #include "administrator.h"
 #include "hashcomputer.h"
 #include "database.h"
+#include "account.h"
 
 #include "dbnotopenedexception.h"
 #include "useralreadyexistsexception.h"
@@ -179,5 +180,6 @@ std::list<Client *> BankSystemModel::getUnapprovedClients()
 
 void BankSystemModel::openAccountForClient(Client *client)
 {
-
+    Account account(database->generateUniqueId(), client->getLogin(), 10, 2.3, time(nullptr));
+    database->addAccount(account);
 }

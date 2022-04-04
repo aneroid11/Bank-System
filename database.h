@@ -14,6 +14,7 @@ class Client;
 class Manager;
 class Operator;
 class Administrator;
+class Account;
 
 struct UserRawData
 {
@@ -33,14 +34,18 @@ public:
     void addManager(const Manager &manager);
     void addOperator(const Operator &op);
     void addAdministrator(const Administrator &admin);
+    void addAccount(const Account &account);
 
     void deleteUser(int64_t id);
     bool hasUser(int64_t id);
     bool hasUser(std::string login);
 
+    bool hasRecord(int64_t id);
+
     void approveClient(std::string login);
 
     int64_t generateUniqueUserId();
+    int64_t generateUniqueId();
 
     std::list<User *> getUsersFromTableByParameter(std::string tableName, std::string parameterName,
                                                    std::string parameterValue);
@@ -54,6 +59,7 @@ private:
     void createOperatorsTable();
     void createManagersTable();
     void createAdministratorsTable();
+    void createAccountsTable();
 
     User *createUserFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);
 

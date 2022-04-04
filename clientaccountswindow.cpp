@@ -49,7 +49,7 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
 void ClientAccountsWindow::openAccount()
 {
     std::cout << "Open account for " << client->getLogin() << "\n";
-    //bankSystemModel->openAccountForClient(client);
+    bankSystemModel->openAccountForClient(client);
 }
 
 void ClientAccountsWindow::showAccountInfo()
