@@ -9,6 +9,8 @@
 #include "authorizationwindow.h"
 #include "clientpersonalaccountwindow.h"
 #include "managerpersonalaccountwindow.h"
+#include "operatorpersonalaccountwindow.h"
+#include "adminpersonalaccountwindow.h"
 #include "signupwindow.h"
 
 #include "wronguserpasswordexception.h"
@@ -106,6 +108,20 @@ void AuthorizationWindow::enter()
         managerPersonalAccWindow->exec();
 
         delete managerPersonalAccWindow;
+    }
+    else if (userType == "OPERATORS")
+    {
+        OperatorPersonalAccountWindow *win = new OperatorPersonalAccountWindow();
+        win->setWindowModality(Qt::ApplicationModal);
+        win->exec();
+        delete win;
+    }
+    else if (userType == "ADMINISTRATORS")
+    {
+        AdminPersonalAccountWindow *adminPersonalAccWindow = new AdminPersonalAccountWindow();
+        adminPersonalAccWindow->setWindowModality(Qt::ApplicationModal);
+        adminPersonalAccWindow->exec();
+        delete adminPersonalAccWindow;
     }
 }
 

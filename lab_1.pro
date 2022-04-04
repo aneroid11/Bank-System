@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     administrator.cpp \
+    adminpersonalaccountwindow.cpp \
     authorizationwindow.cpp \
     banksystemmodel.cpp \
     client.cpp \
@@ -33,12 +34,14 @@ SOURCES += \
     manager.cpp \
     managerpersonalaccountwindow.cpp \
     operator.cpp \
+    operatorpersonalaccountwindow.cpp \
     signuprequestswindow.cpp \
     signupwindow.cpp \
     user.cpp
 
 HEADERS += \
     administrator.h \
+    adminpersonalaccountwindow.h \
     authorizationwindow.h \
     banksystemmodel.h \
     cannotopendbexception.h \
@@ -59,6 +62,7 @@ HEADERS += \
     managerpersonalaccountwindow.h \
     nouserindbexception.h \
     operator.h \
+    operatorpersonalaccountwindow.h \
     signuprequestswindow.h \
     signupwindow.h \
     user.h \
