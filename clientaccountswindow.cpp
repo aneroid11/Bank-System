@@ -81,6 +81,23 @@ void ClientAccountsWindow::openAccount()
     updateClientAccountsListWidget();
 }
 
+int64_t ClientAccountsWindow::getCurrentAccountId()
+{
+    QList<QListWidgetItem*> selectedAccounts = accountsListWidget->selectedItems();
+
+    if (selectedAccounts.size() != 1)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Вы должны выбрать один из счетов");
+        msgBox.exec();
+        return -1;
+    }
+
+    int64_t accId = selectedAccounts[0]->text().toInt();
+    return accId;
+}
+
 void ClientAccountsWindow::putMoney()
 {
     QInputDialog inpDialog;
@@ -97,23 +114,19 @@ void ClientAccountsWindow::putMoney()
     }
     while (!ok);
 
-    std::cout << "got money: " << inpMoney << "\n";
+    int64_t accId = getCurrentAccountId();
+
+    if (accId == -1) { return; }
+
+    bankSystemModel->putMoneyOnAccount(accId, inpMoney);
 }
 
 void ClientAccountsWindow::showAccountInfo()
 {
-    QList<QListWidgetItem*> selectedAccounts = accountsListWidget->selectedItems();
+    int64_t accId = getCurrentAccountId();
 
-    if (selectedAccounts.size() != 1)
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Ошибка");
-        msgBox.setText("Вы должны выбрать один из счетов");
-        msgBox.exec();
-        return;
-    }
+    if (accId == -1) { return; }
 
-    int64_t accId = selectedAccounts[0]->text().toInt();
     bankSystemModel->clientAccountAccumulate(accId);
 
     auto it = std::find_if(std::begin(clientAccounts),

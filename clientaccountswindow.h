@@ -24,6 +24,8 @@ private slots:
     void putMoney();
 
 private:
+    int64_t getCurrentAccountId();
+
     IBankSystemModel *bankSystemModel;
     Client *client;
     std::list<Account *> clientAccounts;

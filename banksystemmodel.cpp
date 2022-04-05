@@ -205,3 +205,8 @@ void BankSystemModel::updateAccountData(Account *acc)
 {
     database->updateAccount(acc);
 }
+
+void BankSystemModel::putMoneyOnAccount(int64_t id, double value)
+{
+    std::cout << "put " << value << " amount of money on " << id << " account\n";
+}

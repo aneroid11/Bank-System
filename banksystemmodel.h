@@ -39,7 +39,9 @@ public:
 
     void clientAccountAccumulate(int64_t idn) override;
 
-    virtual void updateAccountData(Account *acc) override;
+    void updateAccountData(Account *acc) override;
+
+    void putMoneyOnAccount(int64_t id, double value) override;
 
     void test() override;
 

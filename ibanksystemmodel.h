@@ -49,8 +49,11 @@ public:
     // Обновить баланс (начислить проценты) и время обновления баланса
     virtual void clientAccountAccumulate(int64_t id) = 0;
 
-    // Обновить информацию о клиенте
+    // Обновить информацию о счёте
     virtual void updateAccountData(Account *acc) = 0;
+
+    // Положить деньги на счёт
+    virtual void putMoneyOnAccount(int64_t id, double value) = 0;
 
     // Запустить определённые тесты
     virtual void test() = 0;
