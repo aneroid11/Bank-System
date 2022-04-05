@@ -20,7 +20,7 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
 
     QGridLayout *gridLayout = new QGridLayout(this);
 
-    QListWidget *accountsListWidget = new QListWidget(this);
+    accountsListWidget = new QListWidget(this);
 
     // Здесь нужно получать список счетов Клиента из базы данных
     // Отображать нужно только их id'шники
@@ -68,11 +68,34 @@ void ClientAccountsWindow::openAccount()
 
 void ClientAccountsWindow::showAccountInfo()
 {
+    QList<QListWidgetItem*> selectedAccounts = accountsListWidget->selectedItems();
+
+    if (selectedAccounts.size() != 1)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Вы должны выбрать один из счетов");
+        msgBox.exec();
+        return;
+    }
+
+    int64_t accId = selectedAccounts[0]->text().toInt();
+
+    auto it = std::find_if(std::begin(clientAccounts),
+                           std::end(clientAccounts),
+                           [&](const Account *acc){ return acc->getId() == accId; } );
+
+    Account *currAcc = *it;
+
     QMessageBox msgBox;
-    QString info = "Процентная ставка: 2%\n";
-    info += "Баланс: 2000 руб.\n";
-    info += "Создан: 25.04.22 в 09:00\n";
     msgBox.setWindowTitle("Информация о счёте");
-    msgBox.setText(info);
+
+    std::string info;
+    info += "Процентная ставка: " + std::to_string(currAcc->getPercents()) + "\n";
+    info += "Баланс: " + std::to_string(currAcc->getBalance()) + "\n";
+    time_t creationTime = currAcc->getCreationTime();
+    info += "Создан: " + std::string(ctime(&creationTime)) + "\n";
+
+    msgBox.setText(info.c_str());
     msgBox.exec();
 }

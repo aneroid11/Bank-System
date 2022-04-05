@@ -2,6 +2,7 @@
 #define CLIENTACCOUNTSWINDOW_H
 
 #include <QDialog>
+#include <QListWidget>
 
 #include <list>
 
@@ -23,6 +24,8 @@ private:
     IBankSystemModel *bankSystemModel;
     Client *client;
     std::list<Account *> clientAccounts;
+
+    QListWidget *accountsListWidget;
 };
 
 #endif // CLIENTACCOUNTSWINDOW_H
