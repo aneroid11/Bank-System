@@ -3,13 +3,17 @@
 
 #include <QDialog>
 
+#include <list>
+
 class IBankSystemModel;
 class Client;
+class Account;
 
 class ClientAccountsWindow : public QDialog
 {
 public:
     ClientAccountsWindow(IBankSystemModel *bankSystem, Client *cl);
+    ~ClientAccountsWindow();
 
 private slots:
     void openAccount();
@@ -18,6 +22,7 @@ private slots:
 private:
     IBankSystemModel *bankSystemModel;
     Client *client;
+    std::list<Account *> clientAccounts;
 };
 
 #endif // CLIENTACCOUNTSWINDOW_H

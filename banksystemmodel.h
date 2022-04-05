@@ -35,6 +35,8 @@ public:
 
     void openAccountForClient(Client *client) override;
 
+    std::list<Account *> getClientAccounts(Client *client) override;
+
     void test() override;
 
 private:

@@ -5,6 +5,7 @@
 #include <list>
 
 #include "client.h"
+#include "account.h"
 #include "nouserindbexception.h"
 
 class IBankSystemModel
@@ -41,6 +42,9 @@ public:
 
     // Открыть счёт
     virtual void openAccountForClient(Client *client) = 0;
+
+    // Получить счета клиента в банке
+    virtual std::list<Account *> getClientAccounts(Client *client) = 0;
 
     // Запустить определённые тесты
     virtual void test() = 0;

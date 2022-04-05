@@ -183,3 +183,14 @@ void BankSystemModel::openAccountForClient(Client *client)
     Account account(database->generateUniqueId(), client->getLogin(), 10, 2.3, time(nullptr));
     database->addAccount(account);
 }
+
+std::list<Account *> BankSystemModel::getClientAccounts(Client *client)
+{
+    std::list<Account *> accounts;
+    accounts.push_back(new Account(4904910, client->getLogin(), 300, 2.1, time(nullptr)));
+    accounts.push_back(new Account(23425, client->getLogin(), 300, 2.1, time(nullptr)));
+    accounts.push_back(new Account(325235, client->getLogin(), 300, 2.1, time(nullptr)));
+    accounts.push_back(new Account(235235253, client->getLogin(), 300, 2.1, time(nullptr)));
+
+    return accounts;
+}

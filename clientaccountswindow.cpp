@@ -22,9 +22,15 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
 
     QListWidget *accountsListWidget = new QListWidget(this);
 
-    accountsListWidget->insertItem(0, "24918239183293, 2%, на балансе 3000 руб.");
-    accountsListWidget->insertItem(1, "90812903912309, 3%, на балансе 440 руб.");
-    accountsListWidget->insertItem(2, "31891289819899, 1%, на балансе 4000 руб.");
+    // Здесь нужно получать список счетов Клиента из базы данных
+    // Отображать нужно только их id'шники
+    clientAccounts = bankSystemModel->getClientAccounts(client);
+
+    int i = 0;
+    for (Account *a : clientAccounts)
+    {
+        accountsListWidget->insertItem(i, std::to_string(a->getId()).c_str());
+    }
 
     QPushButton *openAccount = new QPushButton("Открыть новый счёт", this);
     connect(openAccount, &QPushButton::clicked, this, &ClientAccountsWindow::openAccount);
@@ -44,6 +50,14 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
     gridLayout->addWidget(withdraw, 4, 0);
     gridLayout->addWidget(transfer, 5, 0);
     gridLayout->addWidget(putMoney, 6, 0);
+}
+
+ClientAccountsWindow::~ClientAccountsWindow()
+{
+    for (Account *a : clientAccounts)
+    {
+        delete a;
+    }
 }
 
 void ClientAccountsWindow::openAccount()
