@@ -37,7 +37,9 @@ public:
 
     std::list<Account *> getClientAccounts(Client *client) override;
 
-    void updateClientAccount(int64_t idn) override;
+    void clientAccountAccumulate(int64_t idn) override;
+
+    virtual void updateAccountData(Account *acc) override;
 
     void test() override;
 

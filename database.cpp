@@ -523,3 +523,8 @@ User *Database::getUserData(std::string login, std::string &type)
 
     throw NoUserInDBException();
 }
+
+void Database::updateAccount(Account *data)
+{
+    std::cout << "Database::updateAccount()\n";
+}

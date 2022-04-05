@@ -59,6 +59,10 @@ ClientAccountsWindow::~ClientAccountsWindow()
 
 void ClientAccountsWindow::updateClientAccountsListWidget()
 {
+    for (Account *a : clientAccounts)
+    {
+        delete a;
+    }
     clientAccounts = bankSystemModel->getClientAccounts(client);
 
     accountsListWidget->clear();
@@ -72,7 +76,6 @@ void ClientAccountsWindow::updateClientAccountsListWidget()
 
 void ClientAccountsWindow::openAccount()
 {
-    std::cout << "Open account for " << client->getLogin() << "\n";
     bankSystemModel->openAccountForClient(client);
 
     updateClientAccountsListWidget();
@@ -80,10 +83,21 @@ void ClientAccountsWindow::openAccount()
 
 void ClientAccountsWindow::putMoney()
 {
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Положить деньги на счёт");
-    msgBox.setText("Кладите деньги");
-    msgBox.exec();
+    QInputDialog inpDialog;
+    bool ok;
+    double inpMoney;
+
+    do
+    {
+        inpMoney = inpDialog.getDouble(this, "Положить деньги", "Введите сумму пополнения (BYN, 0.0 - 1000.0)",
+                                       0.0,
+                                       0.0, 1000.0,
+                                       2,
+                                       &ok);
+    }
+    while (!ok);
+
+    std::cout << "got money: " << inpMoney << "\n";
 }
 
 void ClientAccountsWindow::showAccountInfo()
@@ -100,7 +114,7 @@ void ClientAccountsWindow::showAccountInfo()
     }
 
     int64_t accId = selectedAccounts[0]->text().toInt();
-    bankSystemModel->updateClientAccount(accId);
+    bankSystemModel->clientAccountAccumulate(accId);
 
     auto it = std::find_if(std::begin(clientAccounts),
                            std::end(clientAccounts),

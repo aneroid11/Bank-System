@@ -58,6 +58,8 @@ public:
     // Получить по логину пользователя и его роль в системе (записывается в переменную type)
     User *getUserData(std::string login, std::string &type);
 
+    void updateAccount(Account *data);
+
 private:
     void createClientsTable();
     void createOperatorsTable();

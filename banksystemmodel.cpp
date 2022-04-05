@@ -189,14 +189,19 @@ std::list<Account *> BankSystemModel::getClientAccounts(Client *client)
     return database->getClientAccounts(client->getLogin());
 }
 
-void BankSystemModel::updateClientAccount(int64_t id)
+void BankSystemModel::clientAccountAccumulate(int64_t id)
 {
     std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",
                                                                           "ID",
                                                                           std::to_string(id));
     Account *acc = (Account *)(*accounts.begin());
     acc->accumulate();
+    updateAccountData(acc);
+    delete acc;
+}
 
-    std::cout << "Счёт: " << acc->getId() << "\n";
-    std::cout << "Текущий баланс: " << acc->getBalance() << "\n";
+
+void BankSystemModel::updateAccountData(Account *acc)
+{
+    database->updateAccount(acc);
 }

@@ -47,7 +47,10 @@ public:
     virtual std::list<Account *> getClientAccounts(Client *client) = 0;
 
     // Обновить баланс (начислить проценты) и время обновления баланса
-    virtual void updateClientAccount(int64_t id) = 0;
+    virtual void clientAccountAccumulate(int64_t id) = 0;
+
+    // Обновить информацию о клиенте
+    virtual void updateAccountData(Account *acc) = 0;
 
     // Запустить определённые тесты
     virtual void test() = 0;
