@@ -9,6 +9,7 @@ public:
     Account(int64_t id, std::string clientLogin, double initialBalance, double percents, time_t creationTime);
 
     void accumulate();
+    void putMoney(double value) { balance += value; }
 };
 
 #endif // ACCOUNT_H

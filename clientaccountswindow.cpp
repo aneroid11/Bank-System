@@ -118,6 +118,7 @@ void ClientAccountsWindow::putMoney()
 
     if (accId == -1) { return; }
 
+    bankSystemModel->clientAccountAccumulate(accId);
     bankSystemModel->putMoneyOnAccount(accId, inpMoney);
 }
 

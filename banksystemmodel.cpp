@@ -208,5 +208,13 @@ void BankSystemModel::updateAccountData(Account *acc)
 
 void BankSystemModel::putMoneyOnAccount(int64_t id, double value)
 {
+    std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",
+                                                                          "ID",
+                                                                          std::to_string(id));
+    Account *acc = (Account *)(*accounts.begin());
+    acc->putMoney(value);
+    updateAccountData(acc);
+    delete acc;
+
     std::cout << "put " << value << " amount of money on " << id << " account\n";
 }
