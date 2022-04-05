@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QListWidget>
 #include <QMessageBox>
+#include <QInputDialog>
 
 #include "ibanksystemmodel.h"
 #include "client.h"
@@ -32,7 +33,9 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
     QPushButton *closeAccount = new QPushButton("Закрыть счёт", this);
     QPushButton *withdraw = new QPushButton("Снять деньги", this);
     QPushButton *transfer = new QPushButton("Перевести деньги", this);
+
     QPushButton *putMoney = new QPushButton("Положить деньги", this);
+    connect(putMoney, &QPushButton::clicked, this, &ClientAccountsWindow::putMoney);
 
     QPushButton *showAccInfo = new QPushButton("Информация о счёте", this);
     connect(showAccInfo, &QPushButton::clicked, this, &ClientAccountsWindow::showAccountInfo);
@@ -73,6 +76,14 @@ void ClientAccountsWindow::openAccount()
     bankSystemModel->openAccountForClient(client);
 
     updateClientAccountsListWidget();
+}
+
+void ClientAccountsWindow::putMoney()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Положить деньги на счёт");
+    msgBox.setText("Кладите деньги");
+    msgBox.exec();
 }
 
 void ClientAccountsWindow::showAccountInfo()

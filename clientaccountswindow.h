@@ -21,6 +21,7 @@ public:
 private slots:
     void openAccount();
     void showAccountInfo();
+    void putMoney();
 
 private:
     IBankSystemModel *bankSystemModel;
