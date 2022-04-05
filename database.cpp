@@ -400,14 +400,21 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
     }
     else
     {
+        std::cout << "This is a record\n";
+
         // Это запись счёта
         int64_t newAccId = query.value(rec.indexOf("ID")).toInt();
+
         std::string newAccClLogin = query.value(rec.indexOf("CLIENT_LOGIN")).toString().toStdString();
+
         int64_t newAccInitialBalance = query.value(rec.indexOf("BALANCE")).toInt();
-        double newAccPercents = query.value(rec.indexOf("PERCENTS")).toDouble();
-        time_t newAccCreationTime = query.value(rec.indexOf("CREATION_TIME")).toLongLong();
+
+        double newAccPercents = query.value(rec.indexOf("PERCENT")).toDouble();
+
+        time_t newAccCreationTime = query.value(rec.indexOf("CREATION_DATE")).toLongLong();
 
         Account *newAccount = new Account(newAccId, newAccClLogin, newAccInitialBalance, newAccPercents, newAccCreationTime);
+
         return newAccount;
     }
 
@@ -477,13 +484,15 @@ std::list<Account *> Database::getClientAccounts(std::string clientLogin)
 {
     // Поиск в базе по таблице Accounts, чтобы найти счета, у которых совпадает поле client_login с параметром функции
 
-
-
+    std::list<void *> accountsRecords = getRecordsFromTableByParameter("ACCOUNTS", "CLIENT_LOGIN", clientLogin);
     std::list<Account *> accounts;
-    accounts.push_back(new Account(4904910, clientLogin, 300, 2.1, time(nullptr)));
-    accounts.push_back(new Account(23425, clientLogin, 300, 2.1, time(nullptr)));
-    accounts.push_back(new Account(325235, clientLogin, 300, 2.1, time(nullptr)));
-    accounts.push_back(new Account(235235253, clientLogin, 300, 2.1, time(nullptr)));
+
+    for (void *a : accountsRecords)
+    {
+        accounts.push_back((Account *)a);
+    }
+
+    std::cout << "accounts.size() = " << accounts.size() << "\n";
 
     return accounts;
 }
