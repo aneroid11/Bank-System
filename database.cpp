@@ -405,15 +405,18 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
         // Это запись счёта
         int64_t newAccId = query.value(rec.indexOf("ID")).toInt();
 
-        std::string newAccClLogin = query.value(rec.indexOf("CLIENT_LOGIN")).toString().toStdString();
+        QString newAccClLogin = query.value(rec.indexOf("CLIENT_LOGIN")).toString();
 
         int64_t newAccInitialBalance = query.value(rec.indexOf("BALANCE")).toInt();
 
-        double newAccPercents = query.value(rec.indexOf("PERCENT")).toDouble();
+        QString percentStr = query.value(rec.indexOf("PERCENT")).toString();
+        percentStr.replace(',', '.');
+
+        double newAccPercents = percentStr.toDouble();
 
         time_t newAccCreationTime = query.value(rec.indexOf("CREATION_DATE")).toLongLong();
 
-        Account *newAccount = new Account(newAccId, newAccClLogin, newAccInitialBalance, newAccPercents, newAccCreationTime);
+        Account *newAccount = new Account(newAccId, newAccClLogin.toStdString(), newAccInitialBalance, newAccPercents, newAccCreationTime);
 
         return newAccount;
     }
