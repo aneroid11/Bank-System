@@ -49,7 +49,11 @@ public:
 
     std::list<User *> getUsersFromTableByParameter(std::string tableName, std::string parameterName,
                                                    std::string parameterValue);
+    std::list<void *> getRecordsFromTableByParameter(std::string tableName, std::string parameterName,
+                                                     std::string parameterValue);
+
     std::list<Client *> getUnapprovedClients();
+    std::list<Account *> getClientAccounts(std::string clientLogin);
 
     // Получить по логину пользователя и его роль в системе (записывается в переменную type)
     User *getUserData(std::string login, std::string &type);
@@ -62,6 +66,7 @@ private:
     void createAccountsTable();
 
     User *createUserFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);
+    void *createRecordFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);
 
     QSqlDatabase database;
     //sqlite3 *database;

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 #include <QSqlQuery>
 #include <QSqlError>
@@ -385,6 +386,55 @@ User *Database::createUserFromData(const QSqlQuery &query, const QSqlRecord &rec
     return nullptr;
 }
 
+void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName)
+{
+    std::vector<std::string> userTableNames =
+    {
+        "ADMINISTRATORS", "OPERATORS", "MANAGERS", "CLIENTS"
+    };
+
+    if (std::count(userTableNames.begin(), userTableNames.end(), tableName))
+    {
+        // Это один из пользователей
+        return createUserFromData(query, rec, tableName);
+    }
+    else
+    {
+        // Это запись счёта
+        int64_t newAccId = query.value(rec.indexOf("ID")).toInt();
+        std::string newAccClLogin = query.value(rec.indexOf("CLIENT_LOGIN")).toString().toStdString();
+        int64_t newAccInitialBalance = query.value(rec.indexOf("BALANCE")).toInt();
+        double newAccPercents = query.value(rec.indexOf("PERCENTS")).toDouble();
+        time_t newAccCreationTime = query.value(rec.indexOf("CREATION_TIME")).toLongLong();
+
+        Account *newAccount = new Account(newAccId, newAccClLogin, newAccInitialBalance, newAccPercents, newAccCreationTime);
+        return newAccount;
+    }
+
+    return nullptr;
+}
+
+std::list<void *> Database::getRecordsFromTableByParameter(std::string tableName, std::string parameterName,
+                                                           std::string parameterValue)
+{
+    std::string query = std::string("SELECT * FROM ") + tableName +
+            " WHERE " + parameterName + " = \'" + parameterValue + "\';";
+    QSqlQuery searchQuery;
+    searchQuery.prepare(query.c_str());
+    searchQuery.exec();
+    const QSqlRecord rec = searchQuery.record();
+
+    std::list<void *> records;
+
+    while (searchQuery.next())
+    {
+        void *currRec = createRecordFromData(searchQuery, rec, tableName);
+        records.push_back(currRec);
+    }
+
+    return records;
+}
+
 std::list<User *> Database::getUsersFromTableByParameter(std::string tableName,
                                                          std::string parameterName,
                                                          std::string parameterValue)
@@ -421,6 +471,21 @@ std::list<Client *> Database::getUnapprovedClients()
 
     std::cout << "unapprovedClients.size() = " << unapprovedClients.size() << "\n";
     return unapprovedClients;
+}
+
+std::list<Account *> Database::getClientAccounts(std::string clientLogin)
+{
+    // Поиск в базе по таблице Accounts, чтобы найти счета, у которых совпадает поле client_login с параметром функции
+
+
+
+    std::list<Account *> accounts;
+    accounts.push_back(new Account(4904910, clientLogin, 300, 2.1, time(nullptr)));
+    accounts.push_back(new Account(23425, clientLogin, 300, 2.1, time(nullptr)));
+    accounts.push_back(new Account(325235, clientLogin, 300, 2.1, time(nullptr)));
+    accounts.push_back(new Account(235235253, clientLogin, 300, 2.1, time(nullptr)));
+
+    return accounts;
 }
 
 User *Database::getUserData(std::string login, std::string &type)
