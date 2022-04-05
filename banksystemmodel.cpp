@@ -180,7 +180,9 @@ std::list<Client *> BankSystemModel::getUnapprovedClients()
 
 void BankSystemModel::openAccountForClient(Client *client)
 {
-    Account account(database->generateUniqueId(), client->getLogin(), 10, 2.3, time(nullptr));
+    // Изначальный баланс на счёте - 0
+    // Процентная ставка - 2.4 %
+    Account account(database->generateUniqueId(), client->getLogin(), 0, 2.4, time(nullptr));
     database->addAccount(account);
 }
 

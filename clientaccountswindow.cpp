@@ -24,13 +24,7 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
 
     // Здесь нужно получать список счетов Клиента из базы данных
     // Отображать нужно только их id'шники
-    clientAccounts = bankSystemModel->getClientAccounts(client);
-
-    int i = 0;
-    for (Account *a : clientAccounts)
-    {
-        accountsListWidget->insertItem(i, std::to_string(a->getId()).c_str());
-    }
+    updateClientAccountsListWidget();
 
     QPushButton *openAccount = new QPushButton("Открыть новый счёт", this);
     connect(openAccount, &QPushButton::clicked, this, &ClientAccountsWindow::openAccount);
@@ -60,10 +54,25 @@ ClientAccountsWindow::~ClientAccountsWindow()
     }
 }
 
+void ClientAccountsWindow::updateClientAccountsListWidget()
+{
+    clientAccounts = bankSystemModel->getClientAccounts(client);
+
+    accountsListWidget->clear();
+
+    int i = 0;
+    for (Account *a : clientAccounts)
+    {
+        accountsListWidget->insertItem(i, std::to_string(a->getId()).c_str());
+    }
+}
+
 void ClientAccountsWindow::openAccount()
 {
     std::cout << "Open account for " << client->getLogin() << "\n";
     bankSystemModel->openAccountForClient(client);
+
+    updateClientAccountsListWidget();
 }
 
 void ClientAccountsWindow::showAccountInfo()

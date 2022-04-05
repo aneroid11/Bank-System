@@ -16,6 +16,8 @@ public:
     ClientAccountsWindow(IBankSystemModel *bankSystem, Client *cl);
     ~ClientAccountsWindow();
 
+    void updateClientAccountsListWidget();
+
 private slots:
     void openAccount();
     void showAccountInfo();
