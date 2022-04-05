@@ -526,5 +526,20 @@ User *Database::getUserData(std::string login, std::string &type)
 
 void Database::updateAccount(Account *data)
 {
-    std::cout << "Database::updateAccount()\n";
+    std::cout << "updating account: " << data->getId() << "\n";
+    QSqlQuery sqlQuery;
+    std::string query = "UPDATE ACCOUNTS SET BALANCE = \'" + std::to_string(data->getBalance()) +
+            "\' WHERE ID = \'" + std::to_string(data->getId()) + "\';";
+    std::cout << query << "\n";
+    // std::string query = "UPDATE CLIENTS SET APPROVED = 1 WHERE LOGIN = ";
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
+
+    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
+
+    query = "UPDATE ACCOUNTS SET CREATION_DATE = \'" + std::to_string(data->getCreationTime()) +
+            "\' WHERE ID = \'" + std::to_string(data->getId()) + "\';";
+    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
 }
