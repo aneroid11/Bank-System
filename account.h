@@ -6,7 +6,9 @@
 class Account : public SomethingHoldingMoney
 {
 public:
-    Account(int64_t id, std::string clientLogin, int64_t initialBalance, double percents, time_t creationTime);
+    Account(int64_t id, std::string clientLogin, double initialBalance, double percents, time_t creationTime);
+
+    void accumulate();
 };
 
 #endif // ACCOUNT_H

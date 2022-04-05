@@ -180,8 +180,6 @@ std::list<Client *> BankSystemModel::getUnapprovedClients()
 
 void BankSystemModel::openAccountForClient(Client *client)
 {
-    // Изначальный баланс на счёте - 0
-    // Процентная ставка - 2.4 %
     Account account(database->generateUniqueId(), client->getLogin(), 0, 2.4, time(nullptr));
     database->addAccount(account);
 }
@@ -189,4 +187,16 @@ void BankSystemModel::openAccountForClient(Client *client)
 std::list<Account *> BankSystemModel::getClientAccounts(Client *client)
 {
     return database->getClientAccounts(client->getLogin());
+}
+
+void BankSystemModel::updateClientAccount(int64_t id)
+{
+    std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",
+                                                                          "ID",
+                                                                          std::to_string(id));
+    Account *acc = (Account *)(*accounts.begin());
+    acc->accumulate();
+
+    std::cout << "Счёт: " << acc->getId() << "\n";
+    std::cout << "Текущий баланс: " << acc->getBalance() << "\n";
 }

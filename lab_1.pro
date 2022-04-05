@@ -54,6 +54,7 @@ HEADERS += \
     clientdepositswindow.h \
     clientinstallmentswindow.h \
     clientpersonalaccountwindow.h \
+    constants.h \
     database.h \
     dbexception.h \
     dbnotopenedexception.h \

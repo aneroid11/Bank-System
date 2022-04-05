@@ -37,6 +37,8 @@ public:
 
     std::list<Account *> getClientAccounts(Client *client) override;
 
+    void updateClientAccount(int64_t idn) override;
+
     void test() override;
 
 private:

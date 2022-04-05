@@ -89,6 +89,7 @@ void ClientAccountsWindow::showAccountInfo()
     }
 
     int64_t accId = selectedAccounts[0]->text().toInt();
+    bankSystemModel->updateClientAccount(accId);
 
     auto it = std::find_if(std::begin(clientAccounts),
                            std::end(clientAccounts),

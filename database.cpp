@@ -108,7 +108,7 @@ void Database::createAccountsTable()
     query.prepare("CREATE TABLE ACCOUNTS("  \
                   "ID INT NOT NULL," \
                   "CLIENT_LOGIN TEXT," \
-                  "BALANCE INT," \
+                  "BALANCE REAL," \
                   "PERCENT REAL," \
                   "CREATION_DATE INT);");
     query.exec();
@@ -407,7 +407,8 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
 
         QString newAccClLogin = query.value(rec.indexOf("CLIENT_LOGIN")).toString();
 
-        int64_t newAccInitialBalance = query.value(rec.indexOf("BALANCE")).toInt();
+        QString initialBalanceStr = query.value(rec.indexOf("BALANCE")).toString();
+        double newAccInitialBalance = initialBalanceStr.replace(',', '.').toDouble();
 
         QString percentStr = query.value(rec.indexOf("PERCENT")).toString();
         percentStr.replace(',', '.');
