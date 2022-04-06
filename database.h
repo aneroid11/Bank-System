@@ -71,7 +71,6 @@ private:
     void *createRecordFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);
 
     QSqlDatabase database;
-    //sqlite3 *database;
 };
 
 #endif // DATABASE_H

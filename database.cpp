@@ -110,7 +110,8 @@ void Database::createAccountsTable()
                   "CLIENT_LOGIN TEXT," \
                   "BALANCE REAL," \
                   "PERCENT REAL," \
-                  "CREATION_DATE INT);");
+                  "CREATION_DATE INT," \
+                  "STATUS INT);");
     query.exec();
 }
 
@@ -212,17 +213,15 @@ void Database::addAccount(const Account &account)
     }
 
     std::string query = "INSERT INTO ACCOUNTS ";
-    /*
-     * ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE
-     * */
 
-    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE) ";
+    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, STATUS) ";
     query += "VALUES (";
     query += std::to_string(account.getId()) + ", ";
     query += "\'" + account.getClientLogin() + "\', ";
     query += "\'" + std::to_string(account.getBalance()) + "\', ";
     query += "\'" + std::to_string(account.getPercents()) + "\', ";
-    query += "\'" + std::to_string(account.getCreationTime()) + "\'); ";
+    query += "\'" + std::to_string(account.getCreationTime()) + "\', ";
+    query += "\'" + std::to_string(account.getStatus()) + "\'); ";
 
     QSqlQuery sqlQuery;
     sqlQuery.prepare(query.c_str());
@@ -417,7 +416,14 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
 
         time_t newAccCreationTime = query.value(rec.indexOf("CREATION_DATE")).toLongLong();
 
-        Account *newAccount = new Account(newAccId, newAccClLogin.toStdString(), newAccInitialBalance, newAccPercents, newAccCreationTime);
+        int newAccStatus = query.value(rec.indexOf("STATUS")).toInt();
+
+        Account *newAccount = new Account(newAccId,
+                                          newAccClLogin.toStdString(),
+                                          newAccInitialBalance,
+                                          newAccPercents,
+                                          newAccCreationTime,
+                                          newAccStatus);
 
         return newAccount;
     }
@@ -530,16 +536,11 @@ void Database::updateAccount(Account *data)
     QSqlQuery sqlQuery;
     std::string query = "UPDATE ACCOUNTS SET BALANCE = \'" + std::to_string(data->getBalance()) +
             "\' WHERE ID = \'" + std::to_string(data->getId()) + "\';";
-    std::cout << query << "\n";
-    // std::string query = "UPDATE CLIENTS SET APPROVED = 1 WHERE LOGIN = ";
     sqlQuery.prepare(query.c_str());
     sqlQuery.exec();
 
-    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
-
     query = "UPDATE ACCOUNTS SET CREATION_DATE = \'" + std::to_string(data->getCreationTime()) +
             "\' WHERE ID = \'" + std::to_string(data->getId()) + "\';";
-    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
     sqlQuery.prepare(query.c_str());
     sqlQuery.exec();
 }
