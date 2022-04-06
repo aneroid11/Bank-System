@@ -37,11 +37,15 @@ public:
 
     std::list<Account *> getClientAccounts(Client *client) override;
 
+    Account *getAccountById(int64_t id) override;
+
     void clientAccountAccumulate(int64_t idn) override;
 
     void updateAccountData(Account *acc) override;
 
     void putMoneyOnAccount(int64_t id, double value) override;
+
+    void withdrawMoneyFromAccount(int64_t id, double value) override;
 
     void test() override;
 

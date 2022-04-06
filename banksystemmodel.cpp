@@ -189,6 +189,14 @@ std::list<Account *> BankSystemModel::getClientAccounts(Client *client)
     return database->getClientAccounts(client->getLogin());
 }
 
+Account *BankSystemModel::getAccountById(int64_t id)
+{
+    std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",
+                                                                          "ID",
+                                                                          std::to_string(id));
+    return (Account *)(*accounts.begin());
+}
+
 void BankSystemModel::clientAccountAccumulate(int64_t id)
 {
     std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",
@@ -217,4 +225,17 @@ void BankSystemModel::putMoneyOnAccount(int64_t id, double value)
     delete acc;
 
     std::cout << "put " << value << " amount of money on " << id << " account\n";
+}
+
+void BankSystemModel::withdrawMoneyFromAccount(int64_t id, double value)
+{
+    std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",
+                                                                          "ID",
+                                                                          std::to_string(id));
+    Account *acc = (Account *)(*accounts.begin());
+    acc->withdrawMoney(value);
+    updateAccountData(acc);
+    delete acc;
+
+    std::cout << "withdraw " << value << " amount of money from " << id << " account\n";
 }

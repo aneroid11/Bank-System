@@ -32,7 +32,10 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
     connect(openAccount, &QPushButton::clicked, this, &ClientAccountsWindow::openAccount);
 
     QPushButton *closeAccount = new QPushButton("Закрыть счёт", this);
+
     QPushButton *withdraw = new QPushButton("Снять деньги", this);
+    connect(withdraw, &QPushButton::clicked, this, &ClientAccountsWindow::withdrawMoney);
+
     QPushButton *transfer = new QPushButton("Перевести деньги", this);
 
     QPushButton *putMoney = new QPushButton("Положить деньги", this);
@@ -129,6 +132,31 @@ void ClientAccountsWindow::putMoney()
     bankSystemModel->putMoneyOnAccount(accId, inpMoney);
 }
 
+void ClientAccountsWindow::withdrawMoney()
+{
+    int64_t accId = getCurrentAccountId();
+    Account *acc = bankSystemModel->getAccountById(accId);
+    double maxWithdrawAmount = (int)acc->getBalance();
+    delete acc;
+
+    QInputDialog inpDialog;
+    bool ok;
+    double inpMoney;
+
+    do
+    {
+        QString prompt = "Введите сумму (BYN, 0.0 - " + QString::number(maxWithdrawAmount) + ")";
+        inpMoney = inpDialog.getDouble(this, "Снять деньги", prompt,
+                                       0.0,
+                                       0.0, maxWithdrawAmount,
+                                       2,
+                                       &ok);
+    }
+    while (!ok);
+
+    bankSystemModel->withdrawMoneyFromAccount(accId, inpMoney);
+}
+
 void ClientAccountsWindow::showAccountInfo()
 {
     int64_t accId = getCurrentAccountId();
@@ -151,7 +179,7 @@ void ClientAccountsWindow::showAccountInfo()
     info += "Процентная ставка: " + std::to_string(currAcc->getPercents()) + "\n";
     info += "Баланс: " + std::to_string(currAcc->getBalance()) + "\n";
     time_t creationTime = currAcc->getCreationTime();
-    info += "Создан: " + std::string(ctime(&creationTime)) + "\n";
+    info += "Последнее накопление: " + std::string(ctime(&creationTime)) + "\n";
 
     msgBox.setText(info.c_str());
     msgBox.exec();

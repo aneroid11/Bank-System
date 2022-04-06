@@ -10,6 +10,7 @@ public:
 
     void accumulate();
     void putMoney(double value) { balance += value; }
+    void withdrawMoney(double value) { balance -= value; }
 };
 
 #endif // ACCOUNT_H

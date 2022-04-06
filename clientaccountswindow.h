@@ -20,6 +20,7 @@ private slots:
     void openAccount();
     void showAccountInfo();
     void putMoney();
+    void withdrawMoney();
 
 private:
     int64_t getCurrentAccountId();

@@ -46,6 +46,9 @@ public:
     // Получить счета клиента в банке
     virtual std::list<Account *> getClientAccounts(Client *client) = 0;
 
+    // Получить счёт из базы по id
+    virtual Account *getAccountById(int64_t id) = 0;
+
     // Обновить баланс (начислить проценты) и время обновления баланса
     virtual void clientAccountAccumulate(int64_t id) = 0;
 
@@ -54,6 +57,9 @@ public:
 
     // Положить деньги на счёт
     virtual void putMoneyOnAccount(int64_t id, double value) = 0;
+
+    // Снять деньги со счёта
+    virtual void withdrawMoneyFromAccount(int64_t id, double value) = 0;
 
     // Запустить определённые тесты
     virtual void test() = 0;
