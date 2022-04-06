@@ -16,8 +16,6 @@ public:
     ClientAccountsWindow(IBankSystemModel *bankSystem, Client *cl);
     ~ClientAccountsWindow();
 
-    void updateClientAccountsListWidget();
-
 private slots:
     void openAccount();
     void showAccountInfo();
@@ -25,6 +23,10 @@ private slots:
 
 private:
     int64_t getCurrentAccountId();
+
+    void deleteClientAccounts();
+    void updateClientAccountsData();
+    void updateClientAccountsListWidget();
 
     IBankSystemModel *bankSystemModel;
     Client *client;

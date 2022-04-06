@@ -25,6 +25,7 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
 
     // Здесь нужно получать список счетов Клиента из базы данных
     // Отображать нужно только их id'шники
+    updateClientAccountsData();
     updateClientAccountsListWidget();
 
     QPushButton *openAccount = new QPushButton("Открыть новый счёт", this);
@@ -51,20 +52,25 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
 
 ClientAccountsWindow::~ClientAccountsWindow()
 {
+    deleteClientAccounts();
+}
+
+void ClientAccountsWindow::deleteClientAccounts()
+{
     for (Account *a : clientAccounts)
     {
         delete a;
     }
 }
 
+void ClientAccountsWindow::updateClientAccountsData()
+{
+    deleteClientAccounts();
+    clientAccounts = bankSystemModel->getClientAccounts(client);
+}
+
 void ClientAccountsWindow::updateClientAccountsListWidget()
 {
-    for (Account *a : clientAccounts)
-    {
-        delete a;
-    }
-    clientAccounts = bankSystemModel->getClientAccounts(client);
-
     accountsListWidget->clear();
 
     int i = 0;
@@ -78,6 +84,7 @@ void ClientAccountsWindow::openAccount()
 {
     bankSystemModel->openAccountForClient(client);
 
+    updateClientAccountsData();
     updateClientAccountsListWidget();
 }
 
@@ -130,7 +137,7 @@ void ClientAccountsWindow::showAccountInfo()
 
     bankSystemModel->clientAccountAccumulate(accId);
 
-    updateClientAccountsListWidget();
+    updateClientAccountsData();
     auto it = std::find_if(std::begin(clientAccounts),
                            std::end(clientAccounts),
                            [&](const Account *acc){ return acc->getId() == accId; } );
