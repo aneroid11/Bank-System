@@ -128,10 +128,9 @@ void ClientAccountsWindow::showAccountInfo()
 
     if (accId == -1) { return; }
 
-    updateClientAccountsListWidget();
-
     bankSystemModel->clientAccountAccumulate(accId);
 
+    updateClientAccountsListWidget();
     auto it = std::find_if(std::begin(clientAccounts),
                            std::end(clientAccounts),
                            [&](const Account *acc){ return acc->getId() == accId; } );

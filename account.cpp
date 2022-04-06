@@ -20,6 +20,11 @@ void Account::accumulate()
     double oneIterCoef = 1.0 + percents / 100.0;
     double newBalance = balance;
 
+    if (monthsPassed < 1)
+    {
+        return;
+    }
+
     for (int i = 0; i < monthsPassed; i++)
     {
         newBalance *= oneIterCoef;
@@ -27,5 +32,6 @@ void Account::accumulate()
 
     balance = newBalance;
 
-    creationTime = time(nullptr);
+    //creationTime = time(nullptr);
+    creationTime += monthsPassed * SEC_IN_MONTH;
 }
