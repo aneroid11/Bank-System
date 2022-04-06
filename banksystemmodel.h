@@ -37,6 +37,8 @@ public:
 
     std::list<Account *> getClientAccounts(Client *client) override;
 
+    std::list<Account *> getClientAccountsByStatus(Client *client, int status) override;
+
     Account *getAccountById(int64_t id) override;
 
     void clientAccountAccumulate(int64_t idn) override;

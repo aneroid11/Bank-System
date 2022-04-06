@@ -189,6 +189,28 @@ std::list<Account *> BankSystemModel::getClientAccounts(Client *client)
     return database->getClientAccounts(client->getLogin());
 }
 
+std::list<Account *> BankSystemModel::getClientAccountsByStatus(Client *client, int status)
+{
+    std::list<Account *> accounts = database->getClientAccounts(client->getLogin());
+    std::list<Account *> retAccounts;
+
+    for (auto i = accounts.begin(); i != accounts.end(); i++)
+    {
+        Account *a = *i;
+
+        if (a->getStatus() != status)
+        {
+            delete a;
+        }
+        else
+        {
+            retAccounts.push_back(a);
+        }
+    }
+
+    return retAccounts;
+}
+
 Account *BankSystemModel::getAccountById(int64_t id)
 {
     std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",

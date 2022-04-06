@@ -43,8 +43,11 @@ public:
     // Открыть счёт
     virtual void openAccountForClient(Client *client) = 0;
 
-    // Получить счета клиента в банке
+    // Получить ВСЕ счета клиента в банке
     virtual std::list<Account *> getClientAccounts(Client *client) = 0;
+
+    // Получить счета клиента в банке с определённым статусом
+    virtual std::list<Account *> getClientAccountsByStatus(Client *client, int requiredStatus) = 0;
 
     // Получить счёт из базы по id
     virtual Account *getAccountById(int64_t id) = 0;
