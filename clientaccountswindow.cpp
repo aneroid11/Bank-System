@@ -38,6 +38,7 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
     connect(withdraw, &QPushButton::clicked, this, &ClientAccountsWindow::withdrawMoney);
 
     QPushButton *transfer = new QPushButton("Перевести деньги", this);
+    connect(transfer, &QPushButton::clicked, this, &ClientAccountsWindow::transferMoney);
 
     QPushButton *putMoney = new QPushButton("Положить деньги", this);
     connect(putMoney, &QPushButton::clicked, this, &ClientAccountsWindow::putMoney);
@@ -177,6 +178,25 @@ void ClientAccountsWindow::withdrawMoney()
     while (!ok);
 
     bankSystemModel->withdrawMoneyFromAccount(accId, inpMoney);
+}
+
+void ClientAccountsWindow::transferMoney()
+{
+    QInputDialog inpDialog;
+    bool ok;
+    int64_t recipientId;
+
+    do
+    {
+        recipientId = inpDialog.getInt(this, "Перевод", "Введите номер счёта, на который будут переведены деньги",
+                                       0, 0, 1000000, 1, &ok);
+    }
+    while (!ok);
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Перевод");
+    msgBox.setText("Деньги успешно переведены");
+    msgBox.exec();
 }
 
 void ClientAccountsWindow::showAccountInfo()
