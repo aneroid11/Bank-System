@@ -32,6 +32,7 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
     connect(openAccount, &QPushButton::clicked, this, &ClientAccountsWindow::openAccount);
 
     QPushButton *closeAccount = new QPushButton("Закрыть счёт", this);
+    connect(closeAccount, &QPushButton::clicked, this, &ClientAccountsWindow::closeAccount);
 
     QPushButton *withdraw = new QPushButton("Снять деньги", this);
     connect(withdraw, &QPushButton::clicked, this, &ClientAccountsWindow::withdrawMoney);
@@ -89,6 +90,14 @@ void ClientAccountsWindow::openAccount()
 
     updateClientAccountsData();
     updateClientAccountsListWidget();
+}
+
+void ClientAccountsWindow::closeAccount()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Закрытие счёта");
+    msgBox.setText("Cчёт успешно закрыт");
+    msgBox.exec();
 }
 
 int64_t ClientAccountsWindow::getCurrentAccountId()
@@ -160,7 +169,6 @@ void ClientAccountsWindow::withdrawMoney()
 void ClientAccountsWindow::showAccountInfo()
 {
     int64_t accId = getCurrentAccountId();
-
     if (accId == -1) { return; }
 
     bankSystemModel->clientAccountAccumulate(accId);

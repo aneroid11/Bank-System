@@ -18,6 +18,7 @@ public:
 
 private slots:
     void openAccount();
+    void closeAccount();
     void showAccountInfo();
     void putMoney();
     void withdrawMoney();
