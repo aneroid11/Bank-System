@@ -70,7 +70,8 @@ void ClientAccountsWindow::deleteClientAccounts()
 void ClientAccountsWindow::updateClientAccountsData()
 {
     deleteClientAccounts();
-    clientAccounts = bankSystemModel->getClientAccounts(client);
+    //clientAccounts = bankSystemModel->getClientAccounts(client);
+    clientAccounts = bankSystemModel->getClientAccountsByStatus(client, ACTIVE);
 }
 
 void ClientAccountsWindow::updateClientAccountsListWidget()
@@ -94,6 +95,12 @@ void ClientAccountsWindow::openAccount()
 
 void ClientAccountsWindow::closeAccount()
 {
+    // изменить статус текущего аккаунта на CLOSED.
+    int64_t accId = getCurrentAccountId();
+    if (accId < 0) { return; }
+
+
+
     QMessageBox msgBox;
     msgBox.setWindowTitle("Закрытие счёта");
     msgBox.setText("Cчёт успешно закрыт");

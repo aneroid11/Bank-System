@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <algorithm>
 
 #include <QSqlQuery>
@@ -533,14 +534,25 @@ User *Database::getUserData(std::string login, std::string &type)
 void Database::updateAccount(Account *data)
 {
     std::cout << "updating account: " << data->getId() << "\n";
-    QSqlQuery sqlQuery;
-    std::string query = "UPDATE ACCOUNTS SET BALANCE = \'" + std::to_string(data->getBalance()) +
-            "\' WHERE ID = \'" + std::to_string(data->getId()) + "\';";
-    sqlQuery.prepare(query.c_str());
-    sqlQuery.exec();
 
-    query = "UPDATE ACCOUNTS SET CREATION_DATE = \'" + std::to_string(data->getCreationTime()) +
-            "\' WHERE ID = \'" + std::to_string(data->getId()) + "\';";
-    sqlQuery.prepare(query.c_str());
+    /*
+    query.prepare("CREATE TABLE ACCOUNTS("  \
+                  "ID INT NOT NULL," \
+                  "CLIENT_LOGIN TEXT," \
+                  "BALANCE REAL," \
+                  "PERCENT REAL," \
+                  "CREATION_DATE INT," \
+                  "STATUS INT);");
+     * */
+
+    std::stringstream qs;
+    qs << "UPDATE ACCOUNTS SET ";
+    qs << "BALANCE = \'" << std::to_string(data->getBalance()) << "\', ";
+    qs << "CREATION_DATE = \'" << std::to_string(data->getCreationTime()) << "\', ";
+    qs << "STATUS = \'" << std::to_string(data->getStatus()) << "\' ";
+    qs << "WHERE ID = \'" << std::to_string(data->getId()) << "\';";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(qs.str().c_str());
     sqlQuery.exec();
 }
