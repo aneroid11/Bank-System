@@ -266,6 +266,31 @@ void Database::addDeposit(const Deposit &deposit)
 {
     std::cout << "Need to add a deposit here for " << deposit.getClientLogin() << "\n";
     std::cout << "ID: " << deposit.getId() << "\n";
+
+    if (hasRecord(deposit.getId()))
+    {
+        std::cout << "Already has such deposit\n";
+        return;
+    }
+
+    std::string query = "INSERT INTO DEPOSITS ";
+
+    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, TERM_IN_MONTHS, STATUS) ";
+    query += "VALUES (";
+    query += std::to_string(deposit.getId()) + ", ";
+    query += "\'" + deposit.getClientLogin() + "\', ";
+    query += "\'" + std::to_string(deposit.getBalance()) + "\', ";
+    query += "\'" + std::to_string(deposit.getPercents()) + "\', ";
+    query += "\'" + std::to_string(deposit.getCreationTime()) + "\', ";
+    query += "\'" + std::to_string(deposit.getTerm()) + "\', ";
+    query += "\'" + std::to_string(deposit.getStatus()) + "\'); ";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
+
+    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
+
 }
 
 void Database::addTransfer(const Transfer &transfer)
