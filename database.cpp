@@ -15,6 +15,7 @@
 #include "manager.h"
 #include "administrator.h"
 #include "account.h"
+#include "transfer.h"
 
 #include "cannotopendbexception.h"
 #include "useralreadyexistsexception.h"
@@ -40,6 +41,7 @@ Database::Database(std::string filename)
     createManagersTable();
     createAdministratorsTable();
     createAccountsTable();
+    createTransfersTable();
 }
 
 Database::~Database()
@@ -113,6 +115,18 @@ void Database::createAccountsTable()
                   "PERCENT REAL," \
                   "CREATION_DATE INT," \
                   "STATUS INT);");
+    query.exec();
+}
+
+void Database::createTransfersTable()
+{
+    QSqlQuery query;
+    query.prepare("CREATE TABLE TRANSFERS("  \
+                  "ID INT NOT NULL," \
+                  "SENDER_ID INT," \
+                  "RECIPIENT_ID INT," \
+                  "CREATION_DATE INT," \
+                  "VALUE REAL);");
     query.exec();
 }
 
@@ -231,6 +245,38 @@ void Database::addAccount(const Account &account)
     std::cout << sqlQuery.lastError().text().toStdString() << "\n";
 }
 
+void Database::addTransfer(const Transfer &transfer)
+{
+    if (hasRecord(transfer.getId()))
+    {
+        std::cout << "Already has such transfer\n";
+        return;
+    }
+
+    /*
+     *
+    int64_t id;
+    int64_t senderId, recipientId;
+    time_t creationTime;
+    double value;
+     * */
+    std::string query = "INSERT INTO TRANSFERS ";
+
+    query += "(ID, SENDER_ID, RECIPIENT_ID, CREATION_DATE, VALUE) ";
+    query += "VALUES (";
+    query += std::to_string(transfer.getId()) + ", ";
+    query += "\'" + std::to_string(transfer.getSenderId()) + "\', ";
+    query += "\'" + std::to_string(transfer.getRecipientId()) + "\', ";
+    query += "\'" + std::to_string(transfer.getCreationTime()) + "\', ";
+    query += "\'" + std::to_string(transfer.getValue()) + "\');";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
+
+    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
+}
+
 void Database::deleteUser(int64_t id)
 {
     std::string query = "DELETE FROM CLIENTS WHERE ID = ";
@@ -269,14 +315,12 @@ bool Database::hasRecord(int64_t id)
 
     if (hasUserWithId) { return true; }
 
-    // Проверить таблицу со счетами
     QSqlQuery checkQuery;
-
-    std::string tablesToCheck[] = { "ACCOUNTS" };
+    std::string tablesToCheck[] = { "ACCOUNTS", "TRANSFERS" };
 
     for (const std::string &tableName : tablesToCheck)
     {
-        std::string query = std::string("SELECT NAME FROM ") + tableName +
+        std::string query = std::string("SELECT ID FROM ") + tableName +
                 " WHERE ID = \'" + std::to_string(id) + "\';";
         checkQuery.prepare(query.c_str());
 

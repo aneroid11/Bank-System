@@ -7,9 +7,11 @@
 #include <QMessageBox>
 #include <QInputDialog>
 
+#include "transfer.h"
 #include "ibanksystemmodel.h"
 #include "client.h"
 #include "clientaccountswindow.h"
+#include "noaccountindbexception.h"
 
 ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client *cl)
     : bankSystemModel(bankSystem), client(cl)
@@ -192,6 +194,31 @@ void ClientAccountsWindow::transferMoney()
                                        0, 0, 1000000, 1, &ok);
     }
     while (!ok);
+
+    int64_t senderId = getCurrentAccountId();
+    Account *currAcc = bankSystemModel->getAccountById(senderId);
+    double maxValue = (int)currAcc->getBalance();
+    double value = 0.0;
+
+    do
+    {
+        value = inpDialog.getDouble(this, "Перевод", "Введите количество средств",
+                                    0.0, 0.0, maxValue, 2, &ok);
+    }
+    while (!ok);
+
+    try
+    {
+        bankSystemModel->createTransfer(senderId, recipientId, value);
+    }
+    catch (const NoAccountInDbException &)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Перевод");
+        msgBox.setText("Такого счёта нет в базе данных банка");
+        msgBox.exec();
+        return;
+    }
 
     QMessageBox msgBox;
     msgBox.setWindowTitle("Перевод");

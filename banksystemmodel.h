@@ -49,6 +49,8 @@ public:
 
     void withdrawMoneyFromAccount(int64_t id, double value) override;
 
+    void createTransfer(int64_t sender, int64_t recipient, double value);
+
     void test() override;
 
 private:

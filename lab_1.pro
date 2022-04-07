@@ -39,6 +39,7 @@ SOURCES += \
     signuprequestswindow.cpp \
     signupwindow.cpp \
     somethingholdingmoney.cpp \
+    transfer.cpp \
     user.cpp
 
 HEADERS += \
@@ -64,12 +65,14 @@ HEADERS += \
     mainwindow.h \
     manager.h \
     managerpersonalaccountwindow.h \
+    noaccountindbexception.h \
     nouserindbexception.h \
     operator.h \
     operatorpersonalaccountwindow.h \
     signuprequestswindow.h \
     signupwindow.h \
     somethingholdingmoney.h \
+    transfer.h \
     user.h \
     useralreadyexistsexception.h \
     wronguserpasswordexception.h

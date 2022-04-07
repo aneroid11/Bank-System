@@ -15,6 +15,7 @@ class Manager;
 class Operator;
 class Administrator;
 class Account;
+class Transfer;
 
 struct UserRawData
 {
@@ -35,6 +36,7 @@ public:
     void addOperator(const Operator &op);
     void addAdministrator(const Administrator &admin);
     void addAccount(const Account &account);
+    void addTransfer(const Transfer &transfer);
 
     void deleteUser(int64_t id);
     bool hasUser(int64_t id);
@@ -66,6 +68,7 @@ private:
     void createManagersTable();
     void createAdministratorsTable();
     void createAccountsTable();
+    void createTransfersTable();
 
     User *createUserFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);
     void *createRecordFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);

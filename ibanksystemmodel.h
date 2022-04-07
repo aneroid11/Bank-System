@@ -64,6 +64,9 @@ public:
     // Снять деньги со счёта
     virtual void withdrawMoneyFromAccount(int64_t id, double value) = 0;
 
+    // Оформить перевод со счёта на счёт
+    virtual void createTransfer(int64_t sender, int64_t recipient, double value) = 0;
+
     // Запустить определённые тесты
     virtual void test() = 0;
 };

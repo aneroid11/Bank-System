@@ -12,6 +12,7 @@
 #include "dbnotopenedexception.h"
 #include "useralreadyexistsexception.h"
 #include "wronguserpasswordexception.h"
+#include "noaccountindbexception.h"
 
 BankSystemModel::BankSystemModel()
 {
@@ -260,4 +261,24 @@ void BankSystemModel::withdrawMoneyFromAccount(int64_t id, double value)
     delete acc;
 
     std::cout << "withdraw " << value << " amount of money from " << id << " account\n";
+}
+
+void BankSystemModel::createTransfer(int64_t sender, int64_t recipient, double value)
+{
+    // Создать перевод, записать в него данные, записать его в базу данных, перевести деньги со счёта на счёт
+    Account *senderAcc = getAccountById(sender);
+    Account *recipientAcc = getAccountById(recipient);
+
+    if (!senderAcc || !recipientAcc)
+    {
+        throw NoAccountInDbException();
+    }
+
+    senderAcc->withdrawMoney(value);
+    recipientAcc->putMoney(value);
+    database->updateAccount(senderAcc);
+    database->updateAccount(recipientAcc);
+
+    delete senderAcc;
+    delete recipientAcc;
 }
