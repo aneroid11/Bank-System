@@ -191,7 +191,8 @@ void BankSystemModel::openDepositForClient(Client *client, int termInMonths, dou
 {
     std::cout << "BankSystemModel::openDepositForClient() for " << termInMonths << " months\n";
 
-    Deposit deposit(database->generateUniqueId(), client->getLogin(), sum, 10.0, time(nullptr), termInMonths, ACTIVE);
+    Deposit deposit(database->generateUniqueId(), client->getLogin(),
+                    sum, 10.0, time(nullptr), termInMonths, time(nullptr), ACTIVE);
     database->addDeposit(deposit);
 }
 
@@ -303,7 +304,7 @@ void BankSystemModel::clientAccountAccumulate(int64_t id)
 void BankSystemModel::clientDepositAccumulate(int64_t id)
 {
     Deposit *dep = getDepositById(id);
-    std::cout << "Here, I need to call dep->accumulate()\n";
+    dep->accumulate();
     updateDepositData(dep);
     delete dep;
 }

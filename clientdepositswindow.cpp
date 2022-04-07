@@ -101,7 +101,6 @@ void ClientDepositsWindow::showDepositInfo()
     int64_t depId = getCurrentDepositId();
     if (depId == -1) { return; }
 
-    //bankSystemModel->clientAccountAccumulate(depId);
     bankSystemModel->clientDepositAccumulate(depId);
 
     updateClientDepositsData();
@@ -150,4 +149,7 @@ void ClientDepositsWindow::openDeposit()
     while (!ok);
 
     bankSystemModel->openDepositForClient(client, term, sum);
+
+    updateClientDepositsData();
+    updateClientDepositsListWidget();
 }

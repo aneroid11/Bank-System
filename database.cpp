@@ -129,6 +129,7 @@ void Database::createDepositsTable()
                   "BALANCE REAL," \
                   "PERCENT REAL," \
                   "CREATION_DATE INT," \
+                  "PERCENT_DATE INT," \
                   "TERM_IN_MONTHS INT," \
                   "STATUS INT);");
     query.exec();
@@ -275,13 +276,14 @@ void Database::addDeposit(const Deposit &deposit)
 
     std::string query = "INSERT INTO DEPOSITS ";
 
-    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, TERM_IN_MONTHS, STATUS) ";
+    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, PERCENT_DATE, TERM_IN_MONTHS, STATUS) ";
     query += "VALUES (";
     query += std::to_string(deposit.getId()) + ", ";
     query += "\'" + deposit.getClientLogin() + "\', ";
     query += "\'" + std::to_string(deposit.getBalance()) + "\', ";
     query += "\'" + std::to_string(deposit.getPercents()) + "\', ";
     query += "\'" + std::to_string(deposit.getCreationTime()) + "\', ";
+    query += "\'" + std::to_string(deposit.getLastAccrualOfInterestTime()) + "\', ";
     query += "\'" + std::to_string(deposit.getTerm()) + "\', ";
     query += "\'" + std::to_string(deposit.getStatus()) + "\'); ";
 
@@ -524,12 +526,15 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
         else if (tableName == "DEPOSITS")
         {
             unsigned term = query.value(rec.indexOf("TERM_IN_MONTHS")).toInt();
+            time_t percentTime = query.value(rec.indexOf("PERCENT_DATE")).toUInt();
+
             record = new Deposit(id,
                                  clientLogin.toStdString(),
                                  initialBalance,
                                  percents,
                                  creationTime,
                                  term,
+                                 percentTime,
                                  status);
         }
 
@@ -667,10 +672,10 @@ void Database::updateDeposit(Deposit *data)
     std::stringstream qs;
     qs << "UPDATE DEPOSITS SET ";
     qs << "BALANCE = \'" << std::to_string(data->getBalance()) << "\', ";
-    qs << "CREATION_DATE = \'" << std::to_string(data->getCreationTime()) << "\', ";
+    qs << "PERCENT_DATE = \'" << std::to_string(data->getLastAccrualOfInterestTime()) << "\', ";
     qs << "STATUS = \'" << std::to_string(data->getStatus()) << "\' ";
     qs << "WHERE ID = \'" << std::to_string(data->getId()) << "\';";
-    // term не изменяется
+    // term не изменяется, creationDate не изменяется
 
     QSqlQuery sqlQuery;
     sqlQuery.prepare(qs.str().c_str());
