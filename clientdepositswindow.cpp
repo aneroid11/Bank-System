@@ -1,6 +1,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QListWidget>
+#include <QMessageBox>
 
 #include "clientdepositswindow.h"
 
@@ -13,22 +14,39 @@ ClientDepositsWindow::ClientDepositsWindow()
 
     /*
      * a. Создание
-     * a. Закрытие (не надо)
+     * b. Закрытие (не надо)
      * e. Накопление
      * */
 
     QGridLayout *gridLayout = new QGridLayout(this);
 
-    QListWidget *accountsListWidget = new QListWidget(this);
+    depositsListWidget = new QListWidget(this);
 
-    accountsListWidget->insertItem(0, "24918239183293, 2%, текущая сумма: 3000 руб.");
-    accountsListWidget->insertItem(1, "90812903912309, 3%, текущая сумма: 440 руб.");
-    accountsListWidget->insertItem(2, "31891289819899, 1%, текущая сумма: 4000 руб.");
+    depositsListWidget->insertItem(0, "249182");
+    depositsListWidget->insertItem(1, "908129");
+    depositsListWidget->insertItem(2, "318912");
+
+    QPushButton *depositInfo = new QPushButton("Информация о вкладе", this);
+    connect(depositInfo, &QPushButton::clicked, this, &ClientDepositsWindow::showDepositInfo);
 
     QPushButton *openDeposit = new QPushButton("Открыть новый вклад", this);
     QPushButton *putMoney = new QPushButton("Положить деньги", this);
 
-    gridLayout->addWidget(accountsListWidget, 0, 0);
-    gridLayout->addWidget(openDeposit, 1, 0);
-    gridLayout->addWidget(putMoney, 2, 0);
+    gridLayout->addWidget(depositsListWidget, 0, 0);
+    gridLayout->addWidget(depositInfo, 1, 0);
+    gridLayout->addWidget(openDeposit, 2, 0);
+    gridLayout->addWidget(putMoney, 3, 0);
+}
+
+ClientDepositsWindow::~ClientDepositsWindow()
+{
+    delete depositsListWidget;
+}
+
+void ClientDepositsWindow::showDepositInfo()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Информация о вкладе");
+    msgBox.setText("Нет информации");
+    msgBox.exec();
 }
