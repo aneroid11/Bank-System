@@ -491,33 +491,49 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
     }
     else
     {
-        std::cout << "This is a record\n";
+        std::cout << "This is a record: deposit or account\n";
 
-        // Это запись счёта
-        int64_t newAccId = query.value(rec.indexOf("ID")).toInt();
+        // Это запись счёта или вклада
+        int64_t id = query.value(rec.indexOf("ID")).toInt();
 
-        QString newAccClLogin = query.value(rec.indexOf("CLIENT_LOGIN")).toString();
+        QString clientLogin = query.value(rec.indexOf("CLIENT_LOGIN")).toString();
 
         QString initialBalanceStr = query.value(rec.indexOf("BALANCE")).toString();
-        double newAccInitialBalance = initialBalanceStr.replace(',', '.').toDouble();
+        double initialBalance = initialBalanceStr.replace(',', '.').toDouble();
 
         QString percentStr = query.value(rec.indexOf("PERCENT")).toString();
         percentStr.replace(',', '.');
 
-        double newAccPercents = percentStr.toDouble();
+        double percents = percentStr.toDouble();
 
-        time_t newAccCreationTime = query.value(rec.indexOf("CREATION_DATE")).toLongLong();
+        time_t creationTime = query.value(rec.indexOf("CREATION_DATE")).toLongLong();
 
-        int newAccStatus = query.value(rec.indexOf("STATUS")).toInt();
+        int status = query.value(rec.indexOf("STATUS")).toInt();
 
-        Account *newAccount = new Account(newAccId,
-                                          newAccClLogin.toStdString(),
-                                          newAccInitialBalance,
-                                          newAccPercents,
-                                          newAccCreationTime,
-                                          newAccStatus);
+        void *record = nullptr;
 
-        return newAccount;
+        if (tableName == "ACCOUNTS")
+        {
+            record = new Account(id,
+                                 clientLogin.toStdString(),
+                                 initialBalance,
+                                 percents,
+                                 creationTime,
+                                 status);
+        }
+        else if (tableName == "DEPOSITS")
+        {
+            unsigned term = query.value(rec.indexOf("TERM_IN_MONTHS")).toInt();
+            record = new Deposit(id,
+                                 clientLogin.toStdString(),
+                                 initialBalance,
+                                 percents,
+                                 creationTime,
+                                 term,
+                                 status);
+        }
+
+        return record;
     }
 
     return nullptr;
@@ -584,8 +600,6 @@ std::list<Client *> Database::getUnapprovedClients()
 
 std::list<Account *> Database::getClientAccounts(std::string clientLogin)
 {
-    // Поиск в базе по таблице Accounts, чтобы найти счета, у которых совпадает поле client_login с параметром функции
-
     std::list<void *> accountsRecords = getRecordsFromTableByParameter("ACCOUNTS", "CLIENT_LOGIN", clientLogin);
     std::list<Account *> accounts;
 
@@ -593,8 +607,6 @@ std::list<Account *> Database::getClientAccounts(std::string clientLogin)
     {
         accounts.push_back((Account *)a);
     }
-
-    std::cout << "accounts.size() = " << accounts.size() << "\n";
 
     return accounts;
 }
