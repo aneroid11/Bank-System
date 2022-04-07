@@ -39,13 +39,27 @@ public:
 
     std::list<Account *> getClientAccounts(Client *client) override;
 
-    std::list<Account *> getClientAccountsByStatus(Client *client, int status) override;
+    std::list<Deposit *> getClientDeposits(Client *client) override;
+
+    std::list<SomethingHoldingMoney *> getClientSmthHoldingMoneyByStatus(Client *client,
+                                                                         int requiredStatus,
+                                                                         std::string table);
+
+    std::list<Account *> getClientAccountsByStatus(Client *client, int requiredStatus) override;
+
+    std::list<Deposit *> getClientDepositsByStatus(Client *client, int requiredStatus) override;
 
     Account *getAccountById(int64_t id) override;
 
-    void clientAccountAccumulate(int64_t idn) override;
+    Deposit *getDepositById(int64_t id) override;
+
+    void clientAccountAccumulate(int64_t id) override;
+
+    void clientDepositAccumulate(int64_t id) override;
 
     void updateAccountData(Account *acc) override;
+
+    void updateDepositData(Deposit *dep) override;
 
     void putMoneyOnAccount(int64_t id, double value) override;
 

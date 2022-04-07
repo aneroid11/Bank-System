@@ -200,6 +200,38 @@ std::list<Account *> BankSystemModel::getClientAccounts(Client *client)
     return database->getClientAccounts(client->getLogin());
 }
 
+std::list<Deposit *> BankSystemModel::getClientDeposits(Client *client)
+{
+    std::list<void *> records = database->getRecordsFromTableByParameter("DEPOSITS", "CLIENT_LOGIN", client->getLogin());
+    std::list<Deposit *> deposits;
+
+    for (void *r : records)
+    {
+        deposits.push_back((Deposit *)r);
+    }
+    return deposits;
+}
+
+std::list<SomethingHoldingMoney *> BankSystemModel::getClientSmthHoldingMoneyByStatus(Client *client,
+                                                                                      int requiredStatus,
+                                                                                      std::string table)
+{
+    std::list<void *> records = database->getRecordsFromTableByParameter(table, "CLIENT_LOGIN", client->getLogin());
+    std::list<SomethingHoldingMoney *> retList;
+
+    for (void *r : records)
+    {
+        SomethingHoldingMoney *smth = (SomethingHoldingMoney *)r;
+
+        if (smth->getStatus() == requiredStatus)
+        {
+            retList.push_back(smth);
+        }
+    }
+
+    return retList;
+}
+
 std::list<Account *> BankSystemModel::getClientAccountsByStatus(Client *client, int status)
 {
     std::list<Account *> accounts = database->getClientAccounts(client->getLogin());
@@ -222,6 +254,28 @@ std::list<Account *> BankSystemModel::getClientAccountsByStatus(Client *client, 
     return retAccounts;
 }
 
+std::list<Deposit *> BankSystemModel::getClientDepositsByStatus(Client *client, int requiredStatus)
+{
+    std::list<Deposit *> deposits = getClientDeposits(client);
+    std::list<Deposit *> retDeposits;
+
+    for (auto i = deposits.begin(); i != deposits.end(); i++)
+    {
+        Deposit *d = *i;
+
+        if (d->getStatus() != requiredStatus)
+        {
+            delete d;
+        }
+        else
+        {
+            retDeposits.push_back(d);
+        }
+    }
+
+    return retDeposits;
+}
+
 Account *BankSystemModel::getAccountById(int64_t id)
 {
     std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",
@@ -230,21 +284,38 @@ Account *BankSystemModel::getAccountById(int64_t id)
     return (Account *)(*accounts.begin());
 }
 
-void BankSystemModel::clientAccountAccumulate(int64_t id)
+Deposit *BankSystemModel::getDepositById(int64_t id)
 {
-    std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",
+    std::list<void *> deposits = database->getRecordsFromTableByParameter("DEPOSITS",
                                                                           "ID",
                                                                           std::to_string(id));
-    Account *acc = (Account *)(*accounts.begin());
+    return (Deposit *)(*deposits.begin());
+}
+
+void BankSystemModel::clientAccountAccumulate(int64_t id)
+{
+    Account *acc = getAccountById(id);
     acc->accumulate();
     updateAccountData(acc);
     delete acc;
 }
 
+void BankSystemModel::clientDepositAccumulate(int64_t id)
+{
+    Deposit *dep = getDepositById(id);
+    std::cout << "Here, I need to call dep->accumulate()\n";
+    updateDepositData(dep);
+    delete dep;
+}
 
 void BankSystemModel::updateAccountData(Account *acc)
 {
     database->updateAccount(acc);
+}
+
+void BankSystemModel::updateDepositData(Deposit *dep)
+{
+    database->updateDeposit(dep);
 }
 
 void BankSystemModel::putMoneyOnAccount(int64_t id, double value)

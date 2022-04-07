@@ -647,3 +647,20 @@ void Database::updateAccount(Account *data)
     sqlQuery.prepare(qs.str().c_str());
     sqlQuery.exec();
 }
+
+void Database::updateDeposit(Deposit *data)
+{
+    std::cout << "updating deposit: " << data->getId() << "\n";
+
+    std::stringstream qs;
+    qs << "UPDATE DEPOSITS SET ";
+    qs << "BALANCE = \'" << std::to_string(data->getBalance()) << "\', ";
+    qs << "CREATION_DATE = \'" << std::to_string(data->getCreationTime()) << "\', ";
+    qs << "STATUS = \'" << std::to_string(data->getStatus()) << "\' ";
+    qs << "WHERE ID = \'" << std::to_string(data->getId()) << "\';";
+    // term не изменяется
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(qs.str().c_str());
+    sqlQuery.exec();
+}

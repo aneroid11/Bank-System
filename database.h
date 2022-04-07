@@ -66,6 +66,7 @@ public:
     User *getUserData(std::string login, std::string &type);
 
     void updateAccount(Account *data);
+    void updateDeposit(Deposit *data);
 
 private:
     void createClientsTable();
