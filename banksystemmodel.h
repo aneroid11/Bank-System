@@ -55,6 +55,8 @@ public:
 
     void clientAccountAccumulate(int64_t id) override;
 
+    void clientDepositCheckTerm(int64_t id) override;
+
     void clientDepositAccumulate(int64_t id) override;
 
     void updateAccountData(Account *acc) override;

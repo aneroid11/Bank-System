@@ -68,6 +68,9 @@ public:
     // Обновить баланс (начислить проценты) и время обновления баланса (для счёта)
     virtual void clientAccountAccumulate(int64_t id) = 0;
 
+    // Проверить, не истёк ли срок вклада
+    virtual void clientDepositCheckTerm(int64_t id) = 0;
+
     // Обновить баланс (начислить проценты) и время обновления баланса (для вклада)
     virtual void clientDepositAccumulate(int64_t id) = 0;
 

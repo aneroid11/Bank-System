@@ -41,12 +41,9 @@ ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client 
     QPushButton *openDeposit = new QPushButton("Открыть новый вклад", this);
     connect(openDeposit, &QPushButton::clicked, this, &ClientDepositsWindow::openDeposit);
 
-    QPushButton *putMoney = new QPushButton("Положить деньги", this);
-
     gridLayout->addWidget(depositsListWidget, 0, 0);
     gridLayout->addWidget(depositInfo, 1, 0);
     gridLayout->addWidget(openDeposit, 2, 0);
-    gridLayout->addWidget(putMoney, 3, 0);
 }
 
 ClientDepositsWindow::~ClientDepositsWindow()
@@ -101,6 +98,7 @@ void ClientDepositsWindow::showDepositInfo()
     int64_t depId = getCurrentDepositId();
     if (depId == -1) { return; }
 
+    bankSystemModel->clientDepositCheckTerm(depId);
     bankSystemModel->clientDepositAccumulate(depId);
 
     updateClientDepositsData();
@@ -116,8 +114,8 @@ void ClientDepositsWindow::showDepositInfo()
     std::string info;
     info += "Процентная ставка: " + std::to_string(currDep->getPercents()) + " %\n";
     info += "Баланс: " + std::to_string(currDep->getBalance()) + "\n";
-    time_t creationTime = currDep->getCreationTime();
-    info += "Последнее накопление: " + std::string(ctime(&creationTime)) + "\n";
+    time_t percentTime = currDep->getLastAccrualOfInterestTime();
+    info += "Последнее накопление: " + std::string(ctime(&percentTime)) + "\n";
     info += "Срок вклада: " + std::to_string(currDep->getTerm()) + " месяцев\n";
 
     msgBox.setText(info.c_str());

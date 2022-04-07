@@ -14,6 +14,7 @@ public:
     time_t getLastAccrualOfInterestTime() const { return lastAccrualOfInterestTime; }
 
     void accumulate();
+    void checkTerm();
 
 private:
     time_t lastAccrualOfInterestTime;

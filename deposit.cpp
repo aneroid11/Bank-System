@@ -14,6 +14,8 @@ void Deposit::accumulate()
 {
     // Вычислить новое значение баланса на основании того, сколько времени прошло с creationTime
 
+    if (status != ACTIVE) { return; }
+
     time_t now = time(nullptr);
     time_t delta = now - lastAccrualOfInterestTime;
     int monthsPassed = delta / SEC_IN_MONTH;
@@ -33,4 +35,17 @@ void Deposit::accumulate()
     balance = newBalance;
 
     lastAccrualOfInterestTime += monthsPassed * SEC_IN_MONTH;
+}
+
+void Deposit::checkTerm()
+{
+    // Если с даты создания вклада прошло больше месяцев, чем term, то вклад закрывается.
+    time_t now = time(nullptr);
+    time_t delta = now - creationTime;
+    int monthsPassed = delta / SEC_IN_MONTH;
+
+    if (monthsPassed > term)
+    {
+        status = CLOSED;
+    }
 }

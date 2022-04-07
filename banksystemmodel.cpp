@@ -301,6 +301,14 @@ void BankSystemModel::clientAccountAccumulate(int64_t id)
     delete acc;
 }
 
+void BankSystemModel::clientDepositCheckTerm(int64_t id)
+{
+    Deposit *dep = getDepositById(id);
+    dep->checkTerm();
+    updateDepositData(dep);
+    delete dep;
+}
+
 void BankSystemModel::clientDepositAccumulate(int64_t id)
 {
     Deposit *dep = getDepositById(id);
