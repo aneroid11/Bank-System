@@ -129,6 +129,7 @@ void Database::createDepositsTable()
                   "BALANCE REAL," \
                   "PERCENT REAL," \
                   "CREATION_DATE INT," \
+                  "TERM_IN_MONTHS INT," \
                   "STATUS INT);");
     query.exec();
 }

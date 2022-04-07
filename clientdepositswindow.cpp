@@ -4,6 +4,7 @@
 #include <QGridLayout>
 #include <QListWidget>
 #include <QMessageBox>
+#include <QInputDialog>
 
 #include "clientdepositswindow.h"
 #include "ibanksystemmodel.h"
@@ -19,7 +20,7 @@ ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client 
 
     /*
      * a. Создание
-     * b. Закрытие (не надо)
+     * b. Закрытие (как только истёк срок вклада, но НЕ РАНЬШЕ)
      * e. Накопление
      * */
 
@@ -61,6 +62,8 @@ void ClientDepositsWindow::deleteClientDepositsData()
 
 void ClientDepositsWindow::updateClientDepositsData()
 {
+    deleteClientDepositsData();
+
     std::cout << "update client deposits data\n";
 }
 
@@ -79,5 +82,26 @@ void ClientDepositsWindow::showDepositInfo()
 
 void ClientDepositsWindow::openDeposit()
 {
-    bankSystemModel->openDepositForClient(client);
+    // Нужно запросить у Клиента:
+    // - Срок вклада в месяцах
+    // - Сумму вклада
+    QInputDialog inpDialog;
+    bool ok;
+
+    unsigned term = 0;
+    do
+    {
+        term = inpDialog.getInt(this, "Срок вклада", "Введите срок вклада (в месяцах, от 3 до 24)", 3, 3, 24, 1, &ok);
+    }
+    while (!ok);
+
+    double sum = 0;
+    do
+    {
+        sum = inpDialog.getDouble(this, "Сумма вклада", "Сумма вклада (BYN, 1 - 1000)", 1.0, 1.0, 1000.0, 2, &ok);
+    }
+    while (!ok);
+
+    std::cout << "Open deposit for " << term << " months and " << sum << " BYN\n";
+    //bankSystemModel->openDepositForClient(client);
 }
