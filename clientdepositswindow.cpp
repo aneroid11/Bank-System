@@ -65,13 +65,18 @@ void ClientDepositsWindow::deleteClientDepositsData()
 void ClientDepositsWindow::updateClientDepositsData()
 {
     deleteClientDepositsData();
-
-    std::cout << "update client deposits data\n";
+    clientDeposits = bankSystemModel->getClientDeposits(client);
 }
 
 void ClientDepositsWindow::updateClientDepositsListWidget()
 {
-    std::cout << "update client deposits list widget\n";
+    depositsListWidget->clear();
+
+    int i = 0;
+    for (Deposit *d : clientDeposits)
+    {
+        depositsListWidget->insertItem(i, std::to_string(d->getId()).c_str());
+    }
 }
 
 void ClientDepositsWindow::showDepositInfo()
