@@ -62,6 +62,23 @@ void ClientDepositsWindow::deleteClientDepositsData()
     }
 }
 
+int64_t ClientDepositsWindow::getCurrentDepositId()
+{
+    QList<QListWidgetItem*> selected = depositsListWidget->selectedItems();
+
+    if (selected.size() != 1)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Вы должны выбрать один из вкладов");
+        msgBox.exec();
+        return -1;
+    }
+
+    int64_t depId = selected[0]->text().toInt();
+    return depId;
+}
+
 void ClientDepositsWindow::updateClientDepositsData()
 {
     deleteClientDepositsData();
@@ -81,9 +98,30 @@ void ClientDepositsWindow::updateClientDepositsListWidget()
 
 void ClientDepositsWindow::showDepositInfo()
 {
+    int64_t depId = getCurrentDepositId();
+    if (depId == -1) { return; }
+
+    //bankSystemModel->clientAccountAccumulate(depId);
+    bankSystemModel->clientDepositAccumulate(depId);
+
+    updateClientDepositsData();
+    auto it = std::find_if(std::begin(clientDeposits),
+                           std::end(clientDeposits),
+                           [&](const Deposit *dep){ return dep->getId() == depId; } );
+
+    Deposit *currDep = *it;
+
     QMessageBox msgBox;
     msgBox.setWindowTitle("Информация о вкладе");
-    msgBox.setText("Нет информации");
+
+    std::string info;
+    info += "Процентная ставка: " + std::to_string(currDep->getPercents()) + " %\n";
+    info += "Баланс: " + std::to_string(currDep->getBalance()) + "\n";
+    time_t creationTime = currDep->getCreationTime();
+    info += "Последнее накопление: " + std::string(ctime(&creationTime)) + "\n";
+    info += "Срок вклада: " + std::to_string(currDep->getTerm()) + " месяцев\n";
+
+    msgBox.setText(info.c_str());
     msgBox.exec();
 }
 
