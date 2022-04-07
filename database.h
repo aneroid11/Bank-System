@@ -15,6 +15,7 @@ class Manager;
 class Operator;
 class Administrator;
 class Account;
+class Deposit;
 class Transfer;
 
 struct UserRawData
@@ -36,6 +37,7 @@ public:
     void addOperator(const Operator &op);
     void addAdministrator(const Administrator &admin);
     void addAccount(const Account &account);
+    void addDeposit(const Deposit &deposit);
     void addTransfer(const Transfer &transfer);
 
     void deleteUser(int64_t id);

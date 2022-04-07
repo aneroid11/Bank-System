@@ -8,6 +8,7 @@
 #include "hashcomputer.h"
 #include "database.h"
 #include "account.h"
+#include "deposit.h"
 #include "transfer.h"
 
 #include "dbnotopenedexception.h"
@@ -184,6 +185,12 @@ void BankSystemModel::openAccountForClient(Client *client)
 {
     Account account(database->generateUniqueId(), client->getLogin(), 0, 2.4, time(nullptr));
     database->addAccount(account);
+}
+
+void BankSystemModel::openDepositForClient(Client *client)
+{
+    Deposit deposit(database->generateUniqueId(), client->getLogin(), 0.0, 10.0, time(nullptr));
+    database->addDeposit(deposit);
 }
 
 std::list<Account *> BankSystemModel::getClientAccounts(Client *client)

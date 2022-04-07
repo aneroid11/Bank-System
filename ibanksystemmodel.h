@@ -43,6 +43,9 @@ public:
     // Открыть счёт
     virtual void openAccountForClient(Client *client) = 0;
 
+    // Открыть вклад
+    virtual void openDepositForClient(Client *client) = 0;
+
     // Получить ВСЕ счета клиента в банке
     virtual std::list<Account *> getClientAccounts(Client *client) = 0;
 

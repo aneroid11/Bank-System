@@ -15,6 +15,7 @@
 #include "manager.h"
 #include "administrator.h"
 #include "account.h"
+#include "deposit.h"
 #include "transfer.h"
 
 #include "cannotopendbexception.h"
@@ -237,6 +238,41 @@ void Database::addAccount(const Account &account)
     query += "\'" + std::to_string(account.getPercents()) + "\', ";
     query += "\'" + std::to_string(account.getCreationTime()) + "\', ";
     query += "\'" + std::to_string(account.getStatus()) + "\'); ";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
+
+    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
+}
+
+void Database::addDeposit(const Deposit &deposit)
+{
+    /*
+     * - ID,
+       - CLIENT_LOGIN,
+       - BALANCE,
+       - PERCENT,
+       - CREATION_DATE,
+       - STATUS
+     * */
+
+    if (hasRecord(deposit.getId()))
+    {
+        std::cout << "Already has such deposit\n";
+        return;
+    }
+
+    std::string query = "INSERT INTO DEPOSITS ";
+
+    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, STATUS) ";
+    query += "VALUES (";
+    query += std::to_string(deposit.getId()) + ", ";
+    query += "\'" + deposit.getClientLogin() + "\', ";
+    query += "\'" + std::to_string(deposit.getBalance()) + "\', ";
+    query += "\'" + std::to_string(deposit.getPercents()) + "\', ";
+    query += "\'" + std::to_string(deposit.getCreationTime()) + "\', ";
+    query += "\'" + std::to_string(deposit.getStatus()) + "\'); ";
 
     QSqlQuery sqlQuery;
     sqlQuery.prepare(query.c_str());
