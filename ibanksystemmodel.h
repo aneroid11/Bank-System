@@ -6,6 +6,7 @@
 
 #include "client.h"
 #include "account.h"
+#include "deposit.h"
 #include "nouserindbexception.h"
 
 class IBankSystemModel
@@ -49,17 +50,32 @@ public:
     // Получить ВСЕ счета клиента в банке
     virtual std::list<Account *> getClientAccounts(Client *client) = 0;
 
+    // Получить ВСЕ вклады клиента в банке
+    virtual std::list<Deposit *> getClientDeposits(Client *client) = 0;
+
     // Получить счета клиента в банке с определённым статусом
     virtual std::list<Account *> getClientAccountsByStatus(Client *client, int requiredStatus) = 0;
+
+    // Получить ВКЛАДЫ клиента в банке с определённым статусом
+    virtual std::list<Deposit *> getClientDepositsByStatus(Client *client, int requiredStatus) = 0;
 
     // Получить счёт из базы по id
     virtual Account *getAccountById(int64_t id) = 0;
 
-    // Обновить баланс (начислить проценты) и время обновления баланса
+    // Получить вклад из базы по id
+    virtual Deposit *getDepositById(int64_t id) = 0;
+
+    // Обновить баланс (начислить проценты) и время обновления баланса (для счёта)
     virtual void clientAccountAccumulate(int64_t id) = 0;
+
+    // Обновить баланс (начислить проценты) и время обновления баланса (для вклада)
+    virtual void clientDepositAccumulate(int64_t id) = 0;
 
     // Обновить информацию о счёте
     virtual void updateAccountData(Account *acc) = 0;
+
+    // Обновить информацию о вкладе
+    virtual void updateDepositData(Deposit *dep) = 0;
 
     // Положить деньги на счёт
     virtual void putMoneyOnAccount(int64_t id, double value) = 0;

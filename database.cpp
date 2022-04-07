@@ -290,7 +290,6 @@ void Database::addDeposit(const Deposit &deposit)
     sqlQuery.exec();
 
     std::cout << sqlQuery.lastError().text().toStdString() << "\n";
-
 }
 
 void Database::addTransfer(const Transfer &transfer)
