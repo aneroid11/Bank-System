@@ -28,6 +28,7 @@ SOURCES += \
     clientinstallmentswindow.cpp \
     clientpersonalaccountwindow.cpp \
     database.cpp \
+    deposit.cpp \
     enterprisespecialist.cpp \
     hashcomputer.cpp \
     main.cpp \
@@ -59,6 +60,7 @@ HEADERS += \
     database.h \
     dbexception.h \
     dbnotopenedexception.h \
+    deposit.h \
     enterprisespecialist.h \
     hashcomputer.h \
     ibanksystemmodel.h \
