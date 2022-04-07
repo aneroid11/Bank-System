@@ -19,6 +19,9 @@ private slots:
     void openDeposit();
 
 private:
+    void updateClientDepositsData();
+    void updateClientDepositsListWidget();
+
     int64_t getCurrentDepositId();
 
     IBankSystemModel *bankSystemModel;

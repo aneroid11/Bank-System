@@ -1,9 +1,12 @@
+#include <iostream>
+
 #include <QPushButton>
 #include <QGridLayout>
 #include <QListWidget>
 #include <QMessageBox>
 
 #include "clientdepositswindow.h"
+#include "ibanksystemmodel.h"
 
 ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client *cl)
     : bankSystemModel(bankSystem), client(cl)
@@ -22,6 +25,11 @@ ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client 
     QGridLayout *gridLayout = new QGridLayout(this);
 
     depositsListWidget = new QListWidget(this);
+
+    // Здесь нужно получать список вкладов Клиента из базы данных
+    // Отображать нужно только их id'шники
+    updateClientDepositsData();
+    updateClientDepositsListWidget();
 
     depositsListWidget->insertItem(0, "249182");
     depositsListWidget->insertItem(1, "908129");
@@ -43,7 +51,16 @@ ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client 
 
 ClientDepositsWindow::~ClientDepositsWindow()
 {
-    delete depositsListWidget;
+}
+
+void ClientDepositsWindow::updateClientDepositsData()
+{
+    std::cout << "update client deposits data\n";
+}
+
+void ClientDepositsWindow::updateClientDepositsListWidget()
+{
+    std::cout << "update client deposits list widget\n";
 }
 
 void ClientDepositsWindow::showDepositInfo()
@@ -56,8 +73,5 @@ void ClientDepositsWindow::showDepositInfo()
 
 void ClientDepositsWindow::openDeposit()
 {
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Открытие вклада");
-    msgBox.setText("Вклад успешно открыт");
-    msgBox.exec();
+    bankSystemModel->openDepositForClient(client);
 }
