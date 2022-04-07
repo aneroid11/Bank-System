@@ -42,6 +42,7 @@ Database::Database(std::string filename)
     createManagersTable();
     createAdministratorsTable();
     createAccountsTable();
+    createDepositsTable();
     createTransfersTable();
 }
 
@@ -110,6 +111,19 @@ void Database::createAccountsTable()
 {
     QSqlQuery query;
     query.prepare("CREATE TABLE ACCOUNTS("  \
+                  "ID INT NOT NULL," \
+                  "CLIENT_LOGIN TEXT," \
+                  "BALANCE REAL," \
+                  "PERCENT REAL," \
+                  "CREATION_DATE INT," \
+                  "STATUS INT);");
+    query.exec();
+}
+
+void Database::createDepositsTable()
+{
+    QSqlQuery query;
+    query.prepare("CREATE TABLE DEPOSITS("  \
                   "ID INT NOT NULL," \
                   "CLIENT_LOGIN TEXT," \
                   "BALANCE REAL," \
@@ -220,24 +234,24 @@ void Database::addAdministrator(const Administrator &admin)
     sqlQuery.exec();
 }
 
-void Database::addAccount(const Account &account)
+void Database::addSomethingHoldingMoney(const SomethingHoldingMoney &smth, std::string tableName)
 {
-    if (hasRecord(account.getId()))
+    if (hasRecord(smth.getId()))
     {
         std::cout << "Already has such account\n";
         return;
     }
 
-    std::string query = "INSERT INTO ACCOUNTS ";
+    std::string query = "INSERT INTO " + tableName + " ";
 
     query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, STATUS) ";
     query += "VALUES (";
-    query += std::to_string(account.getId()) + ", ";
-    query += "\'" + account.getClientLogin() + "\', ";
-    query += "\'" + std::to_string(account.getBalance()) + "\', ";
-    query += "\'" + std::to_string(account.getPercents()) + "\', ";
-    query += "\'" + std::to_string(account.getCreationTime()) + "\', ";
-    query += "\'" + std::to_string(account.getStatus()) + "\'); ";
+    query += std::to_string(smth.getId()) + ", ";
+    query += "\'" + smth.getClientLogin() + "\', ";
+    query += "\'" + std::to_string(smth.getBalance()) + "\', ";
+    query += "\'" + std::to_string(smth.getPercents()) + "\', ";
+    query += "\'" + std::to_string(smth.getCreationTime()) + "\', ";
+    query += "\'" + std::to_string(smth.getStatus()) + "\'); ";
 
     QSqlQuery sqlQuery;
     sqlQuery.prepare(query.c_str());
@@ -246,39 +260,14 @@ void Database::addAccount(const Account &account)
     std::cout << sqlQuery.lastError().text().toStdString() << "\n";
 }
 
+void Database::addAccount(const Account &account)
+{
+    addSomethingHoldingMoney(account, "ACCOUNTS");
+}
+
 void Database::addDeposit(const Deposit &deposit)
 {
-    /*
-     * - ID,
-       - CLIENT_LOGIN,
-       - BALANCE,
-       - PERCENT,
-       - CREATION_DATE,
-       - STATUS
-     * */
-
-    if (hasRecord(deposit.getId()))
-    {
-        std::cout << "Already has such deposit\n";
-        return;
-    }
-
-    std::string query = "INSERT INTO DEPOSITS ";
-
-    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, STATUS) ";
-    query += "VALUES (";
-    query += std::to_string(deposit.getId()) + ", ";
-    query += "\'" + deposit.getClientLogin() + "\', ";
-    query += "\'" + std::to_string(deposit.getBalance()) + "\', ";
-    query += "\'" + std::to_string(deposit.getPercents()) + "\', ";
-    query += "\'" + std::to_string(deposit.getCreationTime()) + "\', ";
-    query += "\'" + std::to_string(deposit.getStatus()) + "\'); ";
-
-    QSqlQuery sqlQuery;
-    sqlQuery.prepare(query.c_str());
-    sqlQuery.exec();
-
-    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
+    addSomethingHoldingMoney(deposit, "DEPOSITS");
 }
 
 void Database::addTransfer(const Transfer &transfer)
