@@ -31,6 +31,8 @@ ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client 
     connect(depositInfo, &QPushButton::clicked, this, &ClientDepositsWindow::showDepositInfo);
 
     QPushButton *openDeposit = new QPushButton("Открыть новый вклад", this);
+    connect(openDeposit, &QPushButton::clicked, this, &ClientDepositsWindow::openDeposit);
+
     QPushButton *putMoney = new QPushButton("Положить деньги", this);
 
     gridLayout->addWidget(depositsListWidget, 0, 0);
@@ -49,5 +51,13 @@ void ClientDepositsWindow::showDepositInfo()
     QMessageBox msgBox;
     msgBox.setWindowTitle("Информация о вкладе");
     msgBox.setText("Нет информации");
+    msgBox.exec();
+}
+
+void ClientDepositsWindow::openDeposit()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Открытие вклада");
+    msgBox.setText("Вклад успешно открыт");
     msgBox.exec();
 }

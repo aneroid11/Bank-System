@@ -16,6 +16,7 @@ public:
 
 private slots:
     void showDepositInfo();
+    void openDeposit();
 
 private:
     int64_t getCurrentDepositId();
