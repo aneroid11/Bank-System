@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 #include <QPushButton>
 #include <QGridLayout>
@@ -9,6 +10,7 @@
 #include "clientdepositswindow.h"
 #include "ibanksystemmodel.h"
 #include "deposit.h"
+#include "constants.h"
 
 ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client *cl)
     : bankSystemModel(bankSystem), client(cl)
@@ -91,7 +93,9 @@ void ClientDepositsWindow::openDeposit()
     unsigned term = 0;
     do
     {
-        term = inpDialog.getInt(this, "Срок вклада", "Введите срок вклада (в месяцах, от 3 до 24)", 3, 3, 24, 1, &ok);
+        std::stringstream ss;
+        ss << "Введите срок вклада (в месяцах, от " << MIN_DEPOSIT_TERM << " до " << MAX_DEPOSIT_TERM << ")";
+        term = inpDialog.getInt(this, "Срок вклада", ss.str().c_str(), 3, MIN_DEPOSIT_TERM, MAX_DEPOSIT_TERM, 1, &ok);
     }
     while (!ok);
 

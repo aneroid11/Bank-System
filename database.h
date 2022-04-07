@@ -76,8 +76,6 @@ private:
     void createDepositsTable();
     void createTransfersTable();
 
-    void addSomethingHoldingMoney(const SomethingHoldingMoney &smth, std::string tableName);
-
     User *createUserFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);
     void *createRecordFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);
 

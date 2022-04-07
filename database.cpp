@@ -235,10 +235,6 @@ void Database::addAdministrator(const Administrator &admin)
     sqlQuery.exec();
 }
 
-void Database::addSomethingHoldingMoney(const SomethingHoldingMoney &smth, std::string tableName)
-{
-}
-
 void Database::addAccount(const Account &account)
 {
     if (hasRecord(account.getId()))
