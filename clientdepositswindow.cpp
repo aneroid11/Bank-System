@@ -102,6 +102,5 @@ void ClientDepositsWindow::openDeposit()
     }
     while (!ok);
 
-    std::cout << "Open deposit for " << term << " months and " << sum << " BYN\n";
-    //bankSystemModel->openDepositForClient(client);
+    bankSystemModel->openDepositForClient(client, term, sum);
 }
