@@ -78,7 +78,7 @@ void ClientPersonalAccountWindow::showClientAccountsWindow()
 
 void ClientPersonalAccountWindow::showClientDepositsWindow()
 {
-    ClientDepositsWindow *clientDepositsWindow = new ClientDepositsWindow();
+    ClientDepositsWindow *clientDepositsWindow = new ClientDepositsWindow(bankSystemModel, currClient);
     clientDepositsWindow->setWindowModality(Qt::ApplicationModal);
     clientDepositsWindow->exec();
     delete clientDepositsWindow;

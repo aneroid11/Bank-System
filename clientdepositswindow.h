@@ -4,10 +4,14 @@
 #include <QDialog>
 #include <QListWidget>
 
+class IBankSystemModel;
+class Deposit;
+class Client;
+
 class ClientDepositsWindow : public QDialog
 {
 public:
-    ClientDepositsWindow();
+    ClientDepositsWindow(IBankSystemModel *bankSystem, Client *cl);
     ~ClientDepositsWindow();
 
 private slots:
@@ -15,6 +19,9 @@ private slots:
 
 private:
     int64_t getCurrentDepositId();
+
+    IBankSystemModel *bankSystemModel;
+    Client *client;
 
     QListWidget *depositsListWidget;
 };

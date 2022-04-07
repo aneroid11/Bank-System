@@ -5,7 +5,8 @@
 
 #include "clientdepositswindow.h"
 
-ClientDepositsWindow::ClientDepositsWindow()
+ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client *cl)
+    : bankSystemModel(bankSystem), client(cl)
 {
     setFixedWidth(500);
     setFixedHeight(500);
