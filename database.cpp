@@ -265,6 +265,7 @@ void Database::addAccount(const Account &account)
 void Database::addDeposit(const Deposit &deposit)
 {
     std::cout << "Need to add a deposit here for " << deposit.getClientLogin() << "\n";
+    std::cout << "ID: " << deposit.getId() << "\n";
 }
 
 void Database::addTransfer(const Transfer &transfer)

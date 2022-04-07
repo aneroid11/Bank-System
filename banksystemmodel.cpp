@@ -191,7 +191,7 @@ void BankSystemModel::openDepositForClient(Client *client, int termInMonths, dou
 {
     std::cout << "BankSystemModel::openDepositForClient() for " << termInMonths << " months\n";
 
-    Deposit deposit(database->generateUniqueId(), client->getLogin(), sum, 10.0, time(nullptr));
+    Deposit deposit(database->generateUniqueId(), client->getLogin(), sum, 10.0, time(nullptr), termInMonths, ACTIVE);
     database->addDeposit(deposit);
 }
 
