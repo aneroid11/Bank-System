@@ -8,6 +8,7 @@
 #include "hashcomputer.h"
 #include "database.h"
 #include "account.h"
+#include "transfer.h"
 
 #include "dbnotopenedexception.h"
 #include "useralreadyexistsexception.h"
@@ -278,6 +279,9 @@ void BankSystemModel::createTransfer(int64_t sender, int64_t recipient, double v
     recipientAcc->putMoney(value);
     database->updateAccount(senderAcc);
     database->updateAccount(recipientAcc);
+
+    Transfer transfer(database->generateUniqueId(), sender, recipient, time(nullptr), value);
+    database->addTransfer(transfer);
 
     delete senderAcc;
     delete recipientAcc;
