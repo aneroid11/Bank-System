@@ -22,10 +22,14 @@ private:
     void updateClientDepositsData();
     void updateClientDepositsListWidget();
 
+    void deleteClientDepositsData();
+
     int64_t getCurrentDepositId();
 
     IBankSystemModel *bankSystemModel;
     Client *client;
+
+    std::list<Deposit *> clientDeposits;
 
     QListWidget *depositsListWidget;
 };

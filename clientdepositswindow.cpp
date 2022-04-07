@@ -7,6 +7,7 @@
 
 #include "clientdepositswindow.h"
 #include "ibanksystemmodel.h"
+#include "deposit.h"
 
 ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client *cl)
     : bankSystemModel(bankSystem), client(cl)
@@ -31,10 +32,6 @@ ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client 
     updateClientDepositsData();
     updateClientDepositsListWidget();
 
-    depositsListWidget->insertItem(0, "249182");
-    depositsListWidget->insertItem(1, "908129");
-    depositsListWidget->insertItem(2, "318912");
-
     QPushButton *depositInfo = new QPushButton("Информация о вкладе", this);
     connect(depositInfo, &QPushButton::clicked, this, &ClientDepositsWindow::showDepositInfo);
 
@@ -51,6 +48,15 @@ ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client 
 
 ClientDepositsWindow::~ClientDepositsWindow()
 {
+    deleteClientDepositsData();
+}
+
+void ClientDepositsWindow::deleteClientDepositsData()
+{
+    for (Deposit *d : clientDeposits)
+    {
+        delete d;
+    }
 }
 
 void ClientDepositsWindow::updateClientDepositsData()
