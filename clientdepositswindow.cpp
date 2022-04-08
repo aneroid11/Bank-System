@@ -87,7 +87,7 @@ void ClientDepositsWindow::updateClientDepositsData()
 
     clientDeposits = bankSystemModel->getClientDeposits(client);
 
-    for (auto it = clientDeposits.begin(); it != clientDeposits.end(); it++)
+    /*for (auto it = clientDeposits.begin(); it != clientDeposits.end(); it++)
     {
         Deposit *dep = *it;
         int status = dep->getStatus();
@@ -97,7 +97,7 @@ void ClientDepositsWindow::updateClientDepositsData()
             delete dep;
             clientDeposits.remove(dep);
         }
-    }
+    }*/
 
     // Убрать не закрытые и не открытые вклады
     /*for (Deposit *d : deposits)
