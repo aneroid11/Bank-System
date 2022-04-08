@@ -1,5 +1,6 @@
 #include "adminpersonalaccountwindow.h"
 #include "adminaccountsdepositswindow.h"
+#include "ibanksystemmodel.h"
 
 #include <QMessageBox>
 #include <QGridLayout>
@@ -7,7 +8,8 @@
 #include <QTableWidget>
 #include <QPushButton>
 
-AdminPersonalAccountWindow::AdminPersonalAccountWindow()
+AdminPersonalAccountWindow::AdminPersonalAccountWindow(IBankSystemModel *bankSystem)
+    : bankSystemModel(bankSystem)
 {
     setFixedWidth(500);
     setFixedHeight(500);
@@ -24,7 +26,7 @@ AdminPersonalAccountWindow::AdminPersonalAccountWindow()
 
 void AdminPersonalAccountWindow::showAccountsDepositsWindow()
 {
-    AdminAccountsDepositsWindow window;
+    AdminAccountsDepositsWindow window(bankSystemModel);
     window.setWindowModality(Qt::ApplicationModal);
     window.exec();
 }

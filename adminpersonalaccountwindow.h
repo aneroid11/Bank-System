@@ -3,14 +3,19 @@
 
 #include <QDialog>
 
+class IBankSystemModel;
+
 class AdminPersonalAccountWindow : public QDialog
 {
     Q_OBJECT
 public:
-    AdminPersonalAccountWindow();
+    AdminPersonalAccountWindow(IBankSystemModel *bankSystem);
 
 private slots:
     void showAccountsDepositsWindow();
+
+private:
+    IBankSystemModel *bankSystemModel;
 };
 
 #endif // ADMINPERSONALACCOUNTWINDOW_H

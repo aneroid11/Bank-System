@@ -118,7 +118,7 @@ void AuthorizationWindow::enter()
     }
     else if (userType == "ADMINISTRATORS")
     {
-        AdminPersonalAccountWindow *adminPersonalAccWindow = new AdminPersonalAccountWindow();
+        AdminPersonalAccountWindow *adminPersonalAccWindow = new AdminPersonalAccountWindow(bankSystemModel);
         adminPersonalAccWindow->setWindowModality(Qt::ApplicationModal);
         adminPersonalAccWindow->exec();
         delete adminPersonalAccWindow;
