@@ -1,6 +1,7 @@
 #include "adminaccountsdepositswindow.h"
 
 #include <QPushButton>
+#include <QListWidget>
 #include <QMessageBox>
 #include <QGridLayout>
 
@@ -11,6 +12,10 @@ AdminAccountsDepositsWindow::AdminAccountsDepositsWindow(IBankSystemModel *bankS
     setFixedHeight(500);
 
     setWindowTitle("Счета и вклады");
+
+    QListWidget *accountsListWidget = new QListWidget(this);
+
+    QListWidget *depositsListWidget = new QListWidget(this);
 
     QGridLayout *gridLayout = new QGridLayout(this);
 
@@ -23,9 +28,11 @@ AdminAccountsDepositsWindow::AdminAccountsDepositsWindow(IBankSystemModel *bankS
     QPushButton *freeze = new QPushButton("Заморозить", this);
     connect(freeze, &QPushButton::clicked, this, &AdminAccountsDepositsWindow::freeze);
 
-    gridLayout->addWidget(info, 0, 0);
-    gridLayout->addWidget(ban, 1, 0);
-    gridLayout->addWidget(freeze, 2, 0);
+    gridLayout->addWidget(accountsListWidget, 0, 0);
+    gridLayout->addWidget(depositsListWidget, 1, 0);
+    gridLayout->addWidget(info, 2, 0);
+    gridLayout->addWidget(ban, 3, 0);
+    gridLayout->addWidget(freeze, 4, 0);
 }
 
 void AdminAccountsDepositsWindow::showInfo()
