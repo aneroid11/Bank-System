@@ -47,6 +47,7 @@ ClientDepositsWindow::ClientDepositsWindow(IBankSystemModel *bankSystem, Client 
     gridLayout->addWidget(depositsListWidget, 0, 0);
     gridLayout->addWidget(depositInfo, 1, 0);
     gridLayout->addWidget(openDeposit, 2, 0);
+    gridLayout->addWidget(withdrawMoney, 3, 0);
 }
 
 ClientDepositsWindow::~ClientDepositsWindow()
@@ -168,8 +169,21 @@ void ClientDepositsWindow::openDeposit()
 
 void ClientDepositsWindow::withdrawMoney()
 {
+    int64_t id = getCurrentDepositId();
+    Deposit *dep = bankSystemModel->getDepositById(id);
+    int status = dep->getStatus();
+
     QMessageBox msgBox;
     msgBox.setWindowTitle("Информация о вкладе");
-    msgBox.setText("АААААА");
+
+    if (status == CLOSED)
+    {
+        msgBox.setText("Можем снять деньги со вклада. Вклад закрыт.");
+    }
+    else
+    {
+        msgBox.setText("Вклад должен быть закрыт для того, чтобы можно было снять деньги.");
+    }
+
     msgBox.exec();
 }
