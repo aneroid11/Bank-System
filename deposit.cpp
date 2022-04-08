@@ -16,9 +16,17 @@ void Deposit::accumulate()
 
     if (status != ACTIVE) { return; }
 
+    time_t expireTime = creationTime + term * SEC_IN_MONTH;
     time_t now = time(nullptr);
+
+    if (now > expireTime)
+    {
+        now = expireTime;
+    }
+
     time_t delta = now - lastAccrualOfInterestTime;
     int monthsPassed = delta / SEC_IN_MONTH;
+
     double oneIterCoef = 1.0 + percents / 100.0;
     double newBalance = balance;
 
