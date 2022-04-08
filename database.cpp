@@ -24,7 +24,6 @@
 
 Database::Database(std::string filename)
 {
-    //qDebug() << QSqlDatabase::drivers();
     database = QSqlDatabase::addDatabase("QSQLCIPHER");
     database.setDatabaseName(filename.c_str());
 
