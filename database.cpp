@@ -668,6 +668,7 @@ void Database::updateAccount(Account *data)
 void Database::updateDeposit(Deposit *data)
 {
     std::cout << "updating deposit: " << data->getId() << "\n";
+    std::cout << "status = " << data->getStatus() << "\n";
 
     std::stringstream qs;
     qs << "UPDATE DEPOSITS SET ";

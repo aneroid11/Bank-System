@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cfloat>
 #include <climits>
 #include <cmath>
@@ -51,6 +52,8 @@ void Deposit::accumulate()
 
 void Deposit::checkTerm()
 {
+    if (status != ACTIVE) { return; }
+
     // Если с даты создания вклада прошло больше месяцев, чем term, то вклад закрывается.
     time_t now = time(nullptr);
     time_t delta = now - creationTime;
@@ -74,6 +77,9 @@ void Deposit::withdrawMoney(double value)
     // Срок счёта истёк и все деньги с него сняты
     if (fabs(balance) < 0.01)
     {
+        std::cout << "deleting deposit\n";
         status = DELETED;
     }
+
+    std::cout << "status = " << status << "\n";
 }

@@ -84,6 +84,11 @@ void ClientDepositsWindow::updateClientDepositsData()
 {
     deleteClientDepositsData();
     clientDeposits = bankSystemModel->getClientDeposits(client);
+
+    for (Deposit *d : clientDeposits)
+    {
+        std::cout << d->getId() << ": " << d->getStatus() << "\n";
+    }
 }
 
 void ClientDepositsWindow::updateClientDepositsListWidget()
@@ -183,7 +188,7 @@ void ClientDepositsWindow::withdrawMoney()
 
         do
         {
-            withdrawValue = inpDialog.getDouble(this, "Сумма снятия", "Введите сумму для снятия (BYN)", 1, 1, maxValue, 10, &ok);
+            withdrawValue = inpDialog.getDouble(this, "Сумма снятия", "Введите сумму для снятия (BYN)", 1, 0, maxValue, 10, &ok);
         }
         while (!ok);
 
@@ -191,7 +196,6 @@ void ClientDepositsWindow::withdrawMoney()
         bankSystemModel->updateDepositData(dep);
 
         updateClientDepositsData();
-        updateClientDepositsListWidget();
     }
     else
     {
