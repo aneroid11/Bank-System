@@ -83,10 +83,12 @@ int64_t ClientDepositsWindow::getCurrentDepositId()
 void ClientDepositsWindow::updateClientDepositsData()
 {
     deleteClientDepositsData();
-    std::list<Deposit *> deposits = bankSystemModel->getClientDeposits(client);
+    //std::list<Deposit *> deposits = bankSystemModel->getClientDeposits(client);
+
+    clientDeposits = bankSystemModel->getClientDeposits(client);
 
     // Убрать не закрытые и не открытые вклады
-    for (Deposit *d : deposits)
+    /*for (Deposit *d : deposits)
     {
         if (d->getStatus() == ACTIVE || d->getStatus() == CLOSED)
         {
@@ -96,7 +98,7 @@ void ClientDepositsWindow::updateClientDepositsData()
         {
             delete d;
         }
-    }
+    }*/
     for (Deposit *d : clientDeposits)
     {
         std::cout << d->getId() << ": " << d->getStatus() << "\n";
