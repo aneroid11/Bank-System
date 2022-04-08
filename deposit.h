@@ -3,6 +3,8 @@
 
 #include "somethingholdingmoney.h"
 
+const int DELETED = 4;
+
 class Deposit : public SomethingHoldingMoney
 {
 public:
@@ -15,6 +17,7 @@ public:
 
     void accumulate();
     void checkTerm();
+    void withdrawMoney(double value);
 
 private:
     time_t lastAccrualOfInterestTime;

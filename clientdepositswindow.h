@@ -17,6 +17,7 @@ public:
 private slots:
     void showDepositInfo();
     void openDeposit();
+    void withdrawMoney();
 
 private:
     void updateClientDepositsData();

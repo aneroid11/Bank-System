@@ -1,3 +1,7 @@
+#include <cfloat>
+#include <climits>
+#include <cmath>
+
 #include "deposit.h"
 #include "constants.h"
 
@@ -55,5 +59,21 @@ void Deposit::checkTerm()
     if (monthsPassed > term)
     {
         status = CLOSED;
+    }
+}
+
+void Deposit::withdrawMoney(double value)
+{
+    checkTerm();
+
+    // Вывести деньги можно только с закрытого счёта
+    if (status != CLOSED) { return; }
+
+    balance -= value;
+
+    // Срок счёта истёк и все деньги с него сняты
+    if (fabs(balance) < 0.01)
+    {
+        status = DELETED;
     }
 }
