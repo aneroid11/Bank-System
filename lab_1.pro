@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     account.cpp \
+    adminaccountsdepositswindow.cpp \
     administrator.cpp \
     adminpersonalaccountwindow.cpp \
     authorizationwindow.cpp \
@@ -45,6 +46,7 @@ SOURCES += \
 
 HEADERS += \
     account.h \
+    adminaccountsdepositswindow.h \
     administrator.h \
     adminpersonalaccountwindow.h \
     authorizationwindow.h \

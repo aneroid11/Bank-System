@@ -8,6 +8,9 @@ class AdminPersonalAccountWindow : public QDialog
     Q_OBJECT
 public:
     AdminPersonalAccountWindow();
+
+private slots:
+    void showAccountsDepositsWindow();
 };
 
 #endif // ADMINPERSONALACCOUNTWINDOW_H

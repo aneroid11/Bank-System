@@ -1,5 +1,7 @@
 #include "adminpersonalaccountwindow.h"
+#include "adminaccountsdepositswindow.h"
 
+#include <QMessageBox>
 #include <QGridLayout>
 #include <QLabel>
 #include <QTableWidget>
@@ -14,9 +16,15 @@ AdminPersonalAccountWindow::AdminPersonalAccountWindow()
 
     QGridLayout *gridLayout = new QGridLayout(this);
 
-    QPushButton *accountsWork = new QPushButton("Счета банка", this);
-    QPushButton *depositsWork = new QPushButton("Вклады банка", this);
+    QPushButton *accountsDepositsWork = new QPushButton("Счета и вклады", this);
+    connect(accountsDepositsWork, &QPushButton::clicked, this, &AdminPersonalAccountWindow::showAccountsDepositsWindow);
 
-    gridLayout->addWidget(accountsWork, 0, 0);
-    gridLayout->addWidget(depositsWork, 1, 0);
+    gridLayout->addWidget(accountsDepositsWork, 0, 0);
+}
+
+void AdminPersonalAccountWindow::showAccountsDepositsWindow()
+{
+    AdminAccountsDepositsWindow window;
+    window.setWindowModality(Qt::ApplicationModal);
+    window.exec();
 }
