@@ -173,17 +173,33 @@ void ClientDepositsWindow::withdrawMoney()
     Deposit *dep = bankSystemModel->getDepositById(id);
     int status = dep->getStatus();
 
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Информация о вкладе");
-
     if (status == CLOSED)
     {
-        msgBox.setText("Можем снять деньги со вклада. Вклад закрыт.");
+        double maxValue = dep->getBalance();
+
+        QInputDialog inpDialog;
+        bool ok;
+        double withdrawValue;
+
+        do
+        {
+            withdrawValue = inpDialog.getDouble(this, "Сумма снятия", "Введите сумму для снятия (BYN)", 1, 1, maxValue, 10, &ok);
+        }
+        while (!ok);
+
+        dep->withdrawMoney(withdrawValue);
+        bankSystemModel->updateDepositData(dep);
+
+        updateClientDepositsData();
+        updateClientDepositsListWidget();
     }
     else
     {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Невозможно снять деньги");
         msgBox.setText("Вклад должен быть закрыт для того, чтобы можно было снять деньги.");
+        msgBox.exec();
     }
 
-    msgBox.exec();
+    delete dep;
 }
