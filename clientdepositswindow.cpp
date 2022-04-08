@@ -85,19 +85,19 @@ void ClientDepositsWindow::updateClientDepositsData()
     deleteClientDepositsData();
     //std::list<Deposit *> deposits = bankSystemModel->getClientDeposits(client);
 
-    clientDeposits = bankSystemModel->getClientDeposits(client);
+    std::list<Deposit *> deposits = bankSystemModel->getClientDeposits(client);
+    clientDeposits = deposits;
 
-    /*for (auto it = clientDeposits.begin(); it != clientDeposits.end(); it++)
+    for (Deposit *d : deposits)
     {
-        Deposit *dep = *it;
-        int status = dep->getStatus();
+        int status = d->getStatus();
 
         if (status != ACTIVE && status != CLOSED)
         {
-            delete dep;
-            clientDeposits.remove(dep);
+            delete d;
+            clientDeposits.remove(d);
         }
-    }*/
+    }
 
     // Убрать не закрытые и не открытые вклады
     /*for (Deposit *d : deposits)
