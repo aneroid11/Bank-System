@@ -99,18 +99,6 @@ void ClientDepositsWindow::updateClientDepositsData()
         }
     }
 
-    // Убрать не закрытые и не открытые вклады
-    /*for (Deposit *d : deposits)
-    {
-        if (d->getStatus() == ACTIVE || d->getStatus() == CLOSED)
-        {
-            clientDeposits.push_back(d);
-        }
-        else
-        {
-            delete d;
-        }
-    }*/
     for (Deposit *d : clientDeposits)
     {
         std::cout << d->getId() << ": " << d->getStatus() << "\n";
