@@ -21,6 +21,7 @@ SOURCES += \
     administrator.cpp \
     adminpersonalaccountwindow.cpp \
     authorizationwindow.cpp \
+    bank.cpp \
     banksystemmodel.cpp \
     client.cpp \
     clientaccountswindow.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     administrator.h \
     adminpersonalaccountwindow.h \
     authorizationwindow.h \
+    bank.h \
     banksystemmodel.h \
     cannotopendbexception.h \
     client.h \
