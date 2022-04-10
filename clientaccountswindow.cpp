@@ -245,7 +245,9 @@ void ClientAccountsWindow::showAccountInfo()
 
     std::string info;
     info += "Процентная ставка: " + std::to_string(currAcc->getPercents()) + "\n";
-    info += "Баланс: " + std::to_string(currAcc->getBalance()) + "\n";
+    info += "Баланс: " + std::to_string(currAcc->getBalance());
+    info += (currAcc->getCurrencyType() == BYN ? " BYN" : " $");
+    info += "\n";
     time_t creationTime = currAcc->getCreationTime();
     info += "Последнее накопление: " + std::string(ctime(&creationTime)) + "\n";
 
