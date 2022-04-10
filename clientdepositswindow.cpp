@@ -136,7 +136,9 @@ void ClientDepositsWindow::showDepositInfo()
 
     std::string info;
     info += "Процентная ставка: " + std::to_string(currDep->getPercents()) + " %\n";
-    info += "Баланс: " + std::to_string(currDep->getBalance()) + "\n";
+    info += "Баланс: " + std::to_string(currDep->getBalance());
+    info += (currDep->getCurrencyType() == BYN ? " BYN" : " $");
+    info += "\n";
     time_t creationTime = currDep->getCreationTime();
     info += "Создан: " + std::string(ctime(&creationTime));
     time_t percentTime = currDep->getLastAccrualOfInterestTime();
@@ -176,7 +178,10 @@ void ClientDepositsWindow::openDeposit()
     double sum = 0;
     do
     {
-        sum = inpDialog.getDouble(this, "Сумма вклада", "Сумма вклада (BYN, 1 - 1000)", 1.0, 1.0, 1000.0, 2, &ok);
+        double maxValue = 1000.0;
+        QString currency = client->isFromRB() ? "BYN" : "$";
+        QString prompt = "Сумма вклада (" + currency + ", 1.0 - " + QString::number(maxValue) + ")";
+        sum = inpDialog.getDouble(this, "Сумма вклада", prompt, 1.0, 1.0, maxValue, 2, &ok);
     }
     while (!ok);
 
@@ -202,7 +207,10 @@ void ClientDepositsWindow::withdrawMoney()
 
         do
         {
-            withdrawValue = inpDialog.getDouble(this, "Сумма снятия", "Введите сумму для снятия (BYN)", 1, 0, maxValue, 10, &ok);
+            QString currency = dep->getCurrencyType() == BYN ? "BYN" : "$";
+            QString prompt = "Введите сумму для снятия (" + currency + ")";
+
+            withdrawValue = inpDialog.getDouble(this, "Сумма снятия", prompt, 1, 0, maxValue, 10, &ok);
         }
         while (!ok);
 

@@ -281,7 +281,7 @@ void Database::addDeposit(const Deposit &deposit)
 
     std::string query = "INSERT INTO DEPOSITS ";
 
-    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, PERCENT_DATE, TERM_IN_MONTHS, STATUS) ";
+    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, PERCENT_DATE, TERM_IN_MONTHS, CURRENCY_TYPE, STATUS) ";
     query += "VALUES (";
     query += std::to_string(deposit.getId()) + ", ";
     query += "\'" + deposit.getClientLogin() + "\', ";
@@ -290,6 +290,7 @@ void Database::addDeposit(const Deposit &deposit)
     query += "\'" + std::to_string(deposit.getCreationTime()) + "\', ";
     query += "\'" + std::to_string(deposit.getLastAccrualOfInterestTime()) + "\', ";
     query += "\'" + std::to_string(deposit.getTerm()) + "\', ";
+    query += "\'" + std::to_string(deposit.getCurrencyType()) + "\', ";
     query += "\'" + std::to_string(deposit.getStatus()) + "\'); ";
 
     QSqlQuery sqlQuery;
