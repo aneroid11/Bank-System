@@ -73,7 +73,6 @@ void ClientAccountsWindow::deleteClientAccounts()
 void ClientAccountsWindow::updateClientAccountsData()
 {
     deleteClientAccounts();
-    //clientAccounts = bankSystemModel->getClientAccounts(client);
     clientAccounts = bankSystemModel->getClientAccountsByStatus(client, ACTIVE);
 }
 
@@ -202,7 +201,8 @@ void ClientAccountsWindow::transferMoney()
 
     do
     {
-        value = inpDialog.getDouble(this, "Перевод", "Введите количество средств",
+        QString prompt = "Введите сумму (BYN, 0.0 - " + QString::number(maxValue) + ")";
+        value = inpDialog.getDouble(this, "Перевод", prompt,
                                     0.0, 0.0, maxValue, 2, &ok);
     }
     while (!ok);
