@@ -380,8 +380,13 @@ void BankSystemModel::createTransfer(int64_t sender, int64_t recipient, double v
         throw NoAccountInDbException();
     }
 
+    CurrencyConverter converter;
+    double putValue = converter.convert(value, senderAcc->getCurrencyType(), recipientAcc->getCurrencyType());
+
     senderAcc->withdrawMoney(value);
-    recipientAcc->putMoney(value);
+    //recipientAcc->putMoney(value);
+    recipientAcc->putMoney(putValue);
+
     database->updateAccount(senderAcc);
     database->updateAccount(recipientAcc);
 
