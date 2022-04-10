@@ -5,12 +5,12 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "currencyconverter.h"
+
 const int ACTIVE = 0;
 const int CLOSED = 1;
 const int FROZEN = 2;
 const int BLOCKED = 3;
-
-enum Currency { BYN, US_DOLLAR };
 
 class SomethingHoldingMoney
 {

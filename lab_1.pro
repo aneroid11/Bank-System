@@ -29,6 +29,7 @@ SOURCES += \
     clientdepositswindow.cpp \
     clientinstallmentswindow.cpp \
     clientpersonalaccountwindow.cpp \
+    currencyconverter.cpp \
     database.cpp \
     deposit.cpp \
     enterprisespecialist.cpp \
@@ -61,6 +62,7 @@ HEADERS += \
     clientinstallmentswindow.h \
     clientpersonalaccountwindow.h \
     constants.h \
+    currencyconverter.h \
     database.h \
     dbexception.h \
     dbnotopenedexception.h \
