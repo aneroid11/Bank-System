@@ -8,8 +8,8 @@
 
 Deposit::Deposit(int64_t id, std::string clientLogin, double initialBalance,
                  double percents, time_t creationTime, unsigned term,
-                 time_t lastAccrualOfInterestTime, int status)
-    : SomethingHoldingMoney(id, clientLogin, initialBalance, percents, creationTime, status)
+                 time_t lastAccrualOfInterestTime, int status, Currency currencyType)
+    : SomethingHoldingMoney(id, clientLogin, initialBalance, percents, creationTime, status, currencyType)
 {
     this->term = term;
     this->lastAccrualOfInterestTime = lastAccrualOfInterestTime;

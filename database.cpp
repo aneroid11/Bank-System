@@ -572,7 +572,8 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
                                  initialBalance,
                                  percents,
                                  creationTime,
-                                 status);
+                                 status,
+                                 BYN);
         }
         else if (tableName == "DEPOSITS")
         {
@@ -586,7 +587,8 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
                                  creationTime,
                                  term,
                                  percentTime,
-                                 status);
+                                 status,
+                                 BYN);
         }
 
         return record;
@@ -693,16 +695,6 @@ User *Database::getUserData(std::string login, std::string &type)
 void Database::updateAccount(Account *data)
 {
     std::cout << "updating account: " << data->getId() << "\n";
-
-    /*
-    query.prepare("CREATE TABLE ACCOUNTS("  \
-                  "ID INT NOT NULL," \
-                  "CLIENT_LOGIN TEXT," \
-                  "BALANCE REAL," \
-                  "PERCENT REAL," \
-                  "CREATION_DATE INT," \
-                  "STATUS INT);");
-     * */
 
     std::stringstream qs;
     qs << "UPDATE ACCOUNTS SET ";

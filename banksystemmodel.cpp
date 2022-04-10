@@ -194,7 +194,11 @@ std::list<Client *> BankSystemModel::getUnapprovedClients()
 
 void BankSystemModel::openAccountForClient(Client *client)
 {
-    Account account(database->generateUniqueId(), client->getLogin(), 0, 2.4, time(nullptr));
+    Account account(database->generateUniqueId(),
+                    client->getLogin(),
+                    0.0, 2.4,
+                    time(nullptr),
+                    ACTIVE, client->isFromRB() ? BYN : US_DOLLAR);
     database->addAccount(account);
 }
 
@@ -203,7 +207,8 @@ void BankSystemModel::openDepositForClient(Client *client, int termInMonths, dou
     std::cout << "BankSystemModel::openDepositForClient() for " << termInMonths << " months\n";
 
     Deposit deposit(database->generateUniqueId(), client->getLogin(),
-                    sum, 10.0, time(nullptr), termInMonths, time(nullptr), ACTIVE);
+                    sum, 10.0, time(nullptr), termInMonths, time(nullptr),
+                    ACTIVE, client->isFromRB() ? BYN : US_DOLLAR);
     database->addDeposit(deposit);
 }
 

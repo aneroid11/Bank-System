@@ -5,8 +5,8 @@
 #include "constants.h"
 
 Account::Account(int64_t id, std::string clientLogin, double initialBalance,
-                 double percents, time_t creationTime, int st)
-    : SomethingHoldingMoney(id, clientLogin, initialBalance, percents, creationTime, st)
+                 double percents, time_t creationTime, int st, Currency currencyType)
+    : SomethingHoldingMoney(id, clientLogin, initialBalance, percents, creationTime, st, currencyType)
 {
 }
 

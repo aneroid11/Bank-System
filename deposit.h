@@ -10,7 +10,7 @@ class Deposit : public SomethingHoldingMoney
 public:
     Deposit(int64_t id, std::string clientLogin, double initialBalance,
             double percents, time_t creationTime, unsigned term,
-            time_t lastAccrualOfInterestTime, int status = ACTIVE);
+            time_t lastAccrualOfInterestTime, int status, Currency currencyType);
 
     unsigned getTerm() const { return term; }
     time_t getLastAccrualOfInterestTime() const { return lastAccrualOfInterestTime; }
