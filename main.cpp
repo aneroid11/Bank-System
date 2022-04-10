@@ -12,7 +12,6 @@ std::list<Bank *> prepareBanks(IBankSystemModel *bankSystemModel)
 
     for (Bank *b : banks)
     {
-        std::cout << b->name << "\n";
         bankSystemModel->setCurrentBank(b->name);
         bankSystemModel->addSampleManager();
         bankSystemModel->addSampleOperator();
