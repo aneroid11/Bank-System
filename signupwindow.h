@@ -23,6 +23,7 @@ private:
     QLineEdit *nameLine;
     QLineEdit *phoneLine;
     QLineEdit *emailLine;
+    QLineEdit *passportDataLine;
 
     IBankSystemModel *bankSystemModel;
 };

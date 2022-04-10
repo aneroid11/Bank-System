@@ -31,6 +31,9 @@ SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     emailLine = new QLineEdit(this);
     emailLine->setPlaceholderText("Введите E-mail");
 
+    passportDataLine = new QLineEdit(this);
+    passportDataLine->setPlaceholderText("Введите серию и номер паспорта");
+
     QPushButton *sendRequest = new QPushButton("Отправить запрос на регистрацию", this);
     connect(sendRequest, &QPushButton::pressed, this, &SignupWindow::sendSignupRequest);
 
@@ -40,7 +43,8 @@ SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     gridLayout->addWidget(nameLine, 2, 0);
     gridLayout->addWidget(phoneLine, 3, 0);
     gridLayout->addWidget(emailLine, 4, 0);
-    gridLayout->addWidget(sendRequest, 5, 0);
+    gridLayout->addWidget(passportDataLine, 5, 0);
+    gridLayout->addWidget(sendRequest, 6, 0);
 }
 
 void SignupWindow::sendSignupRequest()
@@ -62,14 +66,16 @@ void SignupWindow::sendSignupRequest()
                     passwordLine->text().toStdString(),
                     emailLine->text().toStdString(),
                     nameLine->text().toStdString(),
-                    phoneLine->text().toStdString()
+                    phoneLine->text().toStdString(),
+                    passportDataLine->text().toStdString(),
+                    true
                 );
     }
     catch (const UserAlreadyExistsException &)
     {
         QMessageBox msgBox;
         msgBox.setWindowTitle("Ошибка");
-        msgBox.setText("Пользователь с таким логином уже существует. Выберите другой логин");
+        msgBox.setText("Пользователь с таким логином или номером паспорта уже существует");
         msgBox.exec();
         return;
     }

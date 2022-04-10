@@ -79,7 +79,8 @@ void BankSystemModel::enter(std::string login, std::string password)
 }
 
 void BankSystemModel::sendSignupRequestForClient(std::string login, std::string password, std::string email,
-                                                 std::string name, std::string phone)
+                                                 std::string name, std::string phone, std::string passportData,
+                                                 bool fromRB)
 {
     if (!database) { throw DBNotOpenedException(); }
 
@@ -93,7 +94,7 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
         HashComputer().hash(password)
     };
 
-    Client newClient(data, "КВ2332323", true);
+    Client newClient(data, passportData, fromRB);
     std::cout << "Добавление клиента: " << name << "\n";
 
     database->addClient(newClient);

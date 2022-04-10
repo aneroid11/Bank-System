@@ -18,7 +18,8 @@ public:
     void enter(std::string login, std::string password) override;
 
     void sendSignupRequestForClient(std::string login, std::string password, std::string email,
-                                    std::string name, std::string phone) override;
+                                    std::string name, std::string phone, std::string passportData,
+                                    bool fromRB) override;
 
     // TODO: заменить на нормальное появление в базе данных менеджеров, администраторов и операторов
     void addSampleOperator() override;
