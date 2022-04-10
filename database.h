@@ -44,8 +44,11 @@ public:
     void addDeposit(const Deposit &deposit);
 
     void deleteUser(int64_t id);
+
+    bool hasUserWith(std::string parameterName, std::string parameterValue);
     bool hasUser(int64_t id);
     bool hasUser(std::string login);
+    bool hasUserWithPassportData(std::string passportData);
 
     bool hasRecord(int64_t id);
 

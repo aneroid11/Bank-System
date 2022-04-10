@@ -63,6 +63,8 @@ void Database::createClientsTable()
                   "LOGIN TEXT," \
                   "PHONE TEXT," \
                   "EMAIL TEXT," \
+                  "PASSPORT_DATA TEXT," \
+                  "FROM_RB INT," \
                   "APPROVED INT );");
     query.exec();
 }
@@ -148,13 +150,13 @@ void Database::createTransfersTable()
 
 void Database::addClient(const Client &client)
 {
-    if (hasUser(client.getLogin()))
+    if (hasUser(client.getLogin()) || hasUserWithPassportData(client.getPassportData()))
     {
         throw UserAlreadyExistsException();
     }
 
     std::string query = "INSERT INTO CLIENTS ";
-    query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL,APPROVED) ";
+    query += "(ID,NAME,PASSWORD_HASH,LOGIN,PHONE,EMAIL,PASSPORT_DATA,FROM_RB,APPROVED) ";
     query += "VALUES (";
     query += std::to_string(client.getId()) + ", ";
     query += "\'" + client.getName() + "\', ";
@@ -162,6 +164,8 @@ void Database::addClient(const Client &client)
     query += "\'" + client.getLogin() + "\', ";
     query += "\'" + client.getPhone() + "\', ";
     query += "\'" + client.getEmail() + "\', ";
+    query += "\'" + client.getPassportData() + "\', ";
+    query += "\'" + std::to_string((int)client.isFromRB()) + "\', ";
     query += "\'" + std::to_string(client.isApproved()) + "\'); ";
 
     QSqlQuery sqlQuery;
@@ -335,9 +339,32 @@ void Database::deleteUser(int64_t id)
     sqlQuery.exec();
 }
 
-bool Database::hasUser(int64_t id)
+bool Database::hasUserWith(std::string parameterName, std::string parameterValue)
 {
     QSqlQuery checkQuery;
+
+    std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
+
+    for (const std::string &tableName : tablesToCheck)
+    {
+        std::string query = "SELECT NAME FROM " + tableName +
+                " WHERE " + parameterName + " = \'" + parameterValue + "\';";
+        checkQuery.prepare(query.c_str());
+
+        if (checkQuery.exec() && checkQuery.next())
+        {
+            std::cout << "has user\n";
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Database::hasUser(int64_t id)
+{
+    return hasUserWith("ID", std::to_string(id));
+    /*QSqlQuery checkQuery;
 
     std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
 
@@ -354,7 +381,7 @@ bool Database::hasUser(int64_t id)
         }
     }
 
-    return false;
+    return false;*/
 }
 
 bool Database::hasRecord(int64_t id)
@@ -383,7 +410,8 @@ bool Database::hasRecord(int64_t id)
 
 bool Database::hasUser(std::string login)
 {
-    QSqlQuery checkQuery;
+    return hasUserWith("LOGIN", login);
+    /*QSqlQuery checkQuery;
 
     std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
 
@@ -399,7 +427,29 @@ bool Database::hasUser(std::string login)
         }
     }
 
-    return false;
+    return false;*/
+}
+
+bool Database::hasUserWithPassportData(std::string passportData)
+{
+    return hasUserWith("PASSPORT_DATA", passportData);
+    /*QSqlQuery checkQuery;
+
+    std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
+
+    for (const std::string &tableName : tablesToCheck)
+    {
+        std::string query = std::string("SELECT NAME FROM ") + tableName + " WHERE PASSPORT_DATA = \'" + passportData + "\';";
+        checkQuery.prepare(query.c_str());
+
+        if (checkQuery.exec() && checkQuery.next())
+        {
+            std::cout << "has user\n";
+            return true;
+        }
+    }
+
+    return false;*/
 }
 
 int64_t Database::generateUniqueUserId()
