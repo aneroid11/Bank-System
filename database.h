@@ -59,10 +59,15 @@ public:
 
     std::list<User *> getUsersFromTableByParameter(std::string tableName, std::string parameterName,
                                                    std::string parameterValue);
+    std::list<void *> getAllRecordsFromTable(std::string tableName);
     std::list<void *> getRecordsFromTableByParameter(std::string tableName, std::string parameterName,
                                                      std::string parameterValue);
 
     std::list<Client *> getUnapprovedClients();
+
+    std::list<Account *> getAllAccounts();
+    std::list<Deposit *> getAllDeposits();
+
     std::list<Account *> getClientAccounts(std::string clientLogin);
 
     // Получить по логину пользователя и его роль в системе (записывается в переменную type)

@@ -51,6 +51,12 @@ public:
     // Открыть вклад
     virtual void openDepositForClient(Client *client, int term, double sum) = 0;
 
+    // Получить все счета, хранящиеся в банке
+    virtual std::list<Account *> getAllAccounts() = 0;
+
+    // Получить все вклады, хранящиеся в банке
+    virtual std::list<Deposit *> getAllDeposits() = 0;
+
     // Получить ВСЕ счета клиента в банке
     virtual std::list<Account *> getClientAccounts(Client *client) = 0;
 

@@ -15,8 +15,12 @@ AdminAccountsDepositsWindow::AdminAccountsDepositsWindow(IBankSystemModel *bankS
     setWindowTitle("Счета и вклады");
 
     accountsListWidget = new QListWidget(this);
-
     depositsListWidget = new QListWidget(this);
+
+    updateAccountsData();
+    updateDepositsData();
+    updateAccountsListWidget();
+    updateDepositsListWidget();
 
     QGridLayout *gridLayout = new QGridLayout(this);
 
@@ -185,4 +189,38 @@ void AdminAccountsDepositsWindow::ban()
     QMessageBox msgBox;
     msgBox.setText("adoaskdoas");
     msgBox.exec();
+}
+
+void AdminAccountsDepositsWindow::updateAccountsData()
+{
+    deleteAccountsData();
+    accounts = bankSystemModel->getAllAccounts();
+}
+
+void AdminAccountsDepositsWindow::updateAccountsListWidget()
+{
+    accountsListWidget->clear();
+
+    int i = 0;
+    for (Account *a : accounts)
+    {
+        accountsListWidget->insertItem(i, std::to_string(a->getId()).c_str());
+    }
+}
+
+void AdminAccountsDepositsWindow::updateDepositsData()
+{
+    deleteDepositsData();
+    deposits = bankSystemModel->getAllDeposits();
+}
+
+void AdminAccountsDepositsWindow::updateDepositsListWidget()
+{
+    depositsListWidget->clear();
+
+    int i = 0;
+    for (Deposit *d : deposits)
+    {
+        depositsListWidget->insertItem(i, std::to_string(d->getId()).c_str());
+    }
 }

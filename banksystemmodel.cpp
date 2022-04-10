@@ -212,6 +212,16 @@ void BankSystemModel::openDepositForClient(Client *client, int termInMonths, dou
     database->addDeposit(deposit);
 }
 
+std::list<Account *> BankSystemModel::getAllAccounts()
+{
+    return database->getAllAccounts();
+}
+
+std::list<Deposit *> BankSystemModel::getAllDeposits()
+{
+    return database->getAllDeposits();
+}
+
 std::list<Account *> BankSystemModel::getClientAccounts(Client *client)
 {
     return database->getClientAccounts(client->getLogin());

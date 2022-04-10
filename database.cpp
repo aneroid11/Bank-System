@@ -544,6 +544,25 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
     return nullptr;
 }
 
+std::list<void *> Database::getAllRecordsFromTable(std::string tableName)
+{
+    std::string query = std::string("SELECT * FROM ") + tableName;
+    QSqlQuery searchQuery;
+    searchQuery.prepare(query.c_str());
+    searchQuery.exec();
+    const QSqlRecord rec = searchQuery.record();
+
+    std::list<void *> records;
+
+    while (searchQuery.next())
+    {
+        void *currRec = createRecordFromData(searchQuery, rec, tableName);
+        records.push_back(currRec);
+    }
+
+    return records;
+}
+
 std::list<void *> Database::getRecordsFromTableByParameter(std::string tableName, std::string parameterName,
                                                            std::string parameterValue)
 {
@@ -601,6 +620,32 @@ std::list<Client *> Database::getUnapprovedClients()
 
     std::cout << "unapprovedClients.size() = " << unapprovedClients.size() << "\n";
     return unapprovedClients;
+}
+
+std::list<Account *> Database::getAllAccounts()
+{
+    std::list<void *> accountsRecords = getAllRecordsFromTable("ACCOUNTS");
+    std::list<Account *> accounts;
+
+    for (void *a : accountsRecords)
+    {
+        accounts.push_back((Account *)a);
+    }
+
+    return accounts;
+}
+
+std::list<Deposit *> Database::getAllDeposits()
+{
+    std::list<void *> depositsRecords = getAllRecordsFromTable("DEPOSITS");
+    std::list<Deposit *> deposits;
+
+    for (void *d : depositsRecords)
+    {
+        deposits.push_back((Deposit *)d);
+    }
+
+    return deposits;
 }
 
 std::list<Account *> Database::getClientAccounts(std::string clientLogin)

@@ -40,6 +40,10 @@ public:
 
     void openDepositForClient(Client *client, int term, double sum) override;
 
+    std::list<Account *> getAllAccounts() override;
+
+    std::list<Deposit *> getAllDeposits() override;
+
     std::list<Account *> getClientAccounts(Client *client) override;
 
     std::list<Deposit *> getClientDeposits(Client *client) override;

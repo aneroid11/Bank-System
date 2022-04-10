@@ -27,6 +27,11 @@ private slots:
     void freeze();
 
 private:
+    void updateAccountsData();
+    void updateAccountsListWidget();
+    void updateDepositsData();
+    void updateDepositsListWidget();
+
     IBankSystemModel *bankSystemModel;
 
     QListWidget *accountsListWidget;
