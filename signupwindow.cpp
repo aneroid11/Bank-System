@@ -35,7 +35,8 @@ SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     passportDataLine = new QLineEdit(this);
     passportDataLine->setPlaceholderText("Введите серию и номер паспорта");
 
-    fromRBCheckBox = new QCheckBox("Да? ", this);
+    fromRBCheckBox = new QCheckBox("Гражданин РБ", this);
+    fromRBCheckBox->animateClick();
 
     QPushButton *sendRequest = new QPushButton("Отправить запрос на регистрацию", this);
     connect(sendRequest, &QPushButton::pressed, this, &SignupWindow::sendSignupRequest);
@@ -72,7 +73,7 @@ void SignupWindow::sendSignupRequest()
                     nameLine->text().toStdString(),
                     phoneLine->text().toStdString(),
                     passportDataLine->text().toStdString(),
-                    true
+                    fromRBCheckBox->isDown()
                 );
     }
     catch (const UserAlreadyExistsException &)
