@@ -17,6 +17,7 @@ public:
     };
 
     User(const Data &data);
+    virtual ~User() {}
 
     void setPhone(std::string phone) { data.phone = phone; }
     void setEmail(std::string email) { data.email = email; }
@@ -27,6 +28,8 @@ public:
     int64_t getId() const { return data.id; }
     std::string getLogin() const { return data.login; }
     std::string getPasswordHash() const { return data.passwordHash; }
+
+    virtual std::string getInfo() const;
 
 protected:
     Data data;

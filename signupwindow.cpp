@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "signupwindow.h"
 #include "ibanksystemmodel.h"
 #include "useralreadyexistsexception.h"
@@ -35,8 +37,8 @@ SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     passportDataLine = new QLineEdit(this);
     passportDataLine->setPlaceholderText("Введите серию и номер паспорта");
 
+    std::cout << Qt::CheckState::Checked << "\n";
     fromRBCheckBox = new QCheckBox("Гражданин РБ", this);
-    fromRBCheckBox->animateClick();
 
     QPushButton *sendRequest = new QPushButton("Отправить запрос на регистрацию", this);
     connect(sendRequest, &QPushButton::pressed, this, &SignupWindow::sendSignupRequest);
@@ -65,6 +67,8 @@ void SignupWindow::sendSignupRequest()
 
     try
     {
+        std::cout << "fromRBCheckBoxState == " << fromRBCheckBox->checkState() << "\n";
+
         bankSystemModel->sendSignupRequestForClient
                 (
                     loginLine->text().toStdString(),
@@ -73,7 +77,7 @@ void SignupWindow::sendSignupRequest()
                     nameLine->text().toStdString(),
                     phoneLine->text().toStdString(),
                     passportDataLine->text().toStdString(),
-                    fromRBCheckBox->isDown()
+                    fromRBCheckBox->checkState() == Qt::CheckState::Checked
                 );
     }
     catch (const UserAlreadyExistsException &)

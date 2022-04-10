@@ -165,7 +165,7 @@ void Database::addClient(const Client &client)
     query += "\'" + client.getPhone() + "\', ";
     query += "\'" + client.getEmail() + "\', ";
     query += "\'" + client.getPassportData() + "\', ";
-    query += "\'" + std::to_string((int)client.isFromRB()) + "\', ";
+    query += "\'" + std::to_string(client.isFromRB()) + "\', ";
     query += "\'" + std::to_string(client.isApproved()) + "\'); ";
 
     QSqlQuery sqlQuery;
@@ -500,7 +500,9 @@ User *Database::createUserFromData(const QSqlQuery &query, const QSqlRecord &rec
 
     if (tableName == "CLIENTS")
     {
-        Client *client = new Client(userData, "КВ2222222", true);
+        std::string passwordData = query.value(rec.indexOf("PASSPORT_DATA")).toString().toStdString();
+        bool fromRB = query.value(rec.indexOf("FROM_RB")).toBool();
+        Client *client = new Client(userData, passwordData, fromRB);
         bool clientApproved = query.value(rec.indexOf("APPROVED")).toInt();
 
         if (clientApproved)

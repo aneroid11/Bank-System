@@ -16,6 +16,8 @@ public:
     std::string getPassportData() const { return passportData; }
     bool isFromRB() const { return fromRB; }
 
+    std::string getInfo() const override;
+
 private:
     bool approved = false;
     bool fromRB;

@@ -9,3 +9,11 @@ Client::Client(const User::Data &clientData, std::string passportData, bool from
     this->passportData = passportData;
     this->fromRB = fromRB;
 }
+
+std::string Client::getInfo() const
+{
+    std::string info = User::getInfo();
+    info += "Серия и номер паспорта: " + getPassportData() + "\n";
+    info += (isFromRB() ? "Гражданин РБ" : "Иностранный клиент");
+    return info;
+}

@@ -67,11 +67,7 @@ SignupRequestsWindow::~SignupRequestsWindow()
 
 void SignupRequestsWindow::showClientInfo(Client *client)
 {
-    std::string info;
-    info += "Имя: " + client->getName() + "\n";
-    info += "Идентификационный номер: " + std::to_string(client->getId()) + "\n";
-    info += "Email: " + client->getEmail() + "\n";
-    info += "Телефон: " + client->getPhone() + "\n";
+    std::string info = client->getInfo();
 
     QMessageBox msgBox;
     msgBox.setWindowTitle("Информация о клиенте");
