@@ -13,6 +13,9 @@ public:
     void approve() { approved = true; }
     bool isApproved() const { return approved; }
 
+    std::string getPassportData() const { return passportData; }
+    bool isFromRB() const { return fromRB; }
+
 private:
     bool approved = false;
     bool fromRB;

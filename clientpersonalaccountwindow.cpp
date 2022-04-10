@@ -17,7 +17,7 @@
 ClientPersonalAccountWindow::ClientPersonalAccountWindow(IBankSystemModel *bankSystem, Client *client, QWidget *parent)
     : QDialog(parent), currClient(client), bankSystemModel(bankSystem)
 {
-    setFixedWidth(500);
+    setFixedWidth(600);
     setFixedHeight(500);
 
     setWindowTitle("Личный кабинет клиента");
@@ -30,17 +30,21 @@ ClientPersonalAccountWindow::ClientPersonalAccountWindow(IBankSystemModel *bankS
     QTableWidget *infoTable = new QTableWidget(this);
     infoTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    infoTable->setRowCount(4);
+    infoTable->setRowCount(6);
     infoTable->setColumnCount(2);
     infoTable->setItem(0, 0, new QTableWidgetItem("Имя"));
     infoTable->setItem(1, 0, new QTableWidgetItem("Id"));
     infoTable->setItem(2, 0, new QTableWidgetItem("Email"));
     infoTable->setItem(3, 0, new QTableWidgetItem("Телефон"));
+    infoTable->setItem(4, 0, new QTableWidgetItem("Серия и номер паспорта"));
+    infoTable->setItem(5, 0, new QTableWidgetItem("Иностранный клиент?"));
 
     infoTable->setItem(0, 1, new QTableWidgetItem(currClient->getName().c_str()));
     infoTable->setItem(1, 1, new QTableWidgetItem(std::to_string(currClient->getId()).c_str()));
     infoTable->setItem(2, 1, new QTableWidgetItem(currClient->getEmail().c_str()));
     infoTable->setItem(3, 1, new QTableWidgetItem(currClient->getPhone().c_str()));
+    infoTable->setItem(4, 1, new QTableWidgetItem(currClient->getPassportData().c_str()));
+    infoTable->setItem(5, 1, new QTableWidgetItem(currClient->isFromRB() ? "Нет" : "Да"));
 
     infoTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
