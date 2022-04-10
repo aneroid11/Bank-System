@@ -39,8 +39,10 @@ void BankSystemModel::test()
 std::list<Bank *> BankSystemModel::loadBanksList()
 {
     std::list<Bank *> banks;
+
     banks.push_back(new Bank { "Банк 'Стеклянный'" });
     banks.push_back(new Bank { "Банк 'Оловянный'" });
+    banks.push_back(new Bank { "Банк 'Деревянный'" });
     return banks;
 }
 
