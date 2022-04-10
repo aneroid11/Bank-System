@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class QLineEdit;
+class QCheckBox;
 class IBankSystemModel;
 
 class SignupWindow : public QDialog
@@ -24,6 +25,8 @@ private:
     QLineEdit *phoneLine;
     QLineEdit *emailLine;
     QLineEdit *passportDataLine;
+
+    QCheckBox *fromRBCheckBox;
 
     IBankSystemModel *bankSystemModel;
 };

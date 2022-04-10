@@ -7,6 +7,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QMessageBox>
+#include <QCheckBox>
 
 SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QDialog(parent), bankSystemModel(bankSystem)
@@ -34,6 +35,8 @@ SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     passportDataLine = new QLineEdit(this);
     passportDataLine->setPlaceholderText("Введите серию и номер паспорта");
 
+    fromRBCheckBox = new QCheckBox("Да? ", this);
+
     QPushButton *sendRequest = new QPushButton("Отправить запрос на регистрацию", this);
     connect(sendRequest, &QPushButton::pressed, this, &SignupWindow::sendSignupRequest);
 
@@ -44,7 +47,8 @@ SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     gridLayout->addWidget(phoneLine, 3, 0);
     gridLayout->addWidget(emailLine, 4, 0);
     gridLayout->addWidget(passportDataLine, 5, 0);
-    gridLayout->addWidget(sendRequest, 6, 0);
+    gridLayout->addWidget(fromRBCheckBox, 6, 0);
+    gridLayout->addWidget(sendRequest, 7, 0);
 }
 
 void SignupWindow::sendSignupRequest()
