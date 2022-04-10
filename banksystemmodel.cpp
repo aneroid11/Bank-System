@@ -93,7 +93,7 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
         HashComputer().hash(password)
     };
 
-    Client newClient(data);
+    Client newClient(data, "КВ2332323", true);
     std::cout << "Добавление клиента: " << name << "\n";
 
     database->addClient(newClient);

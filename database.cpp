@@ -450,7 +450,7 @@ User *Database::createUserFromData(const QSqlQuery &query, const QSqlRecord &rec
 
     if (tableName == "CLIENTS")
     {
-        Client *client = new Client(userData);
+        Client *client = new Client(userData, "КВ2222222", true);
         bool clientApproved = query.value(rec.indexOf("APPROVED")).toInt();
 
         if (clientApproved)

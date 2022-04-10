@@ -8,15 +8,15 @@
 class Client : public User
 {
 public:
-    Client(const Data &data);
+    Client(const Data &data, std::string passportData, bool fromRB);
 
     void approve() { approved = true; }
     bool isApproved() const { return approved; }
 
-    void openAccount();
-
 private:
     bool approved = false;
+    bool fromRB;
+    std::string passportData;
 };
 
 #endif // CLIENT_H
