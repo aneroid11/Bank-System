@@ -117,6 +117,7 @@ void Database::createAccountsTable()
                   "BALANCE REAL," \
                   "PERCENT REAL," \
                   "CREATION_DATE INT," \
+                  "CURRENCY_TYPE INT," \
                   "STATUS INT);");
     query.exec();
 }
@@ -132,6 +133,7 @@ void Database::createDepositsTable()
                   "CREATION_DATE INT," \
                   "PERCENT_DATE INT," \
                   "TERM_IN_MONTHS INT," \
+                  "CURRENCY_TYPE INT," \
                   "STATUS INT);");
     query.exec();
 }
@@ -249,13 +251,14 @@ void Database::addAccount(const Account &account)
 
     std::string query = "INSERT INTO ACCOUNTS ";
 
-    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, STATUS) ";
+    query += "(ID, CLIENT_LOGIN, BALANCE, PERCENT, CREATION_DATE, CURRENCY_TYPE, STATUS) ";
     query += "VALUES (";
     query += std::to_string(account.getId()) + ", ";
     query += "\'" + account.getClientLogin() + "\', ";
     query += "\'" + std::to_string(account.getBalance()) + "\', ";
     query += "\'" + std::to_string(account.getPercents()) + "\', ";
     query += "\'" + std::to_string(account.getCreationTime()) + "\', ";
+    query += "\'" + std::to_string(account.getCurrencyType()) + "\', ";
     query += "\'" + std::to_string(account.getStatus()) + "\'); ";
 
     QSqlQuery sqlQuery;
@@ -263,7 +266,6 @@ void Database::addAccount(const Account &account)
     sqlQuery.exec();
 
     std::cout << sqlQuery.lastError().text().toStdString() << "\n";
-    // addSomethingHoldingMoney(account, "ACCOUNTS");
 }
 
 void Database::addDeposit(const Deposit &deposit)
@@ -304,9 +306,7 @@ void Database::addTransfer(const Transfer &transfer)
         std::cout << "Already has such transfer\n";
         return;
     }
-
     /*
-     *
     int64_t id;
     int64_t senderId, recipientId;
     time_t creationTime;
@@ -364,24 +364,6 @@ bool Database::hasUserWith(std::string parameterName, std::string parameterValue
 bool Database::hasUser(int64_t id)
 {
     return hasUserWith("ID", std::to_string(id));
-    /*QSqlQuery checkQuery;
-
-    std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
-
-    for (const std::string &tableName : tablesToCheck)
-    {
-        std::string query = std::string("SELECT NAME FROM ") + tableName +
-                " WHERE ID = \'" + std::to_string(id) + "\';";
-        checkQuery.prepare(query.c_str());
-
-        if (checkQuery.exec() && checkQuery.next())
-        {
-            std::cout << "has user\n";
-            return true;
-        }
-    }
-
-    return false;*/
 }
 
 bool Database::hasRecord(int64_t id)
@@ -411,45 +393,11 @@ bool Database::hasRecord(int64_t id)
 bool Database::hasUser(std::string login)
 {
     return hasUserWith("LOGIN", login);
-    /*QSqlQuery checkQuery;
-
-    std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
-
-    for (const std::string &tableName : tablesToCheck)
-    {
-        std::string query = std::string("SELECT NAME FROM ") + tableName + " WHERE LOGIN = \'" + login + "\';";
-        checkQuery.prepare(query.c_str());
-
-        if (checkQuery.exec() && checkQuery.next())
-        {
-            std::cout << "has user\n";
-            return true;
-        }
-    }
-
-    return false;*/
 }
 
 bool Database::hasUserWithPassportData(std::string passportData)
 {
     return hasUserWith("PASSPORT_DATA", passportData);
-    /*QSqlQuery checkQuery;
-
-    std::string tablesToCheck[] = { "CLIENTS", "OPERATORS", "MANAGERS", "ADMINISTRATORS" };
-
-    for (const std::string &tableName : tablesToCheck)
-    {
-        std::string query = std::string("SELECT NAME FROM ") + tableName + " WHERE PASSPORT_DATA = \'" + passportData + "\';";
-        checkQuery.prepare(query.c_str());
-
-        if (checkQuery.exec() && checkQuery.next())
-        {
-            std::cout << "has user\n";
-            return true;
-        }
-    }
-
-    return false;*/
 }
 
 int64_t Database::generateUniqueUserId()
@@ -556,12 +504,10 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
 
         QString percentStr = query.value(rec.indexOf("PERCENT")).toString();
         percentStr.replace(',', '.');
-
         double percents = percentStr.toDouble();
-
         time_t creationTime = query.value(rec.indexOf("CREATION_DATE")).toLongLong();
-
         int status = query.value(rec.indexOf("STATUS")).toInt();
+        Currency currencyType = (Currency)query.value(rec.indexOf("CURRENCY_TYPE")).toInt();
 
         void *record = nullptr;
 
@@ -573,7 +519,7 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
                                  percents,
                                  creationTime,
                                  status,
-                                 BYN);
+                                 currencyType);
         }
         else if (tableName == "DEPOSITS")
         {
@@ -588,7 +534,7 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
                                  term,
                                  percentTime,
                                  status,
-                                 BYN);
+                                 currencyType);
         }
 
         return record;
