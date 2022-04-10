@@ -6,7 +6,7 @@
 #include "mainwindow.h"
 #include "authorizationwindow.h"
 
-MainWindow::MainWindow(IBankSystemModel* bankSystem, QWidget *parent)
+MainWindow::MainWindow(IBankSystemModel* bankSystem, const std::list<Bank *> &banks, QWidget *parent)
     : QWidget(parent), bankSystemModel(bankSystem)
 {
     setWindowTitle("Управление финансовой системой");
@@ -14,9 +14,11 @@ MainWindow::MainWindow(IBankSystemModel* bankSystem, QWidget *parent)
 
     bankListWidget = new QListWidget(this);
 
-    bankListWidget->insertItem(0, "Банк \'Стеклянный\'");
-    bankListWidget->insertItem(1, "Банк \'Оловянный\'");
-    bankListWidget->insertItem(2, "Банк \'Деревянный\'");
+    int i = 0;
+    for (Bank *b : banks)
+    {
+        bankListWidget->insertItem(i++, b->name.c_str());
+    }
 
     QGridLayout* grid = new QGridLayout(this);
     grid->addWidget(bankListWidget, 0, 0);

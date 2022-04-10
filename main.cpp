@@ -6,28 +6,29 @@
 #include "ibanksystemmodel.h"
 #include "banksystemmodel.h"
 
-int main(int argc, char *argv[])
+std::list<Bank *> prepareBanks(IBankSystemModel *bankSystemModel)
 {
-    IBankSystemModel* bankSystemModel = new BankSystemModel();
-
     std::list<Bank *> banks = bankSystemModel->loadBanksList();
 
     for (Bank *b : banks)
     {
         std::cout << b->name << "\n";
-        delete b;
+        bankSystemModel->setCurrentBank(b->name);
+        bankSystemModel->addSampleManager();
+        bankSystemModel->addSampleOperator();
+        bankSystemModel->addSampleAdministrator();
     }
 
-    // TODO: убрать
-    bankSystemModel->setCurrentBank("Банк \'Стеклянный\'");
-    bankSystemModel->addSampleManager();
-    bankSystemModel->addSampleOperator();
-    bankSystemModel->addSampleAdministrator();
-    //bankSystemModel->test();
-    //
+    return banks;
+}
+
+int main(int argc, char *argv[])
+{
+    IBankSystemModel* bankSystemModel = new BankSystemModel();
+    std::list<Bank *> banks = prepareBanks(bankSystemModel);
 
     QApplication a(argc, argv);
-    MainWindow w(bankSystemModel);
+    MainWindow w(bankSystemModel, banks);
     w.show();
     return a.exec();
 }

@@ -3,16 +3,19 @@
 
 #include <QWidget>
 
+#include <list>
+
 class AuthorizationWindow;
 class QListWidget;
 class IBankSystemModel;
+class Bank;
 
 class MainWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainWindow(IBankSystemModel* bankSystem, QWidget *parent = nullptr);
+    MainWindow(IBankSystemModel* bankSystem, const std::list<Bank *> &banks, QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
