@@ -138,19 +138,25 @@ void ClientAccountsWindow::putMoney()
     bool ok;
     double inpMoney;
 
+    int64_t accId = getCurrentAccountId();
+
+    if (accId == -1) { return; }
+
+    Account *acc = bankSystemModel->getAccountById(accId);
+    QString currency = acc->getCurrencyType() == BYN ? "BYN" : "$";
+    delete acc;
+
     do
     {
-        inpMoney = inpDialog.getDouble(this, "Положить деньги", "Введите сумму пополнения (BYN, 0.0 - 1000.0)",
+        QString prompt = "Введите сумму пополнения в ";
+        prompt += currency;
+        inpMoney = inpDialog.getDouble(this, "Положить деньги", prompt,
                                        0.0,
                                        0.0, 1000.0,
                                        2,
                                        &ok);
     }
     while (!ok);
-
-    int64_t accId = getCurrentAccountId();
-
-    if (accId == -1) { return; }
 
     bankSystemModel->clientAccountAccumulate(accId);
     bankSystemModel->putMoneyOnAccount(accId, inpMoney);
@@ -160,6 +166,7 @@ void ClientAccountsWindow::withdrawMoney()
 {
     int64_t accId = getCurrentAccountId();
     Account *acc = bankSystemModel->getAccountById(accId);
+    QString currency = acc->getCurrencyType() == BYN ? "BYN" : "$";
     double maxWithdrawAmount = (int)acc->getBalance();
     delete acc;
 
@@ -169,7 +176,7 @@ void ClientAccountsWindow::withdrawMoney()
 
     do
     {
-        QString prompt = "Введите сумму (BYN, 0.0 - " + QString::number(maxWithdrawAmount) + ")";
+        QString prompt = "Введите сумму (" + currency + ", 0.0 - " + QString::number(maxWithdrawAmount) + ")";
         inpMoney = inpDialog.getDouble(this, "Снять деньги", prompt,
                                        0.0,
                                        0.0, maxWithdrawAmount,
@@ -196,12 +203,13 @@ void ClientAccountsWindow::transferMoney()
 
     int64_t senderId = getCurrentAccountId();
     Account *currAcc = bankSystemModel->getAccountById(senderId);
+    QString currency = currAcc->getCurrencyType() == BYN ? "BYN" : "$";
     double maxValue = (int)currAcc->getBalance();
     double value = 0.0;
 
     do
     {
-        QString prompt = "Введите сумму (BYN, 0.0 - " + QString::number(maxValue) + ")";
+        QString prompt = "Введите сумму (" + currency + ", 0.0 - " + QString::number(maxValue) + ")";
         value = inpDialog.getDouble(this, "Перевод", prompt,
                                     0.0, 0.0, maxValue, 2, &ok);
     }
