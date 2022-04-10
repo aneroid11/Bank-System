@@ -36,6 +36,14 @@ void BankSystemModel::test()
     std::cout << "End of test\n";
 }
 
+std::list<Bank *> BankSystemModel::loadBanksList()
+{
+    std::list<Bank *> banks;
+    banks.push_back(new Bank { "Банк 'Стеклянный'" });
+    banks.push_back(new Bank { "Банк 'Оловянный'" });
+    return banks;
+}
+
 void BankSystemModel::setCurrentBank(std::string bankName)
 {
     // Генерируем хеш bankName и на его основе создаём файл с точкой в начале

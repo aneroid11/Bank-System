@@ -4,6 +4,7 @@
 #include <string>
 #include <list>
 
+#include "bank.h"
 #include "client.h"
 #include "account.h"
 #include "deposit.h"
@@ -12,6 +13,8 @@
 class IBankSystemModel
 {
 public:
+    virtual std::list<Bank *> loadBanksList() = 0;
+
     // Установить банк, с которым будет работать система.
     virtual void setCurrentBank(std::string bankName) = 0;
 

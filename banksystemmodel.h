@@ -11,6 +11,8 @@ public:
     BankSystemModel();
     ~BankSystemModel();
 
+    std::list<Bank *> loadBanksList() override;
+
     void setCurrentBank(std::string bankName) override;
 
     void enter(std::string login, std::string password) override;
