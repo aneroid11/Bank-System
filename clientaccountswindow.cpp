@@ -152,7 +152,8 @@ void ClientAccountsWindow::putMoney()
         prompt += currency;
         inpMoney = inpDialog.getDouble(this, "Положить деньги", prompt,
                                        0.0,
-                                       0.0, 1000.0,
+                                       0.0,
+                                       CurrencyConverter().convert(1000.0, US_DOLLAR, acc->getCurrencyType()),
                                        2,
                                        &ok);
     }

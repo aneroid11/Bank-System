@@ -178,10 +178,12 @@ void ClientDepositsWindow::openDeposit()
     double sum = 0;
     do
     {
-        double maxValue = 1000.0;
-        QString currency = client->isFromRB() ? "BYN" : "$";
-        QString prompt = "Сумма вклада (" + currency + ", 1.0 - " + QString::number(maxValue) + ")";
-        sum = inpDialog.getDouble(this, "Сумма вклада", prompt, 1.0, 1.0, maxValue, 2, &ok);
+        double maxValueUsd = 1000.0;
+        Currency currencyType = client->isFromRB() ? BYN : US_DOLLAR;
+        QString currencyStr = client->isFromRB() ? "BYN" : "$";
+        QString prompt = "Сумма вклада (" + currencyStr + ", 1.0 - " +
+                QString::number(CurrencyConverter().convert(maxValueUsd, US_DOLLAR, currencyType)) + ")";
+        sum = inpDialog.getDouble(this, "Сумма вклада", prompt, 1.0, 1.0, maxValueUsd, 2, &ok);
     }
     while (!ok);
 
