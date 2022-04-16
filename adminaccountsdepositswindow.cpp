@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QGridLayout>
 #include <QLabel>
+#include <QDebug>
 
 AdminAccountsDepositsWindow::AdminAccountsDepositsWindow(IBankSystemModel *bankSystem)
     : bankSystemModel(bankSystem)
@@ -180,8 +181,13 @@ void ClientDepositsWindow::showDepositInfo()
 
 void AdminAccountsDepositsWindow::showInfo()
 {
+    SomethingHoldingMoney *something = bankSystemModel->getSomethingHoldingMoneyById(currentSomethingId);
+    std::string info = something->getInfo();
+    delete something;
+
     QMessageBox msgBox;
-    msgBox.setText("adoaskdoas");
+    msgBox.setWindowTitle("Информация");
+    msgBox.setText(info.c_str());
     msgBox.exec();
 }
 
@@ -199,6 +205,15 @@ void AdminAccountsDepositsWindow::ban()
     msgBox.exec();
 }
 
+void AdminAccountsDepositsWindow::changeCurrentSomethingId(QListWidgetItem *listItem)
+{
+    qDebug() << "changeCurrentSomethingId() called\n";
+    qDebug() << "currentSomethingId = " << currentSomethingId << "\n";
+    currentSomethingId = listItem->text().toInt();
+    qDebug() << "after:\n";
+    qDebug() << "currentSomethingId = " << currentSomethingId << "\n";
+}
+
 void AdminAccountsDepositsWindow::updateAccountsData()
 {
     deleteAccountsData();
@@ -212,8 +227,10 @@ void AdminAccountsDepositsWindow::updateAccountsListWidget()
     int i = 0;
     for (Account *a : accounts)
     {
-        accountsListWidget->insertItem(i, std::to_string(a->getId()).c_str());
+        QListWidgetItem *listItem = new QListWidgetItem(std::to_string(a->getId()).c_str(), accountsListWidget);
+        accountsListWidget->insertItem(i, listItem);
     }
+    connect(accountsListWidget, &QListWidget::itemClicked, this, &AdminAccountsDepositsWindow::changeCurrentSomethingId);
 }
 
 void AdminAccountsDepositsWindow::updateDepositsData()
@@ -231,4 +248,5 @@ void AdminAccountsDepositsWindow::updateDepositsListWidget()
     {
         depositsListWidget->insertItem(i, std::to_string(d->getId()).c_str());
     }
+    connect(depositsListWidget, &QListWidget::itemClicked, this, &AdminAccountsDepositsWindow::changeCurrentSomethingId);
 }

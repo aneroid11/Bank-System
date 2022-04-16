@@ -303,6 +303,23 @@ std::list<Deposit *> BankSystemModel::getClientDepositsByStatus(Client *client, 
     return retDeposits;
 }
 
+SomethingHoldingMoney *BankSystemModel::getSomethingHoldingMoneyById(int64_t id)
+{
+    std::string tables[] = { "ACCOUNTS", "DEPOSITS" };
+
+    for (std::string table : tables)
+    {
+        std::list<void *> arr = database->getRecordsFromTableByParameter(table, "ID", std::to_string(id));
+
+        if (!arr.empty())
+        {
+            return (SomethingHoldingMoney *)(*arr.begin());
+        }
+    }
+
+    return nullptr;
+}
+
 Account *BankSystemModel::getAccountById(int64_t id)
 {
     std::list<void *> accounts = database->getRecordsFromTableByParameter("ACCOUNTS",

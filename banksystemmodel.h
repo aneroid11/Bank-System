@@ -56,6 +56,8 @@ public:
 
     std::list<Deposit *> getClientDepositsByStatus(Client *client, int requiredStatus) override;
 
+    SomethingHoldingMoney *getSomethingHoldingMoneyById(int64_t id) override;
+
     Account *getAccountById(int64_t id) override;
 
     Deposit *getDepositById(int64_t id) override;

@@ -69,6 +69,9 @@ public:
     // Получить ВКЛАДЫ клиента в банке с определённым статусом
     virtual std::list<Deposit *> getClientDepositsByStatus(Client *client, int requiredStatus) = 0;
 
+    // Получить либо счёт, либо вклад по id
+    virtual SomethingHoldingMoney *getSomethingHoldingMoneyById(int64_t id) = 0;
+
     // Получить счёт из базы по id
     virtual Account *getAccountById(int64_t id) = 0;
 

@@ -21,7 +21,7 @@ std::string SomethingHoldingMoney::getInfo() const
     info += (currencyType == BYN ? " BYN" : " $");
     info += "\n";
     info += "Процентная ставка: " + std::to_string(percents) + "\n";
-    info += "Создан: " + std::string(ctime(&creationTime)) + "\n";
+    info += "Создан: " + std::string(ctime(&creationTime));
 
     info += "Статус: ";
 

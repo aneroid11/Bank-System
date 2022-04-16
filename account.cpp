@@ -44,7 +44,7 @@ std::string Account::getInfo() const
     info += (currencyType == BYN ? " BYN" : " $");
     info += "\n";
     info += "Процентная ставка: " + std::to_string(percents) + "\n";
-    info += "Последнее накопление по процентам: " + std::string(ctime(&creationTime)) + "\n";
+    info += "Последнее накопление по процентам: " + std::string(ctime(&creationTime));
 
     info += "Статус: ";
 

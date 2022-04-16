@@ -25,6 +25,7 @@ private slots:
     void showInfo();
     void ban();
     void freeze();
+    void changeCurrentSomethingId(QListWidgetItem *listItem);
 
 private:
     void updateAccountsData();
@@ -39,6 +40,8 @@ private:
 
     std::list<Deposit *> deposits;
     std::list<Account *> accounts;
+
+    int64_t currentSomethingId = -1;
 };
 
 #endif // ADMINACCOUNTSDEPOSITSWINDOW_H
