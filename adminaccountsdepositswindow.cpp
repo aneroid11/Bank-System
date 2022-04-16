@@ -141,16 +141,10 @@ void ClientDepositsWindow::updateClientDepositsListWidget()
 
 void AdminAccountsDepositsWindow::showInfo()
 {
-    if (currentSomethingId < 0)
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Ошибка");
-        msgBox.setText("Вы должны выбрать один из вкладов или счетов");
-        msgBox.exec();
-        return;
-    }
+    int64_t id = getCurrentSomethingId();
+    if (id < 0) { return; }
 
-    SomethingHoldingMoney *something = bankSystemModel->getSomethingHoldingMoneyById(currentSomethingId);
+    SomethingHoldingMoney *something = bankSystemModel->getSomethingHoldingMoneyById(id);
     std::string info = something->getInfo();
     delete something;
 
@@ -162,8 +156,15 @@ void AdminAccountsDepositsWindow::showInfo()
 
 void AdminAccountsDepositsWindow::freeze()
 {
+    int64_t id = getCurrentSomethingId();
+    if (id < 0) { return; }
+
+    bankSystemModel->freeze(id);
+
     QMessageBox msgBox;
-    msgBox.setText("adoaskdoas");
+    std::string message = "Заморозка прошла успешно";
+    msgBox.setWindowTitle("Информация");
+    msgBox.setText(message.c_str());
     msgBox.exec();
 }
 
@@ -218,4 +219,17 @@ void AdminAccountsDepositsWindow::updateDepositsListWidget()
         depositsListWidget->insertItem(i, std::to_string(d->getId()).c_str());
     }
     connect(depositsListWidget, &QListWidget::itemClicked, this, &AdminAccountsDepositsWindow::changeCurrentSomethingId);
+}
+
+int64_t AdminAccountsDepositsWindow::getCurrentSomethingId() const
+{
+    if (currentSomethingId < 0)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Вы должны выбрать один из вкладов или счетов");
+        msgBox.exec();
+        return -1;
+    }
+    return currentSomethingId;
 }

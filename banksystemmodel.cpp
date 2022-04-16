@@ -303,7 +303,7 @@ std::list<Deposit *> BankSystemModel::getClientDepositsByStatus(Client *client, 
     return retDeposits;
 }
 
-SomethingHoldingMoney *BankSystemModel::getSomethingHoldingMoneyById(int64_t id)
+SomethingHoldingMoney *BankSystemModel::getSomethingHoldingMoneyById(int64_t id, std::string *retTable)
 {
     std::string tables[] = { "ACCOUNTS", "DEPOSITS" };
 
@@ -313,6 +313,7 @@ SomethingHoldingMoney *BankSystemModel::getSomethingHoldingMoneyById(int64_t id)
 
         if (!arr.empty())
         {
+            if (retTable) { *retTable = table; }
             return (SomethingHoldingMoney *)(*arr.begin());
         }
     }
@@ -334,6 +335,22 @@ Deposit *BankSystemModel::getDepositById(int64_t id)
                                                                           "ID",
                                                                           std::to_string(id));
     return (Deposit *)(*deposits.begin());
+}
+
+void BankSystemModel::freeze(int64_t id)
+{
+    std::string table;
+    SomethingHoldingMoney *something = getSomethingHoldingMoneyById(id, &table);
+    something->setStatus(FROZEN);
+
+    if (table == "ACCOUNTS")
+    {
+        updateAccountData((Account *)something);
+    }
+    else if (table == "DEPOSITS")
+    {
+        updateDepositData((Deposit *)something);
+    }
 }
 
 void BankSystemModel::clientAccountAccumulate(int64_t id)

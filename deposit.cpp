@@ -87,6 +87,7 @@ void Deposit::withdrawMoney(double value)
 std::string Deposit::getInfo() const
 {
     std::string info = SomethingHoldingMoney::getInfo();
+    info += "Последнее накопление по процентам: " + std::string(ctime(&lastAccrualOfInterestTime));
     info += "Срок вклада: " + std::to_string(term) + " мес.\n";
     return info;
 }

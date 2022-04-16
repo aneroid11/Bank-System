@@ -33,6 +33,8 @@ private:
     void updateDepositsData();
     void updateDepositsListWidget();
 
+    int64_t getCurrentSomethingId() const;
+
     IBankSystemModel *bankSystemModel;
 
     QListWidget *accountsListWidget;
