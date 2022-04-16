@@ -13,6 +13,9 @@ Account::Account(int64_t id, std::string clientLogin, double initialBalance,
 void Account::accumulate()
 {
     // Вычислить новое значение баланса на основании того, сколько времени прошло с последнего начисления
+
+    if (status != ACTIVE) { return; }
+
     time_t now = time(nullptr);
     time_t delta = now - creationTime;
     int monthsPassed = delta / SEC_IN_MONTH;
