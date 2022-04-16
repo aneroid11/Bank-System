@@ -5,6 +5,8 @@
 #include <QMessageBox>
 #include <QInputDialog>
 
+#include "client.h"
+#include "ibanksystemmodel.h"
 #include "clientcreditswindow.h"
 
 ClientCreditsWindow::ClientCreditsWindow(IBankSystemModel *bankSystemModel, Client *client)
@@ -109,9 +111,30 @@ void ClientCreditsWindow::takeLoan()
         while (!ok);
     }
 
+    Currency currency = client->isFromRB() ? BYN : US_DOLLAR;
+    // from 100.00$ to 10000.00$
+    double minValue = CurrencyConverter().convert(100.0, US_DOLLAR, currency);
+    double maxValue = CurrencyConverter().convert(10000.0, US_DOLLAR, currency);
+    QString currencyStr = currency == BYN ? "BYN" : "$";
+
+    QString prompt = "Введите сумму кредита (" + currencyStr + "): " + QString::number(minValue) + " - " +
+            QString::number(maxValue);
+
+    bool ok = false;
+    double value = minValue;
+
+    do
+    {
+        value = inpDialog.getDouble(this, "Сумма кредита", prompt, minValue, minValue, maxValue, 2, &ok);
+    }
+    while (!ok);
+
     QMessageBox msgBox;
-    msgBox.setWindowTitle("Выбор срока кредита");
-    QString text = "Вы берёте кредит на " + QString::number(months) + " месяцев";
+    msgBox.setWindowTitle("Информация");
+    QString text = "Вы берёте кредит на " + QString::number(months) + " месяцев\n";
+    text += "Сумма кредита: " + QString::number(value) + currencyStr + "\n";
+    text += "Процентная ставка: nn %\n";
     msgBox.setText(text);
     msgBox.exec();
+
 }

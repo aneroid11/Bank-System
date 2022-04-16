@@ -107,7 +107,7 @@ void ClientPersonalAccountWindow::showClientInstallmentsWindow()
 void ClientPersonalAccountWindow::showSalaryProjectWindow()
 {
     QString title = QString("Вы действительно хотите подать заявку на зарплатный проект предприятия ");
-    title += "ОАО АБУБУ ЛДТ КОМПАНИ";
+    title += "ОАО АБУБУ ЛТД КОМПАНИ";
     title += "?";
     QMessageBox::StandardButton reply = QMessageBox::question(this, "Заявка на зарплатный проект",
                                                               title, QMessageBox::Yes | QMessageBox::No);
