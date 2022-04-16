@@ -351,6 +351,7 @@ void BankSystemModel::setSmthHoldingMoneyStatus(int64_t id, int status)
     {
         updateDepositData((Deposit *)something);
     }
+    delete something;
 }
 
 void BankSystemModel::freeze(int64_t id)

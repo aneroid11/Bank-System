@@ -83,7 +83,6 @@ int64_t ClientDepositsWindow::getCurrentDepositId()
 void ClientDepositsWindow::updateClientDepositsData()
 {
     deleteClientDepositsData();
-    //std::list<Deposit *> deposits = bankSystemModel->getClientDeposits(client);
 
     std::list<Deposit *> deposits = bankSystemModel->getClientDeposits(client);
     clientDeposits = deposits;
