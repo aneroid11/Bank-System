@@ -4,10 +4,13 @@
 #include <QDialog>
 #include <QListWidget>
 
+class Client;
+class IBankSystemModel;
+
 class ClientCreditsWindow : public QDialog
 {
 public:
-    ClientCreditsWindow();
+    ClientCreditsWindow(IBankSystemModel *bankSystemModel, Client *client);
 
 private slots:
     void changeCurrentCreditId(QListWidgetItem *item);
@@ -17,6 +20,9 @@ private slots:
     void makeMonthlyPayment();
 
 private:
+    Client *client;
+    IBankSystemModel *bankSystemModel;
+
     int64_t getCurrentCreditId() const;
 
     QListWidget *creditsListWidget;

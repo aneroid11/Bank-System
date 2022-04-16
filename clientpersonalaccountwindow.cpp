@@ -90,7 +90,7 @@ void ClientPersonalAccountWindow::showClientDepositsWindow()
 
 void ClientPersonalAccountWindow::showClientCreditsWindow()
 {
-    ClientCreditsWindow *clientCreditsWindow = new ClientCreditsWindow();
+    ClientCreditsWindow *clientCreditsWindow = new ClientCreditsWindow(bankSystemModel, currClient);
     clientCreditsWindow->setWindowModality(Qt::ApplicationModal);
     clientCreditsWindow->exec();
     delete clientCreditsWindow;

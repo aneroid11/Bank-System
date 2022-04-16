@@ -3,11 +3,15 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QMessageBox>
+#include <QInputDialog>
 
 #include "clientcreditswindow.h"
 
-ClientCreditsWindow::ClientCreditsWindow()
+ClientCreditsWindow::ClientCreditsWindow(IBankSystemModel *bankSystemModel, Client *client)
 {
+    this->client = client;
+    this->bankSystemModel = bankSystemModel;
+
     setWindowTitle("Управление кредитами");
     setFixedWidth(300);
     setFixedHeight(300);
@@ -68,6 +72,7 @@ void ClientCreditsWindow::showCreditInfo()
 
 void ClientCreditsWindow::makeMonthlyPayment()
 {
+    // как только всё выплачено, статус кредита должен поменяться с ACTIVE на REPAID
     QMessageBox msgBox;
     msgBox.setWindowTitle("aaaa");
     msgBox.setText("гыыыыы");
@@ -76,8 +81,37 @@ void ClientCreditsWindow::makeMonthlyPayment()
 
 void ClientCreditsWindow::takeLoan()
 {
+    QInputDialog inpDialog;
+    QStringList alternatives;
+
+    alternatives.append("3 месяца");
+    alternatives.append("6 месяцев");
+    alternatives.append("12 месяцев");
+    alternatives.append("24 месяца");
+    alternatives.append("более 24 месяцев");
+    QString choice = inpDialog.getItem(this, "Срок кредита", "Выберите срок кредита", alternatives, 0, false);
+
+    int months = 0;
+
+    if (choice == alternatives[0])      { months = 3; }
+    else if (choice == alternatives[1]) { months = 6; }
+    else if (choice == alternatives[2]) { months = 12; }
+    else if (choice == alternatives[3]) { months = 24; }
+    else
+    {
+        // 96 месяцев - самый максимум
+        bool ok = false;
+
+        do
+        {
+            months = inpDialog.getInt(this, "Срок кредита", "Введите срок кредита в месяцах", 25, 25, 96, 1, &ok);
+        }
+        while (!ok);
+    }
+
     QMessageBox msgBox;
-    msgBox.setWindowTitle("adads");
-    msgBox.setText("гыыыыы");
+    msgBox.setWindowTitle("Выбор срока кредита");
+    QString text = "Вы берёте кредит на " + QString::number(months) + " месяцев";
+    msgBox.setText(text);
     msgBox.exec();
 }
