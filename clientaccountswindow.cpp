@@ -30,31 +30,31 @@ ClientAccountsWindow::ClientAccountsWindow(IBankSystemModel *bankSystem, Client 
     updateClientAccountsData();
     updateClientAccountsListWidget();
 
-    QPushButton *openAccount = new QPushButton("Открыть новый счёт", this);
-    connect(openAccount, &QPushButton::clicked, this, &ClientAccountsWindow::openAccount);
+    buttons["openAccount"] = new QPushButton("Открыть новый счёт", this);
+    connect(buttons["openAccount"], &QPushButton::clicked, this, &ClientAccountsWindow::openAccount);
 
-    QPushButton *closeAccount = new QPushButton("Закрыть счёт", this);
-    connect(closeAccount, &QPushButton::clicked, this, &ClientAccountsWindow::closeAccount);
+    buttons["closeAccount"] = new QPushButton("Закрыть счёт", this);
+    connect(buttons["closeAccount"], &QPushButton::clicked, this, &ClientAccountsWindow::closeAccount);
 
-    QPushButton *withdraw = new QPushButton("Снять деньги", this);
-    connect(withdraw, &QPushButton::clicked, this, &ClientAccountsWindow::withdrawMoney);
+    buttons["withdraw"] = new QPushButton("Снять деньги", this);
+    connect(buttons["withdraw"], &QPushButton::clicked, this, &ClientAccountsWindow::withdrawMoney);
 
-    QPushButton *transfer = new QPushButton("Перевести деньги", this);
-    connect(transfer, &QPushButton::clicked, this, &ClientAccountsWindow::transferMoney);
+    buttons["transfer"] = new QPushButton("Перевести деньги", this);
+    connect(buttons["transfer"], &QPushButton::clicked, this, &ClientAccountsWindow::transferMoney);
 
-    QPushButton *putMoney = new QPushButton("Положить деньги", this);
-    connect(putMoney, &QPushButton::clicked, this, &ClientAccountsWindow::putMoney);
+    buttons["putMoney"] = new QPushButton("Положить деньги", this);
+    connect(buttons["putMoney"], &QPushButton::clicked, this, &ClientAccountsWindow::putMoney);
 
-    QPushButton *showAccInfo = new QPushButton("Информация о счёте", this);
-    connect(showAccInfo, &QPushButton::clicked, this, &ClientAccountsWindow::showAccountInfo);
+    buttons["showAccInfo"] = new QPushButton("Информация о счёте", this);
+    connect(buttons["showAccInfo"], &QPushButton::clicked, this, &ClientAccountsWindow::showAccountInfo);
 
     gridLayout->addWidget(accountsListWidget, 0, 0);
-    gridLayout->addWidget(showAccInfo, 1, 0);
-    gridLayout->addWidget(openAccount, 2, 0);
-    gridLayout->addWidget(closeAccount, 3, 0);
-    gridLayout->addWidget(withdraw, 4, 0);
-    gridLayout->addWidget(transfer, 5, 0);
-    gridLayout->addWidget(putMoney, 6, 0);
+    gridLayout->addWidget(buttons["showAccInfo"], 1, 0);
+    gridLayout->addWidget(buttons["openAccount"], 2, 0);
+    gridLayout->addWidget(buttons["closeAccount"], 3, 0);
+    gridLayout->addWidget(buttons["withdraw"], 4, 0);
+    gridLayout->addWidget(buttons["transfer"], 5, 0);
+    gridLayout->addWidget(buttons["putMoney"], 6, 0);
 }
 
 ClientAccountsWindow::~ClientAccountsWindow()
@@ -65,6 +65,15 @@ ClientAccountsWindow::~ClientAccountsWindow()
 void ClientAccountsWindow::changeCurrentAccountId(QListWidgetItem *listItem)
 {
     currentAccountId = listItem->text().toInt();
+
+    Account *acc = bankSystemModel->getAccountById(currentAccountId);
+
+    bool operationBttnsEnabled = acc->getStatus() == ACTIVE;
+
+    buttons["closeAccount"]->setEnabled(operationBttnsEnabled);
+    buttons["withdraw"]->setEnabled(operationBttnsEnabled);
+    buttons["transfer"]->setEnabled(operationBttnsEnabled);
+    buttons["putMoney"]->setEnabled(operationBttnsEnabled);
 }
 
 int64_t ClientAccountsWindow::getCurrentAccountId()

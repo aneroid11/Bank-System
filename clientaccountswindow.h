@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QListWidget>
+#include <QMap>
+#include <QPushButton>
 
 #include <list>
 
@@ -38,6 +40,7 @@ private:
     std::list<Account *> clientAccounts;
 
     QListWidget *accountsListWidget;
+    QMap<QString, QPushButton *> buttons;
 
     int64_t currentAccountId = -1;
 };
