@@ -87,19 +87,6 @@ int64_t ClientAccountsWindow::getCurrentAccountId()
         return -1;
     }
     return currentAccountId;
-    /*QList<QListWidgetItem*> selectedAccounts = accountsListWidget->selectedItems();
-
-    if (selectedAccounts.size() != 1)
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Ошибка");
-        msgBox.setText("Вы должны выбрать один из счетов");
-        msgBox.exec();
-        return -1;
-    }
-
-    int64_t accId = selectedAccounts[0]->text().toInt();
-    return accId;*/
 }
 
 void ClientAccountsWindow::deleteClientAccounts()
