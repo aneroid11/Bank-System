@@ -9,8 +9,14 @@ class ClientCreditsWindow : public QDialog
 public:
     ClientCreditsWindow();
 
+private slots:
+    void changeCurrentCreditId(QListWidgetItem *item);
+
 private:
+    int64_t getCurrentCreditId() const;
+
     QListWidget *creditsListWidget;
+    int64_t currentCreditId = -1;
 };
 
 #endif // CLIENTCREDITSWINDOW_H
