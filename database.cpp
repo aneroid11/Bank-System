@@ -29,7 +29,6 @@ Database::Database(std::string filename)
 
     if (!database.open())
     {
-        //throw CannotOpenDBException(sqlite3_errmsg(database));
         throw CannotOpenDBException(database.lastError().text().toStdString());
     }
 
