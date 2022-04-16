@@ -19,6 +19,8 @@ public:
     void checkTerm();
     void withdrawMoney(double value);
 
+    std::string getInfo() const override;
+
 private:
     time_t lastAccrualOfInterestTime;
     unsigned term;

@@ -12,8 +12,7 @@ Account::Account(int64_t id, std::string clientLogin, double initialBalance,
 
 void Account::accumulate()
 {
-    // Вычислить новое значение баланса на основании того, сколько времени прошло с creationTime
-
+    // Вычислить новое значение баланса на основании того, сколько времени прошло с последнего начисления
     time_t now = time(nullptr);
     time_t delta = now - creationTime;
     int monthsPassed = delta / SEC_IN_MONTH;
@@ -34,4 +33,33 @@ void Account::accumulate()
 
     //creationTime = time(nullptr);
     creationTime += monthsPassed * SEC_IN_MONTH;
+}
+
+std::string Account::getInfo() const
+{
+    std::string info;
+    info += "ID: " + std::to_string(id) + "\n";
+    info += "Принадлежит: " + clientLogin + "\n";
+    info += "Баланс: " + std::to_string(balance);
+    info += (currencyType == BYN ? " BYN" : " $");
+    info += "\n";
+    info += "Процентная ставка: " + std::to_string(percents) + "\n";
+    info += "Последнее накопление по процентам: " + std::string(ctime(&creationTime)) + "\n";
+
+    info += "Статус: ";
+
+    switch (status) {
+    case ACTIVE:
+        info += "открыт\n";
+        break;
+    case CLOSED:
+        info += "закрыт\n";
+        break;
+    case FROZEN:
+        info += "заморожен\n";
+        break;
+    default:
+        info  += "заблокирован\n";
+    }
+    return info;
 }

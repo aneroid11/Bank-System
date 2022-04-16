@@ -12,6 +12,8 @@ public:
     void accumulate();
     void putMoney(double value) { balance += value; }
     void withdrawMoney(double value) { balance -= value; }
+
+    std::string getInfo() const override;
 };
 
 #endif // ACCOUNT_H

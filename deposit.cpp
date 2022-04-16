@@ -83,3 +83,10 @@ void Deposit::withdrawMoney(double value)
 
     std::cout << "status = " << status << "\n";
 }
+
+std::string Deposit::getInfo() const
+{
+    std::string info = SomethingHoldingMoney::getInfo();
+    info += "Срок вклада: " + std::to_string(term) + "\n";
+    return info;
+}

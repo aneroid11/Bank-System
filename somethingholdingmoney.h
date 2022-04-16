@@ -17,6 +17,7 @@ class SomethingHoldingMoney
 public:
     SomethingHoldingMoney(int64_t id, std::string clientLogin, double initialBalance,
                           double percents, time_t creationTime, int status, Currency currencyType);
+    virtual ~SomethingHoldingMoney() {}
 
     int64_t getId() const { return id; }
     double getBalance() const { return balance; }
@@ -29,6 +30,8 @@ public:
 
     void setStatus(int st) { status = st; }
     int getStatus() const { return status; }
+
+    virtual std::string getInfo() const;
 
 protected:
     int64_t id;

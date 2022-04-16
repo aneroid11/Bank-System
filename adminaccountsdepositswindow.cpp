@@ -5,6 +5,7 @@
 #include <QListWidget>
 #include <QMessageBox>
 #include <QGridLayout>
+#include <QLabel>
 
 AdminAccountsDepositsWindow::AdminAccountsDepositsWindow(IBankSystemModel *bankSystem)
     : bankSystemModel(bankSystem)
@@ -13,6 +14,11 @@ AdminAccountsDepositsWindow::AdminAccountsDepositsWindow(IBankSystemModel *bankS
     setFixedHeight(500);
 
     setWindowTitle("Счета и вклады");
+
+    QLabel *accountsListTitle = new QLabel(this);
+    accountsListTitle->setText("Счета:");
+    QLabel *depositsListTitle = new QLabel(this);
+    depositsListTitle->setText("Вклады:");
 
     accountsListWidget = new QListWidget(this);
     depositsListWidget = new QListWidget(this);
@@ -33,11 +39,13 @@ AdminAccountsDepositsWindow::AdminAccountsDepositsWindow(IBankSystemModel *bankS
     QPushButton *freeze = new QPushButton("Заморозить", this);
     connect(freeze, &QPushButton::clicked, this, &AdminAccountsDepositsWindow::freeze);
 
-    gridLayout->addWidget(accountsListWidget, 0, 0);
-    gridLayout->addWidget(depositsListWidget, 1, 0);
-    gridLayout->addWidget(info, 2, 0);
-    gridLayout->addWidget(ban, 3, 0);
-    gridLayout->addWidget(freeze, 4, 0);
+    gridLayout->addWidget(accountsListTitle, 0, 0);
+    gridLayout->addWidget(accountsListWidget, 1, 0);
+    gridLayout->addWidget(depositsListTitle, 2, 0);
+    gridLayout->addWidget(depositsListWidget, 3, 0);
+    gridLayout->addWidget(info, 4, 0);
+    gridLayout->addWidget(ban, 5, 0);
+    gridLayout->addWidget(freeze, 6, 0);
 }
 
 AdminAccountsDepositsWindow::~AdminAccountsDepositsWindow()
