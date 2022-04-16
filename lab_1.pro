@@ -29,6 +29,7 @@ SOURCES += \
     clientdepositswindow.cpp \
     clientinstallmentswindow.cpp \
     clientpersonalaccountwindow.cpp \
+    credit.cpp \
     currencyconverter.cpp \
     database.cpp \
     deposit.cpp \
@@ -62,6 +63,7 @@ HEADERS += \
     clientinstallmentswindow.h \
     clientpersonalaccountwindow.h \
     constants.h \
+    credit.h \
     currencyconverter.h \
     database.h \
     dbexception.h \
