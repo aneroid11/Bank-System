@@ -62,7 +62,11 @@ public:
 
     Deposit *getDepositById(int64_t id) override;
 
+    void setSmthHoldingMoneyStatus(int64_t id, int status);
+
     void freeze(int64_t id) override;
+
+    void ban(int64_t id) override;
 
     void clientAccountAccumulate(int64_t id) override;
 

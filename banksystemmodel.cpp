@@ -337,11 +337,11 @@ Deposit *BankSystemModel::getDepositById(int64_t id)
     return (Deposit *)(*deposits.begin());
 }
 
-void BankSystemModel::freeze(int64_t id)
+void BankSystemModel::setSmthHoldingMoneyStatus(int64_t id, int status)
 {
     std::string table;
     SomethingHoldingMoney *something = getSomethingHoldingMoneyById(id, &table);
-    something->setStatus(FROZEN);
+    something->setStatus(status);
 
     if (table == "ACCOUNTS")
     {
@@ -351,6 +351,16 @@ void BankSystemModel::freeze(int64_t id)
     {
         updateDepositData((Deposit *)something);
     }
+}
+
+void BankSystemModel::freeze(int64_t id)
+{
+    setSmthHoldingMoneyStatus(id, FROZEN);
+}
+
+void BankSystemModel::ban(int64_t id)
+{
+    setSmthHoldingMoneyStatus(id, BLOCKED);
 }
 
 void BankSystemModel::clientAccountAccumulate(int64_t id)

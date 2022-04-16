@@ -75,6 +75,9 @@ public:
     // Заморозить счёт или вклад
     virtual void freeze(int64_t id) = 0;
 
+    // Заблокировать счёт или вклад
+    virtual void ban(int64_t id) = 0;
+
     // Получить счёт из базы по id
     virtual Account *getAccountById(int64_t id) = 0;
 

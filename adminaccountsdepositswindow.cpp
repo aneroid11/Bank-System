@@ -71,74 +71,6 @@ void AdminAccountsDepositsWindow::deleteDepositsData()
     }
 }
 
-/*
-ClientDepositsWindow::~ClientDepositsWindow()
-{
-    deleteClientDepositsData();
-}
-
-void ClientDepositsWindow::deleteClientDepositsData()
-{
-    for (Deposit *d : clientDeposits)
-    {
-        delete d;
-    }
-}
-
-int64_t ClientDepositsWindow::getCurrentDepositId()
-{
-    QList<QListWidgetItem*> selected = depositsListWidget->selectedItems();
-
-    if (selected.size() != 1)
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Ошибка");
-        msgBox.setText("Вы должны выбрать один из вкладов");
-        msgBox.exec();
-        return -1;
-    }
-
-    int64_t depId = selected[0]->text().toInt();
-    return depId;
-}
-
-void ClientDepositsWindow::updateClientDepositsData()
-{
-    deleteClientDepositsData();
-    //std::list<Deposit *> deposits = bankSystemModel->getClientDeposits(client);
-
-    std::list<Deposit *> deposits = bankSystemModel->getClientDeposits(client);
-    clientDeposits = deposits;
-
-    for (Deposit *d : deposits)
-    {
-        int status = d->getStatus();
-
-        if (status != ACTIVE && status != CLOSED)
-        {
-            delete d;
-            clientDeposits.remove(d);
-        }
-    }
-
-    for (Deposit *d : clientDeposits)
-    {
-        std::cout << d->getId() << ": " << d->getStatus() << "\n";
-    }
-}
-
-void ClientDepositsWindow::updateClientDepositsListWidget()
-{
-    depositsListWidget->clear();
-
-    int i = 0;
-    for (Deposit *d : clientDeposits)
-    {
-        depositsListWidget->insertItem(i, std::to_string(d->getId()).c_str());
-    }
-}
-*/
-
 void AdminAccountsDepositsWindow::showInfo()
 {
     int64_t id = getCurrentSomethingId();
@@ -170,8 +102,15 @@ void AdminAccountsDepositsWindow::freeze()
 
 void AdminAccountsDepositsWindow::ban()
 {
+    int64_t id = getCurrentSomethingId();
+    if (id < 0) { return; }
+
+    bankSystemModel->ban(id);
+
     QMessageBox msgBox;
-    msgBox.setText("adoaskdoas");
+    std::string message = "Блокировка прошла успешно";
+    msgBox.setWindowTitle("Информация");
+    msgBox.setText(message.c_str());
     msgBox.exec();
 }
 
