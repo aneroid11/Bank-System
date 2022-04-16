@@ -64,6 +64,8 @@ public:
 
     void setSmthHoldingMoneyStatus(int64_t id, int status);
 
+    void close(int64_t id) override;
+
     void freeze(int64_t id) override;
 
     void ban(int64_t id) override;

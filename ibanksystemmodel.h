@@ -72,6 +72,9 @@ public:
     // Получить либо счёт, либо вклад по id
     virtual SomethingHoldingMoney *getSomethingHoldingMoneyById(int64_t id, std::string *table = nullptr) = 0;
 
+    // Закрыть счёт или вклад. Если закрыть невозможно, выкинуть исключение CannotCloseSHMException
+    virtual void close(int64_t id) = 0;
+
     // Заморозить счёт или вклад
     virtual void freeze(int64_t id) = 0;
 

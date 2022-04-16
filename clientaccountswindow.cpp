@@ -108,10 +108,7 @@ void ClientAccountsWindow::closeAccount()
     int64_t accId = getCurrentAccountId();
     if (accId < 0) { return; }
 
-    Account *currAcc = bankSystemModel->getAccountById(accId);
-    currAcc->setStatus(CLOSED);
-    bankSystemModel->updateAccountData(currAcc);
-    delete currAcc;
+    bankSystemModel->close(accId);
 
     updateClientAccountsData();
     updateClientAccountsListWidget();

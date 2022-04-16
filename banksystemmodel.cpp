@@ -354,6 +354,11 @@ void BankSystemModel::setSmthHoldingMoneyStatus(int64_t id, int status)
     delete something;
 }
 
+void BankSystemModel::close(int64_t id)
+{
+    setSmthHoldingMoneyStatus(id, CLOSED);
+}
+
 void BankSystemModel::freeze(int64_t id)
 {
     setSmthHoldingMoneyStatus(id, FROZEN);
