@@ -137,46 +137,6 @@ void ClientDepositsWindow::updateClientDepositsListWidget()
         depositsListWidget->insertItem(i, std::to_string(d->getId()).c_str());
     }
 }
-
-void ClientDepositsWindow::showDepositInfo()
-{
-    int64_t depId = getCurrentDepositId();
-    if (depId == -1) { return; }
-
-    bankSystemModel->clientDepositAccumulate(depId);
-    bankSystemModel->clientDepositCheckTerm(depId);
-
-    updateClientDepositsData();
-    auto it = std::find_if(std::begin(clientDeposits),
-                           std::end(clientDeposits),
-                           [&](const Deposit *dep){ return dep->getId() == depId; } );
-
-    Deposit *currDep = *it;
-
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Информация о вкладе");
-
-    std::string info;
-    info += "Процентная ставка: " + std::to_string(currDep->getPercents()) + " %\n";
-    info += "Баланс: " + std::to_string(currDep->getBalance()) + "\n";
-    time_t creationTime = currDep->getCreationTime();
-    info += "Создан: " + std::string(ctime(&creationTime));
-    time_t percentTime = currDep->getLastAccrualOfInterestTime();
-    info += "Последнее накопление: " + std::string(ctime(&percentTime));
-    info += "Срок вклада: " + std::to_string(currDep->getTerm()) + " месяцев\n";
-
-    if (currDep->getStatus() == ACTIVE)
-    {
-        info += "Статус: открытый\n";
-    }
-    else if (currDep->getStatus() == CLOSED)
-    {
-        info += "Статус: закрытый\n";
-    }
-
-    msgBox.setText(info.c_str());
-    msgBox.exec();
-}
 */
 
 void AdminAccountsDepositsWindow::showInfo()

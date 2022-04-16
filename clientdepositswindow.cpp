@@ -134,25 +134,7 @@ void ClientDepositsWindow::showDepositInfo()
     QMessageBox msgBox;
     msgBox.setWindowTitle("Информация о вкладе");
 
-    std::string info;
-    info += "Процентная ставка: " + std::to_string(currDep->getPercents()) + " %\n";
-    info += "Баланс: " + std::to_string(currDep->getBalance());
-    info += (currDep->getCurrencyType() == BYN ? " BYN" : " $");
-    info += "\n";
-    time_t creationTime = currDep->getCreationTime();
-    info += "Создан: " + std::string(ctime(&creationTime));
-    time_t percentTime = currDep->getLastAccrualOfInterestTime();
-    info += "Последнее накопление: " + std::string(ctime(&percentTime));
-    info += "Срок вклада: " + std::to_string(currDep->getTerm()) + " месяцев\n";
-
-    if (currDep->getStatus() == ACTIVE)
-    {
-        info += "Статус: открытый\n";
-    }
-    else if (currDep->getStatus() == CLOSED)
-    {
-        info += "Статус: закрытый\n";
-    }
+    std::string info = currDep->getInfo();
 
     msgBox.setText(info.c_str());
     msgBox.exec();
