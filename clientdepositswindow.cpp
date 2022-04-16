@@ -92,7 +92,7 @@ void ClientDepositsWindow::updateClientDepositsData()
     {
         int status = d->getStatus();
 
-        if (status != ACTIVE && status != CLOSED)
+        if (status != ACTIVE && status != CLOSED && status != FROZEN)
         {
             delete d;
             clientDeposits.remove(d);

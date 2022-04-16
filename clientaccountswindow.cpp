@@ -74,6 +74,13 @@ void ClientAccountsWindow::updateClientAccountsData()
 {
     deleteClientAccounts();
     clientAccounts = bankSystemModel->getClientAccountsByStatus(client, ACTIVE);
+
+    // плюс FROZEN
+    std::list<Account *> frozenAccounts = bankSystemModel->getClientAccountsByStatus(client, FROZEN);
+    for (Account *a : frozenAccounts)
+    {
+        clientAccounts.push_back(a);
+    }
 }
 
 void ClientAccountsWindow::updateClientAccountsListWidget()
