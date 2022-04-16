@@ -8,6 +8,7 @@
 #include "client.h"
 #include "ibanksystemmodel.h"
 #include "clientcreditswindow.h"
+#include "credit.h"
 
 ClientCreditsWindow::ClientCreditsWindow(IBankSystemModel *bankSystemModel, Client *client)
 {
@@ -113,8 +114,8 @@ void ClientCreditsWindow::takeLoan()
 
     Currency currency = client->isFromRB() ? BYN : US_DOLLAR;
     // from 100.00$ to 10000.00$
-    double minValue = CurrencyConverter().convert(100.0, US_DOLLAR, currency);
-    double maxValue = CurrencyConverter().convert(10000.0, US_DOLLAR, currency);
+    double minValue = CurrencyConverter().convert(MIN_CREDIT_VALUE, US_DOLLAR, currency);
+    double maxValue = CurrencyConverter().convert(MAX_CREDIT_VALUE, US_DOLLAR, currency);
     QString currencyStr = currency == BYN ? "BYN" : "$";
 
     QString prompt = "Введите сумму кредита (" + currencyStr + "): " + QString::number(minValue) + " - " +
@@ -132,9 +133,9 @@ void ClientCreditsWindow::takeLoan()
     QMessageBox msgBox;
     msgBox.setWindowTitle("Информация");
     QString text = "Вы берёте кредит на " + QString::number(months) + " месяцев\n";
-    text += "Сумма кредита: " + QString::number(value) + currencyStr + "\n";
-    text += "Процентная ставка: nn %\n";
+    text += "Сумма кредита: " + QString::number(value) + " " + currencyStr + "\n";
+    double percentRate = computePercentRate(months, value);
+    text += "Процентная ставка: " + QString::number(percentRate) + " % в месяц\n";
     msgBox.setText(text);
     msgBox.exec();
-
 }
