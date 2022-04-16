@@ -20,8 +20,13 @@ ClientCreditsWindow::ClientCreditsWindow()
     connect(creditsListWidget, &QListWidget::itemClicked, this, &ClientCreditsWindow::changeCurrentCreditId);
 
     QPushButton *showInfo = new QPushButton("Информация о кредите", this);
+    connect(showInfo, &QPushButton::clicked, this, &ClientCreditsWindow::showCreditInfo);
+
     QPushButton *takeLoan = new QPushButton("Взять кредит", this);
+    connect(takeLoan, &QPushButton::clicked, this, &ClientCreditsWindow::takeLoan);
+
     QPushButton *makeMonthlyPayment = new QPushButton("Совершить платёж по кредиту", this);
+    connect(makeMonthlyPayment, &QPushButton::clicked, this, &ClientCreditsWindow::makeMonthlyPayment);
 
     QGridLayout *gridLayout = new QGridLayout(this);
     gridLayout->addWidget(creditsListLabel, 0, 0);
@@ -51,4 +56,28 @@ int64_t ClientCreditsWindow::getCurrentCreditId() const
         return -1;
     }
     return currentCreditId;
+}
+
+void ClientCreditsWindow::showCreditInfo()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("аалывал");
+    msgBox.setText("гыыыыы");
+    msgBox.exec();
+}
+
+void ClientCreditsWindow::makeMonthlyPayment()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("aaaa");
+    msgBox.setText("гыыыыы");
+    msgBox.exec();
+}
+
+void ClientCreditsWindow::takeLoan()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("adads");
+    msgBox.setText("гыыыыы");
+    msgBox.exec();
 }

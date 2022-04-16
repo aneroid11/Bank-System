@@ -12,6 +12,10 @@ public:
 private slots:
     void changeCurrentCreditId(QListWidgetItem *item);
 
+    void showCreditInfo();
+    void takeLoan();
+    void makeMonthlyPayment();
+
 private:
     int64_t getCurrentCreditId() const;
 
