@@ -62,6 +62,37 @@ ClientAccountsWindow::~ClientAccountsWindow()
     deleteClientAccounts();
 }
 
+void ClientAccountsWindow::changeCurrentAccountId(QListWidgetItem *listItem)
+{
+    currentAccountId = listItem->text().toInt();
+}
+
+int64_t ClientAccountsWindow::getCurrentAccountId()
+{
+    if (currentAccountId < 0)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Вы должны выбрать один из счетов");
+        msgBox.exec();
+        return -1;
+    }
+    return currentAccountId;
+    /*QList<QListWidgetItem*> selectedAccounts = accountsListWidget->selectedItems();
+
+    if (selectedAccounts.size() != 1)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Вы должны выбрать один из счетов");
+        msgBox.exec();
+        return -1;
+    }
+
+    int64_t accId = selectedAccounts[0]->text().toInt();
+    return accId;*/
+}
+
 void ClientAccountsWindow::deleteClientAccounts()
 {
     for (Account *a : clientAccounts)
@@ -81,6 +112,7 @@ void ClientAccountsWindow::updateClientAccountsData()
     {
         clientAccounts.push_back(a);
     }
+    connect(accountsListWidget, &QListWidget::itemClicked, this, &ClientAccountsWindow::changeCurrentAccountId);
 }
 
 void ClientAccountsWindow::updateClientAccountsListWidget()
@@ -117,23 +149,6 @@ void ClientAccountsWindow::closeAccount()
     msgBox.setWindowTitle("Закрытие счёта");
     msgBox.setText("Cчёт успешно закрыт");
     msgBox.exec();
-}
-
-int64_t ClientAccountsWindow::getCurrentAccountId()
-{
-    QList<QListWidgetItem*> selectedAccounts = accountsListWidget->selectedItems();
-
-    if (selectedAccounts.size() != 1)
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Ошибка");
-        msgBox.setText("Вы должны выбрать один из счетов");
-        msgBox.exec();
-        return -1;
-    }
-
-    int64_t accId = selectedAccounts[0]->text().toInt();
-    return accId;
 }
 
 void ClientAccountsWindow::putMoney()

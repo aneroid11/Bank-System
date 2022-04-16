@@ -24,6 +24,8 @@ private slots:
     void withdrawMoney();
     void transferMoney();
 
+    void changeCurrentAccountId(QListWidgetItem *listItem);
+
 private:
     int64_t getCurrentAccountId();
 
@@ -36,6 +38,8 @@ private:
     std::list<Account *> clientAccounts;
 
     QListWidget *accountsListWidget;
+
+    int64_t currentAccountId = -1;
 };
 
 #endif // CLIENTACCOUNTSWINDOW_H
