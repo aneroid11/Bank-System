@@ -181,6 +181,15 @@ void ClientDepositsWindow::showDepositInfo()
 
 void AdminAccountsDepositsWindow::showInfo()
 {
+    if (currentSomethingId < 0)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Вы должны выбрать один из вкладов или счетов");
+        msgBox.exec();
+        return;
+    }
+
     SomethingHoldingMoney *something = bankSystemModel->getSomethingHoldingMoneyById(currentSomethingId);
     std::string info = something->getInfo();
     delete something;

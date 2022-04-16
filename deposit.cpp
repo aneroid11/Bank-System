@@ -59,7 +59,7 @@ void Deposit::checkTerm()
     time_t delta = now - creationTime;
     int monthsPassed = delta / SEC_IN_MONTH;
 
-    if (monthsPassed > term)
+    if (monthsPassed > (int)term)
     {
         status = CLOSED;
     }
