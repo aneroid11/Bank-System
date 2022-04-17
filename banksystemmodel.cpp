@@ -131,8 +131,8 @@ void BankSystemModel::addSampleOperator()
     Operator::Data data =
     {
         database->generateUniqueUserId(),
-        "Example Examplovich Operator",
-        "+3-E-X-A-M-P-L-E-2",
+        "Антонов Антон Антонович",
+        "+333111111111",
         "examp@example.com",
         "samplop",
         HashComputer().hash("123")
@@ -155,8 +155,8 @@ void BankSystemModel::addSampleManager()
     Manager::Data data =
     {
         database->generateUniqueUserId(),
-        "Example Examplovich",
-        "+3-E-X-A-M-P-L-E",
+        "Иванов Иван Иванович",
+        "+372222222222",
         "example@example.com",
         "samplman",
         HashComputer().hash("123")
@@ -179,8 +179,8 @@ void BankSystemModel::addSampleAdministrator()
     Administrator::Data data =
     {
         database->generateUniqueUserId(),
-        "Example Admin",
-        "+332424442424",
+        "Аркадьев Аркадий Аркадьевич",
+        "+332222222222",
         "exa@exa.com",
         "sampladm",
         HashComputer().hash("123")
