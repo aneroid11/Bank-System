@@ -17,6 +17,9 @@ public:
 
     // Установить банк, с которым будет работать система.
     virtual void setCurrentBank(std::string bankName) = 0;
+    virtual void setCurrentBank(Bank *bank) = 0;
+
+    virtual Bank *getCurrentBank() = 0;
 
     // войти в систему.
     // Если юзера с таким логином или паролем нет, выкинуть исключение NoUserInDBException

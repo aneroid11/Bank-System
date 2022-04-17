@@ -40,16 +40,28 @@ std::list<Bank *> BankSystemModel::loadBanksList()
 {
     std::list<Bank *> banks;
 
-    banks.push_back(new Bank { "Банк 'Стеклянный'" });
-    banks.push_back(new Bank { "Банк 'Оловянный'" });
-    banks.push_back(new Bank { "Банк 'Деревянный'" });
+    banks.push_back(new Bank { "Банк 'Стеклянный'", 93209 });
+    banks.push_back(new Bank { "Банк 'Оловянный'", 429049 });
+    banks.push_back(new Bank { "Банк 'Деревянный'", 328948 });
+    banksList = banks;
     return banks;
 }
 
 void BankSystemModel::setCurrentBank(std::string bankName)
 {
+    // найти этот банк в списке
+    auto findIter = std::find_if(std::begin(banksList),
+                                std::end(banksList),
+                                [&](const Bank *b){ return b->name == bankName; });
+
+    Bank *bank = findIter == banksList.end() ? nullptr : *findIter;
+    setCurrentBank(bank);
+}
+
+void BankSystemModel::setCurrentBank(Bank *bank)
+{
     // Генерируем хеш bankName и на его основе создаём файл с точкой в начале
-    std::string fileName = std::string(".") + HashComputer().hash(bankName) + ".db";
+    std::string fileName = std::string(".") + HashComputer().hash(bank->name) + ".db";
 
     if (database)
     {
@@ -57,6 +69,8 @@ void BankSystemModel::setCurrentBank(std::string bankName)
         database = nullptr;
     }
     database = new Database(fileName);
+
+    currentBank = bank;
 }
 
 void BankSystemModel::enter(std::string login, std::string password)

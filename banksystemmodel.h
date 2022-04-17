@@ -14,6 +14,9 @@ public:
     std::list<Bank *> loadBanksList() override;
 
     void setCurrentBank(std::string bankName) override;
+    void setCurrentBank(Bank *bank) override;
+
+    Bank *getCurrentBank() override { return currentBank; }
 
     void enter(std::string login, std::string password) override;
 
@@ -91,7 +94,9 @@ public:
 private:
     Database *database = nullptr;
 
-    std::string currentBank = "";
+    std::list<Bank *> banksList;
+    Bank *currentBank;
+    //std::string currentBank = "";
 };
 
 #endif // BANKSYSTEMMODEL_H

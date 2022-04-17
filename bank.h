@@ -7,7 +7,7 @@ class Bank
 {
 public:
     std::string name;
-    std::string bic;
+    int64_t bic;
 };
 
 #endif // BANK_H
