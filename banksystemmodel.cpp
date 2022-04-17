@@ -10,6 +10,7 @@
 #include "account.h"
 #include "deposit.h"
 #include "transfer.h"
+#include "enterprise.h"
 
 #include "dbnotopenedexception.h"
 #include "useralreadyexistsexception.h"
@@ -112,6 +113,14 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
     std::cout << "Добавление клиента: " << name << "\n";
 
     database->addClient(newClient);
+}
+
+void BankSystemModel::registerEnterprise(int64_t id, std::string type, std::string name, int64_t pan, int64_t bic, std::string address)
+{
+    if (!database) { throw DBNotOpenedException(); }
+
+    Enterprise newEnterprise(id, type, name, pan, bic, address);
+    database->addEnterprise(newEnterprise);
 }
 
 void BankSystemModel::addSampleOperator()

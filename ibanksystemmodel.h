@@ -30,6 +30,10 @@ public:
                                             std::string name, std::string phone, std::string passportData,
                                             bool fromRB) = 0;
 
+    // Зарегистрировать в базе данных предприятие
+    virtual void registerEnterprise(int64_t id, std::string type, std::string name,
+                                    int64_t pan, int64_t bic, std::string address) = 0;
+
     // TODO: заменить на нормальное появление в базе данных менеджеров, администраторов и операторов
     virtual void addSampleManager() = 0;
 
