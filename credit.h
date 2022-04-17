@@ -1,6 +1,7 @@
 #ifndef CREDIT_H
 #define CREDIT_H
 
+#include <string>
 #include <cstdlib>
 #include <ctime>
 
@@ -15,13 +16,11 @@ const double MIN_CREDIT_MONTH_PERCENTS = 1.0;
 const int MAX_MONTHS = 96;
 const int MIN_MONTHS = 3;
 
-double computePercentRate(int months);
-
 class Credit
 {
 public:
     Credit(int64_t id, int months, double value, Currency currency,
-           double monthlyPercents, time_t creationTime, double paidByClient);
+           double monthlyPercents, time_t creationTime, double paidByClient, std::string clientLogin);
 
     int64_t getId() const { return id; }
     int getMonths() const { return months; }
@@ -37,6 +36,9 @@ private:
     double monthlyPercents;
     time_t creationTime;
     double paidByClient;
+    std::string clientLogin;
 };
+
+double computePercentRate(int months);
 
 #endif // CREDIT_H

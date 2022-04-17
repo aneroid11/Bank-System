@@ -11,7 +11,7 @@ double computePercentRate(int months)
 }
 
 Credit::Credit(int64_t id, int months, double value, Currency currency,
-               double monthlyPercents, time_t creationTime, double paidByClient)
+               double monthlyPercents, time_t creationTime, double paidByClient, std::string clientLogin)
 {
     this->id = id;
     this->months = months;
@@ -20,4 +20,5 @@ Credit::Credit(int64_t id, int months, double value, Currency currency,
     this->monthlyPercents = monthlyPercents;
     this->creationTime = creationTime;
     this->paidByClient = paidByClient;
+    this->clientLogin = clientLogin;
 }

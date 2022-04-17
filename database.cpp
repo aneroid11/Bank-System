@@ -45,6 +45,7 @@ Database::Database(std::string filename)
     createDepositsTable();
     createTransfersTable();
     createEnterprisesTable();
+    createCreditsTable();
 }
 
 Database::~Database()
@@ -175,7 +176,19 @@ void Database::createCreditsTable()
     double monthlyPercents;
     time_t creationTime;
     double paidByClient;
+    std::string clientLogin;
      * */
+    QSqlQuery query;
+    query.prepare("CREATE TABLE CREDITS("  \
+                  "ID INT NOT NULL," \
+                  "MONTHS INT," \
+                  "VALUE REAL," \
+                  "CURRENCY INT," \
+                  "MONTHLY_PERCENTS REAL," \
+                  "CREATION_TIME INT," \
+                  "PAID_BY_CLIENT REAL," \
+                  "CLIENT_LOGIN TEXT);");
+    query.exec();
 }
 
 void Database::addClient(const Client &client)
