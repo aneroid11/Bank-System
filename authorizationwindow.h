@@ -21,7 +21,8 @@ public:
 
 private slots:
     void enter();
-    void signup();
+    void signupClient();
+    void signupSpecialist();
 
 private:
     QString bankName = "";

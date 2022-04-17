@@ -10,7 +10,7 @@ const double MIN_CREDIT_MONTH_PERCENTS = 1.0;
 const int MAX_MONTHS = 96;
 const int MIN_MONTHS = 3;
 
-double computePercentRate(int months, double value);
+double computePercentRate(int months);
 
 class Credit
 {

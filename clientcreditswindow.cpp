@@ -135,7 +135,7 @@ void ClientCreditsWindow::takeLoan()
     msgBox.setWindowTitle("Информация");
     QString text = "Вы берёте кредит на " + QString::number(months) + " месяцев\n";
     text += "Сумма кредита: " + QString::number(value) + " " + currencyStr + "\n";
-    double percentRate = computePercentRate(months, converter.convert(value, currency, US_DOLLAR));
+    double percentRate = computePercentRate(months);
     text += "Процентная ставка: " + QString::number(percentRate) + " % в месяц\n";
     msgBox.setText(text);
     msgBox.exec();

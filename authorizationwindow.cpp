@@ -18,8 +18,8 @@
 AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QDialog(parent), bankSystemModel(bankSystem)
 {
-    setFixedWidth(400);
-    setFixedHeight(200);
+    setFixedWidth(450);
+    setFixedHeight(250);
 
     loginLine = new QLineEdit(this);
     loginLine->setPlaceholderText("Логин");
@@ -28,17 +28,20 @@ AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *
     passwordLine->setPlaceholderText("Пароль");
     passwordLine->setEchoMode(QLineEdit::EchoMode::Password);
 
-    QPushButton* enterButton = new QPushButton("Войти", this);
-    QPushButton* signupButton = new QPushButton("Зарегистрироваться", this);
+    QPushButton *enterButton = new QPushButton("Войти", this);
+    QPushButton *signupClientButton = new QPushButton("Зарегистрироваться как клиент", this);
+    QPushButton *signupSpecialistButton = new QPushButton("Зарегистрироваться как специалист предприятия", this);
 
     connect(enterButton, &QPushButton::pressed, this, &AuthorizationWindow::enter);
-    connect(signupButton, &QPushButton::pressed, this, &AuthorizationWindow::signup);
+    connect(signupClientButton, &QPushButton::pressed, this, &AuthorizationWindow::signupClient);
+    connect(signupSpecialistButton, &QPushButton::pressed, this, &AuthorizationWindow::signupClient);
 
     QGridLayout* grid = new QGridLayout(this);
     grid->addWidget(loginLine, 0, 0);
     grid->addWidget(passwordLine, 1, 0);
     grid->addWidget(enterButton, 2, 0);
-    grid->addWidget(signupButton, 3, 0);
+    grid->addWidget(signupClientButton, 3, 0);
+    grid->addWidget(signupSpecialistButton, 4, 0);
 }
 
 AuthorizationWindow::~AuthorizationWindow()
@@ -125,7 +128,15 @@ void AuthorizationWindow::enter()
     }
 }
 
-void AuthorizationWindow::signup()
+void AuthorizationWindow::signupClient()
+{
+    SignupWindow *signupWindow = new SignupWindow(bankSystemModel);
+    signupWindow->setWindowModality(Qt::ApplicationModal);
+    signupWindow->exec();
+    delete signupWindow;
+}
+
+void AuthorizationWindow::signupSpecialist()
 {
     SignupWindow *signupWindow = new SignupWindow(bankSystemModel);
     signupWindow->setWindowModality(Qt::ApplicationModal);
