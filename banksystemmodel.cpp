@@ -496,7 +496,6 @@ void BankSystemModel::createTransfer(int64_t sender, int64_t recipient, double v
     double putValue = converter.convert(value, senderAcc->getCurrencyType(), recipientAcc->getCurrencyType());
 
     senderAcc->withdrawMoney(value);
-    //recipientAcc->putMoney(value);
     recipientAcc->putMoney(putValue);
 
     database->updateAccount(senderAcc);
@@ -507,4 +506,21 @@ void BankSystemModel::createTransfer(int64_t sender, int64_t recipient, double v
 
     delete senderAcc;
     delete recipientAcc;
+}
+
+void BankSystemModel::createCredit(int months, double value, Currency currency,
+                                   double monthlyPercents, time_t creationTime, std::string clientLogin)
+{
+    /*
+     * query.prepare("CREATE TABLE CREDITS("  \
+                  "ID INT NOT NULL," \
+                  "MONTHS INT," \
+                  "VALUE REAL," \
+                  "CURRENCY INT," \
+                  "MONTHLY_PERCENTS REAL," \
+                  "CREATION_TIME INT," \
+                  "PAID_BY_CLIENT REAL," \
+                  "CLIENT_LOGIN TEXT);");
+     * */
+    std::cout << "Create credit here\n";
 }

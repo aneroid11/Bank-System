@@ -400,18 +400,6 @@ void Database::addCredit(const Credit &credit)
 {
     if (hasRecord(credit.getId())) { return; }
 
-    /*
-     * query.prepare("CREATE TABLE CREDITS("  \
-                  "ID INT NOT NULL," \
-                  "MONTHS INT," \
-                  "VALUE REAL," \
-                  "CURRENCY INT," \
-                  "MONTHLY_PERCENTS REAL," \
-                  "CREATION_TIME INT," \
-                  "PAID_BY_CLIENT REAL," \
-                  "CLIENT_LOGIN TEXT);");
-     * */
-
     std::string query = "INSERT INTO CREDITS ";
 
     query += "(ID, MONTHS, VALUE, CURRENCY, MONTHLY_PERCENTS, CREATION_TIME, PAID_BY_CLIENT, CLIENT_LOGIN) ";

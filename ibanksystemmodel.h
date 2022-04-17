@@ -121,6 +121,10 @@ public:
     // Оформить перевод со счёта на счёт
     virtual void createTransfer(int64_t sender, int64_t recipient, double value) = 0;
 
+    // Оформить кредит
+    virtual void createCredit(int months, double value, Currency currency, double monthlyPercents,
+                              time_t creationTime, std::string clientLogin) = 0;
+
     // Запустить определённые тесты
     virtual void test() = 0;
 };

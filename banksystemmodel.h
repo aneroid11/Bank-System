@@ -94,6 +94,9 @@ public:
 
     void createTransfer(int64_t sender, int64_t recipient, double value);
 
+    void createCredit(int months, double value, Currency currency,
+                      double monthlyPercents, time_t creationTime, std::string clientLogin) override;
+
     void test() override;
 
 private:
