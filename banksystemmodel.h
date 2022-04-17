@@ -42,7 +42,7 @@ public:
 
     void approveClient(std::string login) override;
 
-    void openAccountForClient(Client *client) override;
+    void openAccountForClient(Client *client, int *id = nullptr) override;
 
     void openDepositForClient(Client *client, int term, double sum) override;
 

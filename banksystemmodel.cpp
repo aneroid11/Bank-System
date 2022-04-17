@@ -216,9 +216,12 @@ std::list<Client *> BankSystemModel::getUnapprovedClients()
     return database->getUnapprovedClients();
 }
 
-void BankSystemModel::openAccountForClient(Client *client)
+void BankSystemModel::openAccountForClient(Client *client, int *id)
 {
-    Account account(database->generateUniqueId(),
+    int accId = database->generateUniqueId();
+    if (id != nullptr) { *id = accId; }
+
+    Account account(accId,
                     client->getLogin(),
                     0.0, 2.4,
                     time(nullptr),
@@ -527,4 +530,13 @@ void BankSystemModel::createCredit(int months, double value, Currency currency,
     Credit newCredit(database->generateUniqueId(), months, value, currency, monthlyPercents,
                      creationTime, 0.0, clientLogin);
     database->addCredit(newCredit);
+
+    std::string trash;
+    Client *client = (Client *)database->getUserData(clientLogin, trash);
+
+    int accId;
+    openAccountForClient(client, &accId);
+    putMoneyOnAccount(accId, newCredit.getValue());
+
+    delete client;
 }

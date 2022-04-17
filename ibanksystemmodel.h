@@ -53,7 +53,7 @@ public:
     virtual void approveClient(std::string login) = 0;
 
     // Открыть счёт
-    virtual void openAccountForClient(Client *client) = 0;
+    virtual void openAccountForClient(Client *client, int *id = nullptr) = 0;
 
     // Открыть вклад
     virtual void openDepositForClient(Client *client, int term, double sum) = 0;
