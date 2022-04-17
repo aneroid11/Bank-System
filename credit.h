@@ -27,6 +27,9 @@ public:
     double getValue() const { return value; }
     Currency getCurrency() const { return currency; }
     double getMonthlyPercents() const { return monthlyPercents; }
+    time_t getCreationTime() const { return creationTime; }
+    double getPaidByClient() const { return paidByClient; }
+    std::string getClientLogin() const { return clientLogin; }
 
 private:
     int64_t id;

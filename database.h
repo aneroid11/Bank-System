@@ -18,6 +18,7 @@ class Account;
 class Deposit;
 class Transfer;
 class SomethingHoldingMoney;
+class Credit;
 class Enterprise;
 
 struct UserRawData
@@ -40,6 +41,7 @@ public:
     void addAdministrator(const Administrator &admin);
 
     void addTransfer(const Transfer &transfer);
+    void addCredit(const Credit &credit);
 
     void addAccount(const Account &account);
     void addDeposit(const Deposit &deposit);

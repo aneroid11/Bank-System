@@ -18,6 +18,7 @@
 #include "deposit.h"
 #include "transfer.h"
 #include "enterprise.h"
+#include "credit.h"
 
 #include "cannotopendbexception.h"
 #include "useralreadyexistsexception.h"
@@ -376,7 +377,6 @@ void Database::addTransfer(const Transfer &transfer)
 {
     if (hasRecord(transfer.getId()))
     {
-        std::cout << "Already has such transfer\n";
         return;
     }
     std::string query = "INSERT INTO TRANSFERS ";
@@ -394,6 +394,42 @@ void Database::addTransfer(const Transfer &transfer)
     sqlQuery.exec();
 
     std::cout << sqlQuery.lastError().text().toStdString() << "\n";
+}
+
+void Database::addCredit(const Credit &credit)
+{
+    if (hasRecord(credit.getId())) { return; }
+
+    /*
+     * query.prepare("CREATE TABLE CREDITS("  \
+                  "ID INT NOT NULL," \
+                  "MONTHS INT," \
+                  "VALUE REAL," \
+                  "CURRENCY INT," \
+                  "MONTHLY_PERCENTS REAL," \
+                  "CREATION_TIME INT," \
+                  "PAID_BY_CLIENT REAL," \
+                  "CLIENT_LOGIN TEXT);");
+     * */
+
+    std::string query = "INSERT INTO CREDITS ";
+
+    query += "(ID, MONTHS, VALUE, CURRENCY, MONTHLY_PERCENTS, CREATION_TIME, PAID_BY_CLIENT, CLIENT_LOGIN) ";
+    query += "VALUES (";
+    query += std::to_string(credit.getId()) + ", ";
+    query += "\'" + std::to_string(credit.getMonths()) + "\', ";
+    query += "\'" + std::to_string(credit.getValue()) + "\', ";
+    query += "\'" + std::to_string(credit.getCurrency()) + "\', ";
+    query += "\'" + std::to_string(credit.getMonthlyPercents()) + "\', ";
+    query += "\'" + std::to_string(credit.getCreationTime()) + "\', ";
+    query += "\'" + std::to_string(credit.getPaidByClient()) + "\', ";
+    query += "\'" + credit.getClientLogin() + "\');";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
+
+    qDebug() << sqlQuery.lastError().text() << "\n";
 }
 
 void Database::deleteUser(int64_t id)
