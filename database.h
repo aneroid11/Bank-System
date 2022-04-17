@@ -18,6 +18,7 @@ class Account;
 class Deposit;
 class Transfer;
 class SomethingHoldingMoney;
+class Enterprise;
 
 struct UserRawData
 {
@@ -42,6 +43,8 @@ public:
 
     void addAccount(const Account &account);
     void addDeposit(const Deposit &deposit);
+
+    void addEnterprise(const Enterprise &enterprise);
 
     void deleteUser(int64_t id);
 

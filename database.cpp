@@ -17,6 +17,7 @@
 #include "account.h"
 #include "deposit.h"
 #include "transfer.h"
+#include "enterprise.h"
 
 #include "cannotopendbexception.h"
 #include "useralreadyexistsexception.h"
@@ -283,12 +284,8 @@ void Database::addAccount(const Account &account)
 
 void Database::addDeposit(const Deposit &deposit)
 {
-    std::cout << "Need to add a deposit here for " << deposit.getClientLogin() << "\n";
-    std::cout << "ID: " << deposit.getId() << "\n";
-
     if (hasRecord(deposit.getId()))
     {
-        std::cout << "Already has such deposit\n";
         return;
     }
 
@@ -309,6 +306,38 @@ void Database::addDeposit(const Deposit &deposit)
     QSqlQuery sqlQuery;
     sqlQuery.prepare(query.c_str());
     sqlQuery.exec();
+}
+
+void Database::addEnterprise(const Enterprise &enterprise)
+{
+    if (hasRecord(enterprise.getId()))
+    {
+        return;
+    }
+
+    std::string query = "INSERT INTO ENTERPRISES ";
+
+    /*
+    query.prepare("CREATE TABLE ENTERPRISES("  \
+                  "ID INT NOT NULL," \
+                  "TYPE TEXT," \
+                  "NAME TEXT," \
+                  "PAN INT," \
+                  "BIC INT," \
+                  "ADDRESS TEXT );");
+     * */
+    query += "(ID, TYPE, NAME, PAN, BIC, ADDRESS) ";
+    query += "VALUES (";
+    query += std::to_string(enterprise.getId()) + ", ";
+    query += "\'" + enterprise.getType() + "\', ";
+    query += "\'" + enterprise.getName() + "\', ";
+    query += "\'" + std::to_string(enterprise.getPan()) + "\', ";
+    query += "\'" + std::to_string(enterprise.getBic()) + "\', ";
+    query += "\'" + enterprise.getAddress() + "\'); ";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(query.c_str());
+    sqlQuery.exec();
 
     std::cout << sqlQuery.lastError().text().toStdString() << "\n";
 }
@@ -320,12 +349,6 @@ void Database::addTransfer(const Transfer &transfer)
         std::cout << "Already has such transfer\n";
         return;
     }
-    /*
-    int64_t id;
-    int64_t senderId, recipientId;
-    time_t creationTime;
-    double value;
-     * */
     std::string query = "INSERT INTO TRANSFERS ";
 
     query += "(ID, SENDER_ID, RECIPIENT_ID, CREATION_DATE, VALUE) ";
@@ -387,7 +410,7 @@ bool Database::hasRecord(int64_t id)
     if (hasUserWithId) { return true; }
 
     QSqlQuery checkQuery;
-    std::string tablesToCheck[] = { "ACCOUNTS", "TRANSFERS" };
+    std::string tablesToCheck[] = { "ACCOUNTS", "TRANSFERS", "ENTERPRISES" };
 
     for (const std::string &tableName : tablesToCheck)
     {
