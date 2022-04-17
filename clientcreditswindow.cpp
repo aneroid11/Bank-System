@@ -106,7 +106,6 @@ void ClientCreditsWindow::showCreditInfo()
     auto it = std::find_if(std::begin(clientCredits),
                            std::end(clientCredits),
                            [&](const Credit *c) { return c->getId() == creditId; } );
-
     Credit *currCredit = *it;
 
     QMessageBox msgBox;
@@ -117,10 +116,24 @@ void ClientCreditsWindow::showCreditInfo()
 
 void ClientCreditsWindow::makeMonthlyPayment()
 {
-    // как только всё выплачено, статус кредита должен поменяться с ACTIVE на REPAID
+    int creditId = getCurrentCreditId();
+    if (creditId < 0) { return; }
+
+    updateClientCreditsData();
+    auto it = std::find_if(std::begin(clientCredits),
+                           std::end(clientCredits),
+                           [&](const Credit *c) { return c->getId() == creditId; } );
+    Credit *currCredit = *it;
+
+    QString info;
+    info += "Оплата за " + QString::number(currCredit->getMonthsFromLastPaymentTime()) + " месяцев: ";
+    double sumToPay = currCredit->getPaymentFromLastPaymentTime();
+    QString currencyStr = currCredit->getCurrency() == BYN ? "BYN" : "$";
+    info += QString::number(sumToPay) + " " + currencyStr;
+
     QMessageBox msgBox;
-    msgBox.setWindowTitle("aaaa");
-    msgBox.setText("гыыыыы");
+    msgBox.setText(info);
+    msgBox.setWindowTitle("Оплата");
     msgBox.exec();
 }
 

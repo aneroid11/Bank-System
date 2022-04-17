@@ -39,13 +39,17 @@ double Credit::getMonthlyPayment() const
     return getAmountOfMoneyClientMustPay() / months;
 }
 
-double Credit::getPaymentFromLastPaymentTime() const
+int Credit::getMonthsFromLastPaymentTime() const
 {
-    double monthlyPayment = getMonthlyPayment();
     time_t now = time(nullptr);
     time_t elapsed = now - lastPaymentTime;
     int monthsElapsed = elapsed / SEC_IN_MONTH;
-    return monthsElapsed * monthlyPayment;
+    return monthsElapsed;
+}
+
+double Credit::getPaymentFromLastPaymentTime() const
+{
+    return getMonthsFromLastPaymentTime() * getMonthlyPayment();
 }
 
 std::string Credit::getInfo() const

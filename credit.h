@@ -34,6 +34,7 @@ public:
 
     double getAmountOfMoneyClientMustPay() const;
     double getMonthlyPayment() const;
+    int getMonthsFromLastPaymentTime() const;
     double getPaymentFromLastPaymentTime() const;
 
     std::string getInfo() const override;
