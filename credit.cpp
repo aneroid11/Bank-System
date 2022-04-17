@@ -33,7 +33,7 @@ std::string Credit::getInfo() const
     std::string currencyStr = currency == BYN ? "BYN" : "$";
     inf << "Сумма: " << value << " " << currencyStr << "\n";
     inf << "Процентная ставка (за месяц): " << monthlyPercents << "\n";
-    inf << "Дата и время оформления" << ctime(&creationTime);
+    inf << "Дата и время оформления: " << ctime(&creationTime);
     inf << "Выплачено по кредиту: " << paidByClient << "\n";
     inf << "Клиент: " << clientLogin << "\n";
     return inf.str();

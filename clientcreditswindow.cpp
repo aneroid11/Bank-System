@@ -99,9 +99,19 @@ int64_t ClientCreditsWindow::getCurrentCreditId() const
 
 void ClientCreditsWindow::showCreditInfo()
 {
+    int creditId = getCurrentCreditId();
+    if (creditId < 0) { return; }
+
+    updateClientCreditsData();
+    auto it = std::find_if(std::begin(clientCredits),
+                           std::end(clientCredits),
+                           [&](const Credit *c) { return c->getId() == creditId; } );
+
+    Credit *currCredit = *it;
+
     QMessageBox msgBox;
-    msgBox.setWindowTitle("аалывал");
-    msgBox.setText("гыыыыы");
+    msgBox.setWindowTitle("Информация о кредите");
+    msgBox.setText(currCredit->getInfo().c_str());
     msgBox.exec();
 }
 
