@@ -69,13 +69,6 @@ void SignupSpecialistWindow::registerEnterprise()
     enterpriseTypes.append("ОАО");
     QString type = inpDialog.getItem(this, "Тип предприятия", "Выберите тип предприятия", enterpriseTypes, 0, false);
 
-    /*
-ТИП (ИП, ООО, ЗАО и т.д.);
-Юридическое название;
-УНП;
-БИК банка;
-Юридический адрес
-     * */
     QString enterpriseName;
     bool ok = false;
     do
@@ -109,10 +102,27 @@ void SignupSpecialistWindow::registerEnterprise()
     while (!ok);
 
     // Получить БИК банка, в котором мы сейчас находимся
+    int64_t bankBic = bankSystemModel->getCurrentBank()->bic;
 
     QMessageBox msgBox;
     msgBox.setWindowTitle("Регистрация");
-    msgBox.setText("Вы зарегистрировали предприятие АДАООАОАО");
+
+    /*
+ТИП (ИП, ООО, ЗАО и т.д.);
+Юридическое название;
+УНП;
+БИК банка;
+Юридический адрес
+     * */
+    QString info;
+    info += "Вы зарегистрировали предприятие: \n";
+    info += "Тип: " + type + "\n";
+    info += "Юридическое название: " + enterpriseName + "\n";
+    info += "УНП: " + QString::number(pan) + "\n";
+    info += "БИК банка: " + QString::number(bankBic) + "\n";
+    info += "Юридический адрес: " +  address + "\n";
+
+    msgBox.setText(info);
     msgBox.exec();
 }
 
