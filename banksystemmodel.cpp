@@ -543,3 +543,8 @@ void BankSystemModel::createCredit(int months, double value, Currency currency,
 
     delete client;
 }
+
+void BankSystemModel::payCredit(int64_t id, double value)
+{
+    std::cout << "need to pay " << value << " for credit " << id << " here\n";
+}

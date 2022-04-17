@@ -403,7 +403,7 @@ void Database::addCredit(const Credit &credit)
 
     std::string query = "INSERT INTO CREDITS ";
 
-    query += "(ID, MONTHS, VALUE, CURRENCY, MONTHLY_PERCENTS, CREATION_TIME, PAID_BY_CLIENT, CLIENT_LOGIN) ";
+    query += "(ID, MONTHS, VALUE, CURRENCY, MONTHLY_PERCENTS, CREATION_TIME, LAST_PAYMENT_TIME, PAID_BY_CLIENT, CLIENT_LOGIN) ";
     query += "VALUES (";
     query += std::to_string(credit.getId()) + ", ";
     query += "\'" + std::to_string(credit.getMonths()) + "\', ";

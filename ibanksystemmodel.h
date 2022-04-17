@@ -129,6 +129,9 @@ public:
     virtual void createCredit(int months, double value, Currency currency, double monthlyPercents,
                               time_t creationTime, std::string clientLogin) = 0;
 
+    // Заплатить по кредиту
+    virtual void payCredit(int64_t id, double value) = 0;
+
     // Запустить определённые тесты
     virtual void test() = 0;
 };

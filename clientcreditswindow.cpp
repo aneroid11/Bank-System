@@ -135,6 +135,12 @@ void ClientCreditsWindow::makeMonthlyPayment()
     msgBox.setText(info);
     msgBox.setWindowTitle("Оплата");
     msgBox.exec();
+
+    bankSystemModel->payCredit(currCredit->getId(), sumToPay);
+
+    msgBox.setText("Оплата прошла успешно");
+    msgBox.setWindowTitle("Оплата");
+    msgBox.exec();
 }
 
 void ClientCreditsWindow::takeLoan()
