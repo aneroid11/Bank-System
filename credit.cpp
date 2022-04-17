@@ -10,7 +10,14 @@ double computePercentRate(int months)
     return percents;
 }
 
-Credit::Credit()
+Credit::Credit(int64_t id, int months, double value, Currency currency,
+               double monthlyPercents, time_t creationTime, double paidByClient)
 {
-
+    this->id = id;
+    this->months = months;
+    this->value = value;
+    this->currency = currency;
+    this->monthlyPercents = monthlyPercents;
+    this->creationTime = creationTime;
+    this->paidByClient = paidByClient;
 }

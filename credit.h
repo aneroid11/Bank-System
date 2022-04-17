@@ -1,6 +1,11 @@
 #ifndef CREDIT_H
 #define CREDIT_H
 
+#include <cstdlib>
+#include <ctime>
+
+#include "currencyconverter.h"
+
 const double MIN_CREDIT_VALUE = 100.0;
 const double MAX_CREDIT_VALUE = 10000.0;
 
@@ -15,7 +20,23 @@ double computePercentRate(int months);
 class Credit
 {
 public:
-    Credit();
+    Credit(int64_t id, int months, double value, Currency currency,
+           double monthlyPercents, time_t creationTime, double paidByClient);
+
+    int64_t getId() const { return id; }
+    int getMonths() const { return months; }
+    double getValue() const { return value; }
+    Currency getCurrency() const { return currency; }
+    double getMonthlyPercents() const { return monthlyPercents; }
+
+private:
+    int64_t id;
+    int months;
+    double value;
+    Currency currency;
+    double monthlyPercents;
+    time_t creationTime;
+    double paidByClient;
 };
 
 #endif // CREDIT_H

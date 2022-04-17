@@ -165,6 +165,19 @@ void Database::createTransfersTable()
     query.exec();
 }
 
+void Database::createCreditsTable()
+{
+    /*
+     * int64_t id;
+    int months;
+    double value;
+    Currency currency;
+    double monthlyPercents;
+    time_t creationTime;
+    double paidByClient;
+     * */
+}
+
 void Database::addClient(const Client &client)
 {
     if (hasUser(client.getLogin()) || hasUserWithPassportData(client.getPassportData()))
