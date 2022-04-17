@@ -130,7 +130,7 @@ public:
                               time_t creationTime, std::string clientLogin) = 0;
 
     // Заплатить по кредиту
-    virtual void payCredit(int64_t id, double value) = 0;
+    virtual void payCredit(int64_t id) = 0;
 
     // Запустить определённые тесты
     virtual void test() = 0;

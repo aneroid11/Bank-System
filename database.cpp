@@ -848,3 +848,20 @@ void Database::updateDeposit(Deposit *data)
     sqlQuery.prepare(qs.str().c_str());
     sqlQuery.exec();
 }
+
+void Database::updateCredit(Credit *data)
+{
+    /*
+     * query.prepare("CREATE TABLE CREDITS("  \
+                  "ID INT NOT NULL," \
+                  "MONTHS INT," \
+                  "VALUE REAL," \
+                  "CURRENCY INT," \
+                  "MONTHLY_PERCENTS REAL," \
+                  "CREATION_TIME INT," \
+                  "LAST_PAYMENT_TIME INT," \
+                  "PAID_BY_CLIENT REAL," \
+                  "CLIENT_LOGIN TEXT);");
+     **/
+    std::cout << "need to update credit " << data->getId() << " here\n";
+}

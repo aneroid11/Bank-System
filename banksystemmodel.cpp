@@ -544,7 +544,12 @@ void BankSystemModel::createCredit(int months, double value, Currency currency,
     delete client;
 }
 
-void BankSystemModel::payCredit(int64_t id, double value)
+void BankSystemModel::payCredit(int64_t id)
 {
-    std::cout << "need to pay " << value << " for credit " << id << " here\n";
+    std::cout << "need to pay for credit " << id << " here\n";
+
+    std::list<void *> records = database->getRecordsFromTableByParameter("CREDITS", "ID", std::to_string(id));
+    Credit *currCredit = (Credit *)(*records.begin());
+    currCredit->pay();
+    database->updateCredit(currCredit);
 }

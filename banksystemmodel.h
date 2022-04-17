@@ -99,7 +99,7 @@ public:
     void createCredit(int months, double value, Currency currency,
                       double monthlyPercents, time_t creationTime, std::string clientLogin) override;
 
-    void payCredit(int64_t id, double value) override;
+    void payCredit(int64_t id) override;
 
     void test() override;
 

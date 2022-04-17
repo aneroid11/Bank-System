@@ -53,6 +53,12 @@ double Credit::getPaymentFromLastPaymentTime() const
     return getMonthsFromLastPaymentTime() * getMonthlyPayment();
 }
 
+void Credit::pay()
+{
+    paidByClient += getPaymentFromLastPaymentTime();
+    lastPaymentTime += getMonthsFromLastPaymentTime() * SEC_IN_MONTH;
+}
+
 std::string Credit::getInfo() const
 {
     std::stringstream inf;

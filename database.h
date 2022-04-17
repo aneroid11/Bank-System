@@ -83,6 +83,7 @@ public:
 
     void updateAccount(Account *data);
     void updateDeposit(Deposit *data);
+    void updateCredit(Credit *data);
 
 private:
     void createClientsTable();

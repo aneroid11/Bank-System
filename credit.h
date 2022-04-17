@@ -39,6 +39,8 @@ public:
     int getMonthsFromLastPaymentTime() const;
     double getPaymentFromLastPaymentTime() const;
 
+    void pay();
+
     std::string getInfo() const override;
 
 private:
