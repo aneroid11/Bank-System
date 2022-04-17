@@ -604,10 +604,8 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
         // Это один из пользователей
         return createUserFromData(query, rec, tableName);
     }
-    else
+    else if (tableName == "ACCOUNTS" || tableName == "DEPOSITS")
     {
-        std::cout << "This is a record: deposit or account\n";
-
         // Это запись счёта или вклада
         int64_t id = query.value(rec.indexOf("ID")).toInt();
 
@@ -651,6 +649,23 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
                                  currencyType);
         }
 
+        return record;
+    }
+    else if (tableName == "CREDITS")
+    {
+        // Это запись кредита
+        int64_t id = query.value(rec.indexOf("ID")).toInt();
+        int months = query.value(rec.indexOf("MONTHS")).toInt();
+        double value = query.value(rec.indexOf("VALUE")).toString().replace(',', '.').toDouble();
+        Currency currency = (Currency)query.value(rec.indexOf("CURRENCY")).toInt();
+        double monthlyPercents = query.value(rec.indexOf("MONTHLY_PERCENTS")).toString().replace(',', '.').toDouble();
+        time_t creationTime = query.value(rec.indexOf("CREATION_TIME")).toInt();
+        double paidByClient = query.value(rec.indexOf("PAID_BY_CLIENT")).toString().replace(',', '.').toDouble();
+        QString clientLogin = query.value(rec.indexOf("CLIENT_LOGIN")).toString();
+
+        void *record = nullptr;
+        record = new Credit(id, months, value, currency, monthlyPercents,
+                            creationTime, paidByClient, clientLogin.toStdString());
         return record;
     }
 

@@ -22,9 +22,10 @@ ClientCreditsWindow::ClientCreditsWindow(IBankSystemModel *bankSystemModel, Clie
     QLabel *creditsListLabel = new QLabel("Список кредитов:", this);
 
     creditsListWidget = new QListWidget(this);
-    creditsListWidget->addItem("2942049");
-
     connect(creditsListWidget, &QListWidget::itemClicked, this, &ClientCreditsWindow::changeCurrentCreditId);
+
+    updateClientCreditsData();
+    updateClientCreditsListWidget();
 
     QPushButton *showInfo = new QPushButton("Информация о кредите", this);
     connect(showInfo, &QPushButton::clicked, this, &ClientCreditsWindow::showCreditInfo);
@@ -41,6 +42,37 @@ ClientCreditsWindow::ClientCreditsWindow(IBankSystemModel *bankSystemModel, Clie
     gridLayout->addWidget(showInfo, 2, 0);
     gridLayout->addWidget(takeLoan, 3, 0);
     gridLayout->addWidget(makeMonthlyPayment, 4, 0);
+}
+
+ClientCreditsWindow::~ClientCreditsWindow()
+{
+    deleteClientCredits();
+}
+
+void ClientCreditsWindow::deleteClientCredits()
+{
+    for (Credit *c : clientCredits)
+    {
+        delete c;
+    }
+    clientCredits.clear();
+}
+
+void ClientCreditsWindow::updateClientCreditsData()
+{
+    deleteClientCredits();
+    clientCredits = bankSystemModel->getClientCredits(client);
+}
+
+void ClientCreditsWindow::updateClientCreditsListWidget()
+{
+    creditsListWidget->clear();
+
+    int i = 0;
+    for (Credit *c : clientCredits)
+    {
+        creditsListWidget->insertItem(i, QString::number(c->getId()));
+    }
 }
 
 void ClientCreditsWindow::changeCurrentCreditId(QListWidgetItem *item)
@@ -143,6 +175,9 @@ void ClientCreditsWindow::takeLoan()
     double percentRate = computePercentRate(months);
 
     bankSystemModel->createCredit(months, value, currency, percentRate, time(nullptr), client->getLogin());
+
+    updateClientCreditsData();
+    updateClientCreditsListWidget();
 
     QMessageBox msgBox;
     msgBox.setWindowTitle("Информация");

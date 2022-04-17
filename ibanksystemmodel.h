@@ -8,6 +8,7 @@
 #include "client.h"
 #include "account.h"
 #include "deposit.h"
+#include "credit.h"
 #include "nouserindbexception.h"
 
 class IBankSystemModel
@@ -69,6 +70,9 @@ public:
 
     // Получить ВСЕ вклады клиента в банке
     virtual std::list<Deposit *> getClientDeposits(Client *client) = 0;
+
+    // Получить ВСЕ кредиты клиента в банке
+    virtual std::list<Credit *> getClientCredits(Client *client) = 0;
 
     // Получить счета клиента в банке с определённым статусом
     virtual std::list<Account *> getClientAccountsByStatus(Client *client, int requiredStatus) = 0;

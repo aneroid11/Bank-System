@@ -266,6 +266,21 @@ std::list<Deposit *> BankSystemModel::getClientDeposits(Client *client)
     return deposits;
 }
 
+std::list<Credit *> BankSystemModel::getClientCredits(Client *client)
+{
+    std::cout << "getClientCredits()\n";
+    std::cout << client->getLogin() << "\n";
+    std::list<void *> records = database->getRecordsFromTableByParameter("CREDITS", "CLIENT_LOGIN", client->getLogin());
+    std::list<Credit *> credits;
+
+    for (void *r : records)
+    {
+        std::cout << (int *)r << "\n";
+        credits.push_back((Credit *)r);
+    }
+    return credits;
+}
+
 std::list<SomethingHoldingMoney *> BankSystemModel::getClientSmthHoldingMoneyByStatus(Client *client,
                                                                                       int requiredStatus,
                                                                                       std::string table)
@@ -515,18 +530,6 @@ void BankSystemModel::createTransfer(int64_t sender, int64_t recipient, double v
 void BankSystemModel::createCredit(int months, double value, Currency currency,
                                    double monthlyPercents, time_t creationTime, std::string clientLogin)
 {
-    /*
-     * query.prepare("CREATE TABLE CREDITS("  \
-                  "ID INT NOT NULL," \
-                  "MONTHS INT," \
-                  "VALUE REAL," \
-                  "CURRENCY INT," \
-                  "MONTHLY_PERCENTS REAL," \
-                  "CREATION_TIME INT," \
-                  "PAID_BY_CLIENT REAL," \
-                  "CLIENT_LOGIN TEXT);");
-     * */
-    std::cout << "Create credit here\n";
     Credit newCredit(database->generateUniqueId(), months, value, currency, monthlyPercents,
                      creationTime, 0.0, clientLogin);
     database->addCredit(newCredit);

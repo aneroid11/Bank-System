@@ -54,6 +54,8 @@ public:
 
     std::list<Deposit *> getClientDeposits(Client *client) override;
 
+    std::list<Credit *> getClientCredits(Client *client) override;
+
     std::list<SomethingHoldingMoney *> getClientSmthHoldingMoneyByStatus(Client *client,
                                                                          int requiredStatus,
                                                                          std::string table);
