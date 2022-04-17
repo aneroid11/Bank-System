@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,11 +16,84 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    account.cpp \
+    adminaccountsdepositswindow.cpp \
+    administrator.cpp \
+    adminpersonalaccountwindow.cpp \
+    authorizationwindow.cpp \
+    bank.cpp \
+    banksystemmodel.cpp \
+    client.cpp \
+    clientaccountswindow.cpp \
+    clientcreditswindow.cpp \
+    clientdepositswindow.cpp \
+    clientinstallmentswindow.cpp \
+    clientpersonalaccountwindow.cpp \
+    credit.cpp \
+    currencyconverter.cpp \
+    database.cpp \
+    deposit.cpp \
+    enterprise.cpp \
+    enterprisespecialist.cpp \
+    hashcomputer.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    manager.cpp \
+    managerpersonalaccountwindow.cpp \
+    operator.cpp \
+    operatorpersonalaccountwindow.cpp \
+    signupclientwindow.cpp \
+    signuprequestswindow.cpp \
+    signupspecialistwindow.cpp \
+    somethingholdingmoney.cpp \
+    transfer.cpp \
+    user.cpp
 
 HEADERS += \
-    mainwindow.h
+    account.h \
+    adminaccountsdepositswindow.h \
+    administrator.h \
+    adminpersonalaccountwindow.h \
+    authorizationwindow.h \
+    bank.h \
+    banksystemmodel.h \
+    cannotopendbexception.h \
+    client.h \
+    clientaccountswindow.h \
+    clientcreditswindow.h \
+    clientdepositswindow.h \
+    clientinstallmentswindow.h \
+    clientpersonalaccountwindow.h \
+    constants.h \
+    credit.h \
+    currencyconverter.h \
+    database.h \
+    dbexception.h \
+    dbnotopenedexception.h \
+    deposit.h \
+    enterprise.h \
+    enterprisealreadyexistsexception.h \
+    enterprisespecialist.h \
+    hashcomputer.h \
+    ibanksystemmodel.h \
+    iinforming.h \
+    mainwindow.h \
+    manager.h \
+    managerpersonalaccountwindow.h \
+    noaccountindbexception.h \
+    nouserindbexception.h \
+    operator.h \
+    operatorpersonalaccountwindow.h \
+    signupclientwindow.h \
+    signuprequestswindow.h \
+    signupspecialistwindow.h \
+    somethingholdingmoney.h \
+    transfer.h \
+    user.h \
+    useralreadyexistsexception.h \
+    wronguserpasswordexception.h
+
+LIBS += -lcrypto++# -lsqlite3
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
