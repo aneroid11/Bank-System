@@ -11,7 +11,8 @@
 #include "managerpersonalaccountwindow.h"
 #include "operatorpersonalaccountwindow.h"
 #include "adminpersonalaccountwindow.h"
-#include "signupwindow.h"
+#include "signupclientwindow.h"
+#include "signupspecialistwindow.h"
 
 #include "wronguserpasswordexception.h"
 
@@ -34,7 +35,7 @@ AuthorizationWindow::AuthorizationWindow(IBankSystemModel *bankSystem, QWidget *
 
     connect(enterButton, &QPushButton::pressed, this, &AuthorizationWindow::enter);
     connect(signupClientButton, &QPushButton::pressed, this, &AuthorizationWindow::signupClient);
-    connect(signupSpecialistButton, &QPushButton::pressed, this, &AuthorizationWindow::signupClient);
+    connect(signupSpecialistButton, &QPushButton::pressed, this, &AuthorizationWindow::signupSpecialist);
 
     QGridLayout* grid = new QGridLayout(this);
     grid->addWidget(loginLine, 0, 0);
@@ -130,7 +131,7 @@ void AuthorizationWindow::enter()
 
 void AuthorizationWindow::signupClient()
 {
-    SignupWindow *signupWindow = new SignupWindow(bankSystemModel);
+    SignupClientWindow *signupWindow = new SignupClientWindow(bankSystemModel);
     signupWindow->setWindowModality(Qt::ApplicationModal);
     signupWindow->exec();
     delete signupWindow;
@@ -138,7 +139,7 @@ void AuthorizationWindow::signupClient()
 
 void AuthorizationWindow::signupSpecialist()
 {
-    SignupWindow *signupWindow = new SignupWindow(bankSystemModel);
+    SignupSpecialistWindow *signupWindow = new SignupSpecialistWindow(bankSystemModel);
     signupWindow->setWindowModality(Qt::ApplicationModal);
     signupWindow->exec();
     delete signupWindow;

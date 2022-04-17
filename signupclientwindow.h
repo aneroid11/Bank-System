@@ -1,5 +1,4 @@
-#ifndef SIGNUPWINDOW_H
-#define SIGNUPWINDOW_H
+#pragma once
 
 #include <QDialog>
 
@@ -7,11 +6,11 @@ class QLineEdit;
 class QCheckBox;
 class IBankSystemModel;
 
-class SignupWindow : public QDialog
+class SignupClientWindow : public QDialog
 {
     Q_OBJECT
 public:
-    explicit SignupWindow(IBankSystemModel *bankSystem, QWidget *parent = nullptr);
+    explicit SignupClientWindow(IBankSystemModel *bankSystem, QWidget *parent = nullptr);
 
 private slots:
     void sendSignupRequest();
@@ -30,5 +29,3 @@ private:
 
     IBankSystemModel *bankSystemModel;
 };
-
-#endif // SIGNUPWINDOW_H

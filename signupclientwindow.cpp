@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "signupwindow.h"
+#include "signupclientwindow.h"
 #include "ibanksystemmodel.h"
 #include "useralreadyexistsexception.h"
 
@@ -11,7 +11,7 @@
 #include <QMessageBox>
 #include <QCheckBox>
 
-SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
+SignupClientWindow::SignupClientWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QDialog(parent), bankSystemModel(bankSystem)
 {
     setWindowTitle("Регистрация нового клиента");
@@ -41,7 +41,7 @@ SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     fromRBCheckBox = new QCheckBox("Гражданин РБ", this);
 
     QPushButton *sendRequest = new QPushButton("Отправить запрос на регистрацию", this);
-    connect(sendRequest, &QPushButton::pressed, this, &SignupWindow::sendSignupRequest);
+    connect(sendRequest, &QPushButton::pressed, this, &SignupClientWindow::sendSignupRequest);
 
     QGridLayout *gridLayout = new QGridLayout(this);
     gridLayout->addWidget(loginLine, 0, 0);
@@ -54,7 +54,7 @@ SignupWindow::SignupWindow(IBankSystemModel *bankSystem, QWidget *parent)
     gridLayout->addWidget(sendRequest, 7, 0);
 }
 
-void SignupWindow::sendSignupRequest()
+void SignupClientWindow::sendSignupRequest()
 {
     if (notAllFieldsAreFilled())
     {
@@ -97,7 +97,7 @@ void SignupWindow::sendSignupRequest()
     close();
 }
 
-bool SignupWindow::notAllFieldsAreFilled()
+bool SignupClientWindow::notAllFieldsAreFilled()
 {
     return  loginLine->text().isEmpty() ||
             passwordLine->text().isEmpty() ||

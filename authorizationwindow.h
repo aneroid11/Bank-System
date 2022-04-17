@@ -8,7 +8,7 @@
 class QLineEdit;
 class ClientPersonalAccountWindow;
 class ManagerPersonalAccountWindow;
-class SignupWindow;
+class SignupClientWindow;
 
 class AuthorizationWindow : public QDialog
 {

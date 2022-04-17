@@ -41,8 +41,9 @@ SOURCES += \
     managerpersonalaccountwindow.cpp \
     operator.cpp \
     operatorpersonalaccountwindow.cpp \
+    signupclientwindow.cpp \
     signuprequestswindow.cpp \
-    signupwindow.cpp \
+    signupspecialistwindow.cpp \
     somethingholdingmoney.cpp \
     transfer.cpp \
     user.cpp
@@ -79,8 +80,9 @@ HEADERS += \
     nouserindbexception.h \
     operator.h \
     operatorpersonalaccountwindow.h \
+    signupclientwindow.h \
     signuprequestswindow.h \
-    signupwindow.h \
+    signupspecialistwindow.h \
     somethingholdingmoney.h \
     transfer.h \
     user.h \
