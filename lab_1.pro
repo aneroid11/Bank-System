@@ -72,6 +72,7 @@ HEADERS += \
     dbnotopenedexception.h \
     deposit.h \
     enterprise.h \
+    enterprisealreadyexistsexception.h \
     enterprisespecialist.h \
     hashcomputer.h \
     ibanksystemmodel.h \

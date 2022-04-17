@@ -45,6 +45,8 @@ public:
     void addDeposit(const Deposit &deposit);
 
     void addEnterprise(const Enterprise &enterprise);
+    bool hasEnterpriseWithName(std::string name);
+    bool hasEnterpriseWithPan(int64_t pan);
 
     void deleteUser(int64_t id);
 
@@ -54,6 +56,7 @@ public:
     bool hasUserWithPassportData(std::string passportData);
 
     bool hasRecord(int64_t id);
+    bool hasRecordWith(std::string tableName, std::string parameterName, std::string parameterValue);
 
     void approveClient(std::string login);
 

@@ -21,6 +21,7 @@
 
 #include "cannotopendbexception.h"
 #include "useralreadyexistsexception.h"
+#include "enterprisealreadyexistsexception.h"
 #include "nouserindbexception.h"
 
 Database::Database(std::string filename)
@@ -308,11 +309,23 @@ void Database::addDeposit(const Deposit &deposit)
     sqlQuery.exec();
 }
 
+bool Database::hasEnterpriseWithName(std::string name)
+{
+    return hasRecordWith("ENTERPRISES", "NAME", name);
+}
+
+bool Database::hasEnterpriseWithPan(int64_t pan)
+{
+    return hasRecordWith("ENTERPRISES", "PAN", std::to_string(pan));
+}
+
 void Database::addEnterprise(const Enterprise &enterprise)
 {
-    if (hasRecord(enterprise.getId()))
+    if (hasRecord(enterprise.getId()) ||
+            hasEnterpriseWithName(enterprise.getName()) ||
+            hasEnterpriseWithPan(enterprise.getPan()))
     {
-        return;
+        throw EnterpriseAlreadyExistsException();
     }
 
     std::string query = "INSERT INTO ENTERPRISES ";
@@ -413,6 +426,29 @@ bool Database::hasRecord(int64_t id)
         {
             return true;
         }
+    }
+
+    return false;
+}
+
+bool Database::hasRecordWith(std::string tableName, std::string parameterName, std::string parameterValue)
+{
+    QSqlQuery checkQuery;
+
+    std::string query = "SELECT ID FROM ";
+    query += tableName;
+    query += " WHERE ";
+    query += parameterName;
+    query += " = \'";
+    query += parameterValue;
+    query += "\';";
+    /*std::string query = std::string("SELECT ID FROM ") + tableName +
+            " WHERE ID = \'" + std::to_string(id) + "\';";*/
+    checkQuery.prepare(query.c_str());
+
+    if (checkQuery.exec() && checkQuery.next())
+    {
+        return true;
     }
 
     return false;
