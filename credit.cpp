@@ -1,5 +1,7 @@
 #include "credit.h"
+#include "constants.h"
 
+#include <cmath>
 #include <sstream>
 
 double computePercentRate(int months)
@@ -21,8 +23,29 @@ Credit::Credit(int64_t id, int months, double value, Currency currency,
     this->currency = currency;
     this->monthlyPercents = monthlyPercents;
     this->creationTime = creationTime;
+    this->lastPaymentTime = creationTime;
     this->paidByClient = paidByClient;
     this->clientLogin = clientLogin;
+}
+
+double Credit::getAmountOfMoneyClientMustPay() const
+{
+    //сумма_кредита * (1 + p)^срок_кредита
+    return value * pow((1 + monthlyPercents / 100.0), months);
+}
+
+double Credit::getMonthlyPayment() const
+{
+    return getAmountOfMoneyClientMustPay() / months;
+}
+
+double Credit::getPaymentFromLastPaymentTime() const
+{
+    double monthlyPayment = getMonthlyPayment();
+    time_t now = time(nullptr);
+    time_t elapsed = now - lastPaymentTime;
+    int monthsElapsed = elapsed / SEC_IN_MONTH;
+    return monthsElapsed * monthlyPayment;
 }
 
 std::string Credit::getInfo() const
@@ -30,10 +53,12 @@ std::string Credit::getInfo() const
     std::stringstream inf;
     inf << "Информация о кредите:\n";
     inf << "ID: " << id << "\n";
+    inf << "Срок кредита: " << months << " месяцев\n";
     std::string currencyStr = currency == BYN ? "BYN" : "$";
     inf << "Сумма: " << value << " " << currencyStr << "\n";
-    inf << "Процентная ставка (за месяц): " << monthlyPercents << "\n";
+    inf << "Процентная ставка (за месяц): " << monthlyPercents << " %\n";
     inf << "Дата и время оформления: " << ctime(&creationTime);
+    inf << "Дата и время последнего платежа по кредиту: " << ctime(&creationTime);
     inf << "Выплачено по кредиту: " << paidByClient << "\n";
     inf << "Клиент: " << clientLogin << "\n";
     return inf.str();

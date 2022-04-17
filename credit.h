@@ -32,6 +32,10 @@ public:
     double getPaidByClient() const { return paidByClient; }
     std::string getClientLogin() const { return clientLogin; }
 
+    double getAmountOfMoneyClientMustPay() const;
+    double getMonthlyPayment() const;
+    double getPaymentFromLastPaymentTime() const;
+
     std::string getInfo() const override;
 
 private:
@@ -41,6 +45,7 @@ private:
     Currency currency;
     double monthlyPercents;
     time_t creationTime;
+    time_t lastPaymentTime;
     double paidByClient;
     std::string clientLogin;
 };
