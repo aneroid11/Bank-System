@@ -128,6 +128,15 @@ void ClientCreditsWindow::takeLoan()
     do
     {
         value = inpDialog.getDouble(this, "Сумма кредита", prompt, minValue, minValue, maxValue, 2, &ok);
+
+        if (!bankSystemModel->clientCanTakeLoan(client->getLogin(), converter.convert(value, currency, US_DOLLAR)))
+        {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Ошибка");
+            msgBox.setText("Вы не можете взять кредит на такую большую сумму");
+            msgBox.exec();
+            return;
+        }
     }
     while (!ok);
 

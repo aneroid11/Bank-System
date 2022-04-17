@@ -326,6 +326,35 @@ std::list<Deposit *> BankSystemModel::getClientDepositsByStatus(Client *client, 
     return retDeposits;
 }
 
+bool BankSystemModel::clientCanTakeLoan(std::string clientLogin, double loanValueUsd)
+{
+    // Получить все счета этого клиента
+    std::string type;
+    Client *client = (Client *)getUserData(clientLogin, type);
+    std::list<Account *> accounts = getClientAccounts(client);
+
+    double accountsValueUsd = 0.0;
+
+    for (Account *a : accounts)
+    {
+        // учитываем только активные счета
+        if (a->getStatus() == ACTIVE)
+        {
+            accountsValueUsd += CurrencyConverter().convert(a->getBalance(), a->getCurrencyType(), US_DOLLAR);
+        }
+    }
+
+    bool result = accountsValueUsd >= loanValueUsd / 2;
+
+    delete client;
+    for (Account *a : accounts)
+    {
+        delete a;
+    }
+
+    return result;
+}
+
 SomethingHoldingMoney *BankSystemModel::getSomethingHoldingMoneyById(int64_t id, std::string *retTable)
 {
     std::string tables[] = { "ACCOUNTS", "DEPOSITS" };

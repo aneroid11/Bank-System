@@ -2,7 +2,7 @@
 
 #include "signupspecialistwindow.h"
 #include "ibanksystemmodel.h"
-#include "useralreadyexistsexception.h"
+#include "enterprisealreadyexistsexception.h"
 
 #include <QPushButton>
 #include <QGridLayout>
@@ -104,8 +104,19 @@ void SignupSpecialistWindow::registerEnterprise()
     // Получить БИК банка, в котором мы сейчас находимся
     int64_t bankBic = bankSystemModel->getCurrentBank()->bic;
 
-    bankSystemModel->registerEnterprise(type.toStdString(), enterpriseName.toStdString(),
-                                        pan, bankBic, address.toStdString());
+    try
+    {
+        bankSystemModel->registerEnterprise(type.toStdString(), enterpriseName.toStdString(),
+                                            pan, bankBic, address.toStdString());
+    }
+    catch (const EnterpriseAlreadyExistsException &)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Такое предприятие уже существует. Убедитесь, что вы ввели все данные верно");
+        msgBox.exec();
+        return;
+    }
 
     QMessageBox msgBox;
     msgBox.setWindowTitle("Регистрация");
@@ -146,7 +157,7 @@ void SignupSpecialistWindow::sendSignupRequest()
                     fromRBCheckBox->checkState() == Qt::CheckState::Checked
                 );*/
     }
-    catch (const UserAlreadyExistsException &)
+    catch (const EnterpriseAlreadyExistsException &)
     {
         QMessageBox msgBox;
         msgBox.setWindowTitle("Ошибка");

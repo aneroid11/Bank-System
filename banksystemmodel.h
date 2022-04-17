@@ -62,6 +62,8 @@ public:
 
     std::list<Deposit *> getClientDepositsByStatus(Client *client, int requiredStatus) override;
 
+    bool clientCanTakeLoan(std::string clientLogin, double loanValueUsd) override;
+
     SomethingHoldingMoney *getSomethingHoldingMoneyById(int64_t id, std::string *table = nullptr) override;
 
     Account *getAccountById(int64_t id) override;
