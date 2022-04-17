@@ -11,6 +11,7 @@
 #include "deposit.h"
 #include "transfer.h"
 #include "enterprise.h"
+#include "credit.h"
 
 #include "dbnotopenedexception.h"
 #include "useralreadyexistsexception.h"
@@ -523,4 +524,7 @@ void BankSystemModel::createCredit(int months, double value, Currency currency,
                   "CLIENT_LOGIN TEXT);");
      * */
     std::cout << "Create credit here\n";
+    Credit newCredit(database->generateUniqueId(), months, value, currency, monthlyPercents,
+                     creationTime, 0.0, clientLogin);
+    database->addCredit(newCredit);
 }

@@ -1,5 +1,7 @@
 #include "credit.h"
 
+#include <sstream>
+
 double computePercentRate(int months)
 {
     //3.0 - 2.0 * ((срок_кредита / 93.0)
@@ -21,4 +23,18 @@ Credit::Credit(int64_t id, int months, double value, Currency currency,
     this->creationTime = creationTime;
     this->paidByClient = paidByClient;
     this->clientLogin = clientLogin;
+}
+
+std::string Credit::getInfo() const
+{
+    std::stringstream inf;
+    inf << "Информация о кредите:\n";
+    inf << "ID: " << id << "\n";
+    std::string currencyStr = currency == BYN ? "BYN" : "$";
+    inf << "Сумма: " << value << " " << currencyStr << "\n";
+    inf << "Процентная ставка (за месяц): " << monthlyPercents << "\n";
+    inf << "Дата и время оформления" << ctime(&creationTime);
+    inf << "Выплачено по кредиту: " << paidByClient << "\n";
+    inf << "Клиент: " << clientLogin << "\n";
+    return inf.str();
 }

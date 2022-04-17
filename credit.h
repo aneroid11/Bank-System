@@ -6,6 +6,7 @@
 #include <ctime>
 
 #include "currencyconverter.h"
+#include "iinforming.h"
 
 const double MIN_CREDIT_VALUE = 100.0;
 const double MAX_CREDIT_VALUE = 10000.0;
@@ -16,7 +17,7 @@ const double MIN_CREDIT_MONTH_PERCENTS = 1.0;
 const int MAX_MONTHS = 96;
 const int MIN_MONTHS = 3;
 
-class Credit
+class Credit : public IInforming
 {
 public:
     Credit(int64_t id, int months, double value, Currency currency,
@@ -30,6 +31,8 @@ public:
     time_t getCreationTime() const { return creationTime; }
     double getPaidByClient() const { return paidByClient; }
     std::string getClientLogin() const { return clientLogin; }
+
+    std::string getInfo() const override;
 
 private:
     int64_t id;

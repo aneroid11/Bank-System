@@ -140,11 +140,14 @@ void ClientCreditsWindow::takeLoan()
     }
     while (!ok);
 
+    double percentRate = computePercentRate(months);
+
+    bankSystemModel->createCredit(months, value, currency, percentRate, time(nullptr), client->getLogin());
+
     QMessageBox msgBox;
     msgBox.setWindowTitle("Информация");
-    QString text = "Вы берёте кредит на " + QString::number(months) + " месяцев\n";
+    QString text = "Вы успешно оформили кредит на " + QString::number(months) + " месяцев\n";
     text += "Сумма кредита: " + QString::number(value) + " " + currencyStr + "\n";
-    double percentRate = computePercentRate(months);
     text += "Процентная ставка: " + QString::number(percentRate) + " % в месяц\n";
     msgBox.setText(text);
     msgBox.exec();
