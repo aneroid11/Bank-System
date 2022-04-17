@@ -531,7 +531,7 @@ void BankSystemModel::createCredit(int months, double value, Currency currency,
                                    double monthlyPercents, time_t creationTime, std::string clientLogin)
 {
     Credit newCredit(database->generateUniqueId(), months, value, currency, monthlyPercents,
-                     creationTime, 0.0, clientLogin);
+                     creationTime, creationTime, 0.0, clientLogin);
     database->addCredit(newCredit);
 
     std::string trash;

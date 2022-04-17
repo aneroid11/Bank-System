@@ -15,7 +15,8 @@ double computePercentRate(int months)
 }
 
 Credit::Credit(int64_t id, int months, double value, Currency currency,
-               double monthlyPercents, time_t creationTime, double paidByClient, std::string clientLogin)
+               double monthlyPercents, time_t creationTime, time_t lastPaymentTime,
+               double paidByClient, std::string clientLogin)
 {
     this->id = id;
     this->months = months;
@@ -23,7 +24,7 @@ Credit::Credit(int64_t id, int months, double value, Currency currency,
     this->currency = currency;
     this->monthlyPercents = monthlyPercents;
     this->creationTime = creationTime;
-    this->lastPaymentTime = creationTime;
+    this->lastPaymentTime = lastPaymentTime;
     this->paidByClient = paidByClient;
     this->clientLogin = clientLogin;
 }
@@ -65,5 +66,17 @@ std::string Credit::getInfo() const
     inf << "Дата и время последнего платежа по кредиту: " << ctime(&creationTime);
     inf << "Выплачено по кредиту: " << paidByClient << "\n";
     inf << "Клиент: " << clientLogin << "\n";
+
+    inf << "Статус: ";
+
+    if (paidByClient >= getAmountOfMoneyClientMustPay() - 0.01)
+    {
+        inf << "погашен\n";
+    }
+    else
+    {
+        inf << "не погашен\n";
+    }
+
     return inf.str();
 }

@@ -187,6 +187,7 @@ void Database::createCreditsTable()
                   "CURRENCY INT," \
                   "MONTHLY_PERCENTS REAL," \
                   "CREATION_TIME INT," \
+                  "LAST_PAYMENT_TIME INT," \
                   "PAID_BY_CLIENT REAL," \
                   "CLIENT_LOGIN TEXT);");
     query.exec();
@@ -410,6 +411,7 @@ void Database::addCredit(const Credit &credit)
     query += "\'" + std::to_string(credit.getCurrency()) + "\', ";
     query += "\'" + std::to_string(credit.getMonthlyPercents()) + "\', ";
     query += "\'" + std::to_string(credit.getCreationTime()) + "\', ";
+    query += "\'" + std::to_string(credit.getLastPaymentTime()) + "\', ";
     query += "\'" + std::to_string(credit.getPaidByClient()) + "\', ";
     query += "\'" + credit.getClientLogin() + "\');";
 
@@ -660,12 +662,13 @@ void *Database::createRecordFromData(const QSqlQuery &query, const QSqlRecord &r
         Currency currency = (Currency)query.value(rec.indexOf("CURRENCY")).toInt();
         double monthlyPercents = query.value(rec.indexOf("MONTHLY_PERCENTS")).toString().replace(',', '.').toDouble();
         time_t creationTime = query.value(rec.indexOf("CREATION_TIME")).toInt();
+        time_t lastPaymentTime = query.value(rec.indexOf("LAST_PAYMENT_TIME")).toInt();
         double paidByClient = query.value(rec.indexOf("PAID_BY_CLIENT")).toString().replace(',', '.').toDouble();
         QString clientLogin = query.value(rec.indexOf("CLIENT_LOGIN")).toString();
 
         void *record = nullptr;
         record = new Credit(id, months, value, currency, monthlyPercents,
-                            creationTime, paidByClient, clientLogin.toStdString());
+                            creationTime, lastPaymentTime, paidByClient, clientLogin.toStdString());
         return record;
     }
 

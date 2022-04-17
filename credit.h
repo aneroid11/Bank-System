@@ -21,7 +21,8 @@ class Credit : public IInforming
 {
 public:
     Credit(int64_t id, int months, double value, Currency currency,
-           double monthlyPercents, time_t creationTime, double paidByClient, std::string clientLogin);
+           double monthlyPercents, time_t creationTime, time_t lastPaymentTime,
+           double paidByClient, std::string clientLogin);
 
     int64_t getId() const { return id; }
     int getMonths() const { return months; }
@@ -29,6 +30,7 @@ public:
     Currency getCurrency() const { return currency; }
     double getMonthlyPercents() const { return monthlyPercents; }
     time_t getCreationTime() const { return creationTime; }
+    time_t getLastPaymentTime() const { return lastPaymentTime; }
     double getPaidByClient() const { return paidByClient; }
     std::string getClientLogin() const { return clientLogin; }
 
