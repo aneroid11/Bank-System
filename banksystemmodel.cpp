@@ -115,11 +115,11 @@ void BankSystemModel::sendSignupRequestForClient(std::string login, std::string 
     database->addClient(newClient);
 }
 
-void BankSystemModel::registerEnterprise(int64_t id, std::string type, std::string name, int64_t pan, int64_t bic, std::string address)
+void BankSystemModel::registerEnterprise(std::string type, std::string name, int64_t pan, int64_t bic, std::string address)
 {
     if (!database) { throw DBNotOpenedException(); }
 
-    Enterprise newEnterprise(id, type, name, pan, bic, address);
+    Enterprise newEnterprise(database->generateUniqueId(), type, name, pan, bic, address);
     database->addEnterprise(newEnterprise);
 }
 

@@ -104,6 +104,9 @@ void SignupSpecialistWindow::registerEnterprise()
     // Получить БИК банка, в котором мы сейчас находимся
     int64_t bankBic = bankSystemModel->getCurrentBank()->bic;
 
+    bankSystemModel->registerEnterprise(type.toStdString(), enterpriseName.toStdString(),
+                                        pan, bankBic, address.toStdString());
+
     QMessageBox msgBox;
     msgBox.setWindowTitle("Регистрация");
 

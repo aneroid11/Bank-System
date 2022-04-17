@@ -317,15 +317,6 @@ void Database::addEnterprise(const Enterprise &enterprise)
 
     std::string query = "INSERT INTO ENTERPRISES ";
 
-    /*
-    query.prepare("CREATE TABLE ENTERPRISES("  \
-                  "ID INT NOT NULL," \
-                  "TYPE TEXT," \
-                  "NAME TEXT," \
-                  "PAN INT," \
-                  "BIC INT," \
-                  "ADDRESS TEXT );");
-     * */
     query += "(ID, TYPE, NAME, PAN, BIC, ADDRESS) ";
     query += "VALUES (";
     query += std::to_string(enterprise.getId()) + ", ";
