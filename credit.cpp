@@ -45,6 +45,14 @@ int Credit::getMonthsFromLastPaymentTime() const
     time_t now = time(nullptr);
     time_t elapsed = now - lastPaymentTime;
     int monthsElapsed = elapsed / SEC_IN_MONTH;
+
+    int monthsFromCreation = (now - creationTime) / SEC_IN_MONTH;
+
+    if (monthsElapsed > (months - monthsFromCreation))
+    {
+        monthsElapsed = (months - monthsFromCreation);
+    }
+
     return monthsElapsed;
 }
 
