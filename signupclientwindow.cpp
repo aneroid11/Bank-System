@@ -28,8 +28,8 @@ SignupClientWindow::SignupClientWindow(IBankSystemModel *bankSystem, QWidget *pa
     nameLine->setPlaceholderText("Введите ФИО");
 
     phoneLine = new QLineEdit(this);
-    //phoneLine->setInputMask("+000000000000");
     phoneLine->setPlaceholderText("Введите телефон");
+    phoneLine->setInputMask("+000000000000");
 
     emailLine = new QLineEdit(this);
     emailLine->setPlaceholderText("Введите E-mail");
