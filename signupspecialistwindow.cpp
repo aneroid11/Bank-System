@@ -10,6 +10,8 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QCheckBox>
+#include <QInputDialog>
+#include <QItemSelection>
 
 SignupSpecialistWindow::SignupSpecialistWindow(IBankSystemModel *bankSystem, QWidget *parent)
     : QDialog(parent), bankSystemModel(bankSystem)
@@ -34,9 +36,23 @@ SignupSpecialistWindow::SignupSpecialistWindow(IBankSystemModel *bankSystem, QWi
     emailLine = new QLineEdit(this);
     emailLine->setPlaceholderText("Введите E-mail");
 
-    QPushButton *sendRequest = new QPushButton("Ввести данные о предприятии", this);
-    //connect(sendRequest, &QPushButton::pressed, this, &SignupSpecialistWindow::sendSignupRequest);
-    connect(sendRequest, &QPushButton::pressed, this, &SignupSpecialistWindow::getDataAboutEnterprise);
+    QComboBox *selectEnterprise = new QComboBox(this);
+    /*
+     * enterprises.append("ОАО АБУБУ ЛТД КОМПАНИ");
+    enterprises.append("ИП Акакиев А. А.");
+    enterprises.append("ООО ОПАОПА");
+    enterprises.append("ЗАО Закрытая школа");
+     */
+    selectEnterprise->addItem("ыащывщал");
+    selectEnterprise->addItem("ыащыdsfasf");
+    selectEnterprise->addItem("ыfasащsfasaывщаsffaл");
+    selectEnterprise->addItem("asffsыasаsafaщывщал");
+
+    QPushButton *registerEnterprise = new QPushButton("Зарегистрировать предприятие", this);
+    connect(registerEnterprise, &QPushButton::pressed, this, &SignupSpecialistWindow::registerEnterprise);
+
+    QPushButton *sendSignupRequest = new QPushButton("Отправить запрос на регистрацию", this);
+    connect(sendSignupRequest, &QPushButton::pressed, this, &SignupSpecialistWindow::sendSignupRequest);
 
     QGridLayout *gridLayout = new QGridLayout(this);
     gridLayout->addWidget(loginLine, 0, 0);
@@ -44,16 +60,17 @@ SignupSpecialistWindow::SignupSpecialistWindow(IBankSystemModel *bankSystem, QWi
     gridLayout->addWidget(nameLine, 2, 0);
     gridLayout->addWidget(phoneLine, 3, 0);
     gridLayout->addWidget(emailLine, 4, 0);
-    gridLayout->addWidget(sendRequest, 5, 0);
+    gridLayout->addWidget(selectEnterprise, 5, 0);
+    gridLayout->addWidget(registerEnterprise, 6, 0);
+    gridLayout->addWidget(sendSignupRequest, 7, 0);
 }
 
-void SignupSpecialistWindow::getDataAboutEnterprise()
+void SignupSpecialistWindow::registerEnterprise()
 {
     QMessageBox msgBox;
     msgBox.setWindowTitle("Ошибка");
-    msgBox.setText("Здесь должны вводиться данные о предприятии");
+    msgBox.setText("Вы зарегистрировали предприятие АДАООАОАО");
     msgBox.exec();
-    return;
 }
 
 void SignupSpecialistWindow::sendSignupRequest()

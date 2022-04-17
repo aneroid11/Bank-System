@@ -14,7 +14,7 @@ public:
     explicit SignupSpecialistWindow(IBankSystemModel *bankSystem, QWidget *parent = nullptr);
 
 private slots:
-    void getDataAboutEnterprise();
+    void registerEnterprise();
     void sendSignupRequest();
 
 private:
