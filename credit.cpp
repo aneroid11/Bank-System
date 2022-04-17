@@ -83,7 +83,7 @@ std::string Credit::getInfo() const
 
     inf << "Статус: ";
 
-    if (paidByClient >= getAmountOfMoneyClientMustPay() - 0.01)
+    if (paidByClient >= getAmountOfMoneyClientMustPay()-0.01)
     {
         inf << "погашен\n";
     }
