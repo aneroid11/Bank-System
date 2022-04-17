@@ -33,6 +33,7 @@ SOURCES += \
     currencyconverter.cpp \
     database.cpp \
     deposit.cpp \
+    enterprise.cpp \
     enterprisespecialist.cpp \
     hashcomputer.cpp \
     main.cpp \
@@ -70,9 +71,11 @@ HEADERS += \
     dbexception.h \
     dbnotopenedexception.h \
     deposit.h \
+    enterprise.h \
     enterprisespecialist.h \
     hashcomputer.h \
     ibanksystemmodel.h \
+    iinforming.h \
     mainwindow.h \
     manager.h \
     managerpersonalaccountwindow.h \

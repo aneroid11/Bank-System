@@ -107,13 +107,6 @@ void SignupSpecialistWindow::registerEnterprise()
     QMessageBox msgBox;
     msgBox.setWindowTitle("Регистрация");
 
-    /*
-ТИП (ИП, ООО, ЗАО и т.д.);
-Юридическое название;
-УНП;
-БИК банка;
-Юридический адрес
-     * */
     QString info;
     info += "Вы зарегистрировали предприятие: \n";
     info += "Тип: " + type + "\n";

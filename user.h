@@ -3,7 +3,9 @@
 
 #include <string>
 
-class User
+#include "iinforming.h"
+
+class User : IInforming
 {
 public:
     struct Data
@@ -29,7 +31,7 @@ public:
     std::string getLogin() const { return data.login; }
     std::string getPasswordHash() const { return data.passwordHash; }
 
-    virtual std::string getInfo() const;
+    std::string getInfo() const override;
 
 protected:
     Data data;

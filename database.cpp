@@ -42,6 +42,7 @@ Database::Database(std::string filename)
     createAccountsTable();
     createDepositsTable();
     createTransfersTable();
+    createEnterprisesTable();
 }
 
 Database::~Database()
@@ -50,6 +51,19 @@ Database::~Database()
     {
         database.close();
     }
+}
+
+void Database::createEnterprisesTable()
+{
+    QSqlQuery query;
+    query.prepare("CREATE TABLE ENTERPRISES("  \
+                  "ID INT NOT NULL," \
+                  "TYPE TEXT," \
+                  "NAME TEXT," \
+                  "PAN INT," \
+                  "BIC INT," \
+                  "ADDRESS TEXT );");
+    query.exec();
 }
 
 void Database::createClientsTable()

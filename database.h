@@ -84,6 +84,7 @@ private:
     void createAccountsTable();
     void createDepositsTable();
     void createTransfersTable();
+    void createEnterprisesTable();
 
     User *createUserFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);
     void *createRecordFromData(const QSqlQuery &query, const QSqlRecord &rec, std::string tableName);
