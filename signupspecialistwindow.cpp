@@ -37,12 +37,6 @@ SignupSpecialistWindow::SignupSpecialistWindow(IBankSystemModel *bankSystem, QWi
     emailLine->setPlaceholderText("Введите E-mail");
 
     QComboBox *selectEnterprise = new QComboBox(this);
-    /*
-     * enterprises.append("ОАО АБУБУ ЛТД КОМПАНИ");
-    enterprises.append("ИП Акакиев А. А.");
-    enterprises.append("ООО ОПАОПА");
-    enterprises.append("ЗАО Закрытая школа");
-     */
     selectEnterprise->addItem("ыащывщал");
     selectEnterprise->addItem("ыащыdsfasf");
     selectEnterprise->addItem("ыfasащsfasaывщаsffaл");
@@ -67,8 +61,57 @@ SignupSpecialistWindow::SignupSpecialistWindow(IBankSystemModel *bankSystem, QWi
 
 void SignupSpecialistWindow::registerEnterprise()
 {
+    QInputDialog inpDialog;
+    QStringList enterpriseTypes;
+    enterpriseTypes.append("ИП");
+    enterpriseTypes.append("ООО");
+    enterpriseTypes.append("ЗАО");
+    enterpriseTypes.append("ОАО");
+    QString type = inpDialog.getItem(this, "Тип предприятия", "Выберите тип предприятия", enterpriseTypes, 0, false);
+
+    /*
+ТИП (ИП, ООО, ЗАО и т.д.);
+Юридическое название;
+УНП;
+БИК банка;
+Юридический адрес
+     * */
+    QString enterpriseName;
+    bool ok = false;
+    do
+    {
+        enterpriseName = inpDialog.getText(this, "Юридическое название",
+                                           "Введите юр. название предприятия",
+                                           QLineEdit::Normal, QString(), &ok);
+
+        // проверить, есть ли предприятия с таким названием уже в базе данных, и если есть, то
+        // вывести сообщение об этом.
+    }
+    while (!ok);
+
+    int64_t pan = -1;
+    do
+    {
+        pan = inpDialog.getInt(this, "УНП",
+                               "Введите УНП предприятия", 1, 1, 1000000000, 1, &ok);
+
+        // проверить, есть ли предприятия с таким УНП уже в базе данных, и если есть, то
+        // вывести сообщение об этом.
+    }
+    while (!ok);
+
+    QString address = "";
+    do
+    {
+        address = inpDialog.getText(this, "Юридический адрес",
+                                    "Введите юридический адрес предприятия", QLineEdit::Normal, QString(), &ok);
+    }
+    while (!ok);
+
+    // Получить БИК банка, в котором мы сейчас находимся
+
     QMessageBox msgBox;
-    msgBox.setWindowTitle("Ошибка");
+    msgBox.setWindowTitle("Регистрация");
     msgBox.setText("Вы зарегистрировали предприятие АДАООАОАО");
     msgBox.exec();
 }

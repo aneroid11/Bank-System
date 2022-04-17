@@ -7,6 +7,7 @@ class Bank
 {
 public:
     std::string name;
+    std::string bic;
 };
 
 #endif // BANK_H
