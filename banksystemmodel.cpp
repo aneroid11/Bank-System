@@ -551,5 +551,7 @@ void BankSystemModel::payCredit(int64_t id)
     std::list<void *> records = database->getRecordsFromTableByParameter("CREDITS", "ID", std::to_string(id));
     Credit *currCredit = (Credit *)(*records.begin());
     currCredit->pay();
+
+    std::cout << currCredit->getInfo() << "\n";
     database->updateCredit(currCredit);
 }

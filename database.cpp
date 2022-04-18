@@ -864,4 +864,16 @@ void Database::updateCredit(Credit *data)
                   "CLIENT_LOGIN TEXT);");
      **/
     std::cout << "need to update credit " << data->getId() << " here\n";
+
+    std::stringstream qs;
+    qs << "UPDATE CREDITS SET ";
+    qs << "LAST_PAYMENT_TIME = \'" << std::to_string(data->getLastPaymentTime()) << "\', ";
+    qs << "PAID_BY_CLIENT = \'" << std::to_string(data->getPaidByClient()) << "\' ";
+    qs << "WHERE ID = \'" << std::to_string(data->getId()) << "\';";
+
+    QSqlQuery sqlQuery;
+    sqlQuery.prepare(qs.str().c_str());
+    sqlQuery.exec();
+
+    std::cout << sqlQuery.lastError().text().toStdString() << "\n";
 }

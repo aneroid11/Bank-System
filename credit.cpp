@@ -69,7 +69,7 @@ std::string Credit::getInfo() const
     inf << "Сумма: " << value << " " << currencyStr << "\n";
     inf << "Процентная ставка (за месяц): " << monthlyPercents << " %\n";
     inf << "Дата и время оформления: " << ctime(&creationTime);
-    inf << "Дата и время последнего платежа по кредиту: " << ctime(&creationTime);
+    inf << "Дата и время последнего платежа по кредиту: " << ctime(&lastPaymentTime);
     inf << "Выплачено по кредиту: " << paidByClient << "\n";
     inf << "Клиент: " << clientLogin << "\n";
 
