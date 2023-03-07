@@ -1,4 +1,6 @@
 # Банковская система
+__Язык: C++__  
+__Фреймворк: Qt__  
 __Возможности:__
 1. Имитировать работу банковской системы с возможностями работы с вкладами клиентов:
    * Создание;
@@ -36,3 +38,8 @@ __Возможности:__
      - Просмотр всех логов действий (логи могут быть в отдельном файле и зашифрованы);
      - Отмена всех действий пользователей.
   
+![image](https://user-images.githubusercontent.com/73517902/223437304-9eb9cbc2-c77a-4aef-8377-f6c25a8742ad.png)
+![image](https://user-images.githubusercontent.com/73517902/223437504-b7f1fa38-a90c-4c3a-bcf2-3a84b69ac84a.png)
+![image](https://user-images.githubusercontent.com/73517902/223437967-aecc9735-3f16-4498-a9c3-26bc5d05dbcf.png)
+![image](https://user-images.githubusercontent.com/73517902/223438225-5a81bc93-0552-4068-a001-a5beb5019cb4.png)
+
